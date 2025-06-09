@@ -71,39 +71,129 @@ export default function Home() {
               {/* Text Content */}
               <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
                 <div>
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none mb-4">
-                    CREATIVE
+                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none mb-4">
+                    DHRUV
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                      DEVELOPER
+                      SINGH
                     </span>
                   </h1>
                   <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    Crafting immersive digital experiences with cutting-edge technology.
-                    Passionate about interactive design, 3D graphics, and pushing the boundaries
-                    of web development.
+                    {/* <p className="text-gray-300 text-base leading-relaxed mb-6 font-light"> */}
+                    I'm genuinely excited about <span className="text-purple-400 font-medium">new technologies and blockchain</span>, with significant grasp in <span className="text-cyan-400 font-medium">full-stack development and DevOps</span>. I love trying out the latest tools to build cool stuff, actively contribute to <span className="text-green-400 font-medium">open source</span>, and always encourage using open technologies. Right now, I’m also learning <span className="text-orange-400 font-medium">Rust</span>!
+                    {/* </p> */}
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                {/* Buttons - Centered for mobile/tablet, left-aligned for desktop */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <a href="#projects" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center">
                     View My Work
                   </a>
                   <a href="#contact" className="border border-gray-600 hover:border-purple-400 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-purple-400/10 text-center">
-                    Get In Touch
+                    <span className="lg:hidden">Get CV</span>
+                    <span className="hidden lg:inline">Get CV</span>
                   </a>
                 </div>
               </div>
 
               {/* Interactive Area */}
               <div className="hidden lg:flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <div className="text-sm text-gray-400 tracking-wider">
-                    MOVE YOUR CURSOR
+                <div className="text-center space-y-8">
+                  {/* Extra Large circular profile image */}
+                  <div className="relative w-80 h-80 mx-auto group">
+                    <div className="w-full h-full overflow-hidden rounded-full border-4 border-gradient-to-br from-purple-400 via-pink-400 to-cyan-400 shadow-2xl shadow-purple-500/40 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-purple-500/60">
+                      <img
+                        src="/image.png"
+                        alt="Profile"
+                        className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                    {/* Animated border glow */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 opacity-20 blur-xl animate-pulse"></div>
                   </div>
-                  <div className="text-xs text-gray-500 max-w-xs">
-                    Watch the brain respond to your movement.
-                    Built with Three.js and React Three Fiber.
+
+                  {/* Enhanced Custom Bio */}
+                  <div className="max-w-md mx-auto bg-gray-900/90 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20 shadow-xl">
+                    <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                      Full Stack Developer
+                    </h3>
+
+
+                    {/* Enhanced Technology Tags */}
+                    <div className="flex justify-center flex-wrap gap-3 mb-4">
+                      <span className="bg-gradient-to-r from-purple-500/30 to-purple-600/30 border border-purple-400/40 text-purple-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-purple-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-purple-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <circle cx="12" cy="13.26" r="2.72"></circle>
+                          <path d="M12 2l3.09 6.26L22 9l-5.47 5.47L17.82 21 12 17.77 6.18 21l1.29-6.53L2 9l6.91-.74L12 2z"></path>
+                        </svg>
+                        React
+                      </span>
+                      <span className="bg-gradient-to-r from-orange-500/30 to-orange-600/30 border border-orange-400/40 text-orange-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-orange-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-orange-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+                        </svg>
+                        Three.js
+                      </span>
+                      <span className="bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/40 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-blue-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-.1200-1.955-1.712a3.902 3.902 0 0 1-.643-.104 10.997 10.997 0 0 1-5.849-4.670c-.395-.621-.637-1.28-.637-1.941 0-.844.311-1.629.863-2.181.552-.552 1.337-.863 2.181-.863.844 0 1.629.311 2.181.863.552.552.863 1.337.863 2.181 0 .661-.242 1.32-.637 1.941a10.997 10.997 0 0 1-5.849 4.670c-.245.066-.434.096-.643.104-1.055.612-1.935 1.699-1.955 1.712-.028.024.012.052.219.158 1.346.687 2.712 1.086 4.323 1.264.364.04 1.936.04 2.299 0 .934-.103 1.755-.275 2.534-.525 4.349-1.403 7.557-5.189 8.209-9.695.096-.659.108-.854.108-1.748s-.012-1.088-.108-1.747C21.75 4.185 18.557.346 15.15.041 14.793.01 14.53.007 14.18.007 13.84.007 13.59.01 13.23.041 12.62.07 12.137.01 11.572 0z"></path>
+                        </svg>
+                        Next.js
+                      </span>
+                      <span className="bg-gradient-to-r from-teal-500/30 to-teal-600/30 border border-teal-400/40 text-teal-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-teal-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-teal-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"></path>
+                        </svg>
+                        Tailwind
+                      </span>
+                      <span className="bg-gradient-to-r from-yellow-500/30 to-yellow-600/30 border border-yellow-400/40 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-yellow-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-yellow-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M13.527 2.657l-7.867 3.314a2.252 2.252 0 0 0-1.313 2.039v8.09c0 .846.49 1.621 1.266 2.005l7.983 3.95c.776.384 1.694.384 2.47 0l7.983-3.95a2.252 2.252 0 0 0 1.266-2.005V8.01c0-.846-.49-1.621-1.266-2.005L15.066 2.055a2.252 2.252 0 0 0-1.539-.602 2.252 2.252 0 0 0-.539 1.204zm-.594 13.038v.005a.896.896 0 0 1-.896.896h-3.584a.896.896 0 0 1-.896-.896v-7.074a.896.896 0 0 1 .896-.896h3.584a.896.896 0 0 1 .896.896v7.069z"></path>
+                        </svg>
+                        AWS
+                      </span>
+                      <span className="bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/40 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-blue-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M12 2l3.09 6.26L22 9l-5.47 5.47L17.82 21 12 17.77 6.18 21l1.29-6.53L2 9l6.91-.74L12 2z"></path>
+                        </svg>
+                        Digital Ocean
+                      </span>
+                      <span className="bg-gradient-to-r from-green-500/30 to-green-600/30 border border-green-400/40 text-green-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-green-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-green-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M24 18.588a1.529 1.529 0 0 1-1.895-.72l-3.45-4.771-.5-.667-4.003 5.444a1.466 1.466 0 0 1-1.802.708l5.158-6.92-4.798-6.251a1.595 1.595 0 0 1 1.9-.666L18.204 10.3l3.842-5.197c.546-.739 1.63-.872 2.222-.211a1.588 1.588 0 0 1-.211 2.247L19.329 12l4.728 6.146a1.587 1.587 0 0 1-.057 2.042z"></path>
+                        </svg>
+                        Express
+                      </span>
+                      <span className="bg-gradient-to-r from-indigo-500/30 to-indigo-600/30 border border-indigo-400/40 text-indigo-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-indigo-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-indigo-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M1.5 6.5A.5.5 0 0 1 2 6h5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-9zM7.5 6h9a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-9A.5.5 0 0 1 7.5 6zm10.5.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-9z"></path>
+                        </svg>
+                        Socket
+                      </span>
+                      <span className="bg-gradient-to-r from-red-500/30 to-red-600/30 border border-red-400/40 text-red-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-red-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-red-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M5.8 21l.4-2h9.6l.4 2h-10.4zm-.2-3l1.9-9h9l1.9 9H5.6zM12 2l3 3h4l-5 5-2-2-2 2L5 5h4l3-3z"></path>
+                        </svg>
+                        NoSQL
+                      </span>
+                      <span className="bg-gradient-to-r from-emerald-500/30 to-emerald-600/30 border border-emerald-400/40 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-emerald-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-emerald-500/40 flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                          <path d="M16.5 12c0-4.142-3.358-7.5-7.5-7.5s-7.5 3.358-7.5 7.5c0 4.142 3.358 7.5 7.5 7.5s7.5-3.358 7.5-7.5zm5.5 0c0 6.627-5.373 12-12 12s-12-5.373-12-12 5.373-12 12-12 12 5.373 12 12z"></path>
+                        </svg>
+                        SQL
+                      </span>
+                    </div>
+
+                    {/* Additional Skills */}
+                    <div className="flex justify-center flex-wrap gap-2">
+                      <span className="bg-black/30 backdrop-blur-xs border border-gray-600/30 text-gray-400 px-3 py-1 rounded-full text-xs">TypeScript</span>
+                      <span className="bg-black/30 backdrop-blur-xs border border-gray-600/30 text-gray-400 px-3 py-1 rounded-full text-xs">Solidity</span>
+                      <span className="bg-black/30 backdrop-blur-xs border border-gray-600/30 text-gray-400 px-3 py-1 rounded-full text-xs">C</span>
+                      <span className="bg-black/30 backdrop-blur-xs border border-gray-600/30 text-gray-400 px-3 py-1 rounded-full text-xs">C++</span>
+                      <span className="bg-black/30 backdrop-blur-xs border border-gray-600/30 text-gray-400 px-3 py-1 rounded-full text-xs">Rust</span>
+                      <span className="bg-black/30 backdrop-blur-xs border border-gray-600/30 text-gray-400 px-3 py-1 rounded-full text-xs">Node.js</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -112,7 +202,7 @@ export default function Home() {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/40 backdrop-blur-sm">
+        <section id="experience" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
           <div className="max-w-7xl w-full mx-auto">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
@@ -272,7 +362,7 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/40 backdrop-blur-sm">
+        <section id="projects" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
           <div className="max-w-7xl w-full mx-auto">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
@@ -480,7 +570,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/40 backdrop-blur-sm">
+        <section id="contact" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
           <div className="max-w-5xl w-full mx-auto text-center">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
@@ -491,9 +581,9 @@ export default function Home() {
               Ready to bring your ideas to life? Let's collaborate and create something amazing together.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
               <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                <div className="text-purple-400 text-2xl mb-4">📧</div>
+                <div className="text-purple-400 text-2xl mb-4">✉</div>
                 <h3 className="text-base sm:text-lg font-bold mb-2">Email</h3>
                 <a href="mailto:contact@example.com" className="text-gray-300 hover:text-purple-400 transition-colors text-sm sm:text-base break-all">
                   contact@example.com
@@ -501,18 +591,26 @@ export default function Home() {
               </div>
 
               <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
-                <div className="text-pink-400 text-2xl mb-4">💼</div>
+                <div className="text-pink-400 text-2xl mb-4">in</div>
                 <h3 className="text-base sm:text-lg font-bold mb-2">LinkedIn</h3>
                 <a href="#" className="text-gray-300 hover:text-pink-400 transition-colors text-sm sm:text-base">
                   /in/yourprofile
                 </a>
               </div>
 
-              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 sm:col-span-2 md:col-span-1">
-                <div className="text-cyan-400 text-2xl mb-4">🐱</div>
+              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
+                <div className="text-cyan-400 text-2xl mb-4">🐙</div>
                 <h3 className="text-base sm:text-lg font-bold mb-2">GitHub</h3>
                 <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors text-sm sm:text-base">
                   /yourusername
+                </a>
+              </div>
+
+              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
+                <div className="text-blue-400 text-2xl mb-4 font-bold">𝕏</div>
+                <h3 className="text-base sm:text-lg font-bold mb-2">X (Twitter)</h3>
+                <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors text-sm sm:text-base">
+                  @yourusername
                 </a>
               </div>
             </div>

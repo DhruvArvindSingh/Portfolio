@@ -145,15 +145,16 @@ function BrainModel({ mouseX, mouseY }: BrainModelProps) {
 
     useFrame((state, delta) => {
         if (brainRef.current) {
-            // Smooth rotation based on mouse position - horizontal only
-            const targetRotationY = (mouseX - 0.5) * 12.57 // 2π * 2 for 360° rotation from edge to center
+            // Constant slow rotation that always works
+            const constantRotationSpeed = 0.2 // Slow rotation speed
+            const constantRotationY = state.clock.elapsedTime * constantRotationSpeed
 
-            // Add smooth interpolation for natural movement - horizontal only
-            brainRef.current.rotation.y = THREE.MathUtils.lerp(
-                brainRef.current.rotation.y,
-                targetRotationY,
-                0.03
-            )
+            // Mouse-based rotation offset (on top of constant rotation)
+            const mouseOffsetY = (mouseX - 0.5) * 8.0 // Higher value for more dramatic rotation response
+
+            // Combine constant rotation with mouse-based offset
+            brainRef.current.rotation.y = constantRotationY + mouseOffsetY
+
             // Keep X rotation fixed (no vertical rotation)
             brainRef.current.rotation.x = 0
 
@@ -319,8 +320,8 @@ function DodecahedronElement() {
 function FloatingParticles() {
     const particlesRef = useRef<THREE.Group>(null)
 
-    // Use deterministic positions to avoid hydration mismatch
-    const particles = Array.from({ length: 20 }, (_, i) => {
+    // Use deterministic positions to avoid hydration mismatch - increased from 20 to 50
+    const particles = Array.from({ length: 50 }, (_, i) => {
         // Create pseudo-random but deterministic values based on index
         const seedX = (i * 7.13) % 1
         const seedY = (i * 3.47) % 1
@@ -329,11 +330,11 @@ function FloatingParticles() {
 
         return {
             position: [
-                (seedX - 0.5) * 15,
-                (seedY - 0.5) * 10,
-                (seedZ - 0.5) * 10
+                (seedX - 0.5) * 20, // Increased spread
+                (seedY - 0.5) * 15, // Increased spread
+                (seedZ - 0.5) * 15  // Increased spread
             ] as [number, number, number],
-            size: 0.02 + seedSize * 0.03,
+            size: 0.015 + seedSize * 0.025, // Slightly smaller for more stars
         }
     })
 
@@ -357,6 +358,62 @@ function FloatingParticles() {
                         emissiveIntensity={1.0}
                         transparent
                         opacity={0.8}
+                    />
+                </mesh>
+            ))}
+        </group>
+    )
+}
+
+// Additional twinkling stars component
+function TwinklingStars() {
+    const starsRef = useRef<THREE.Group>(null)
+
+    // Create more distant stars with twinkling effect - increased from 80 to 150
+    const stars = Array.from({ length: 150 }, (_, i) => {
+        const seedX = (i * 11.47) % 1
+        const seedY = (i * 5.73) % 1
+        const seedZ = (i * 9.31) % 1
+        const seedTwinkle = (i * 3.17) % 1
+
+        return {
+            position: [
+                (seedX - 0.5) * 30,
+                (seedY - 0.5) * 20,
+                (seedZ - 0.5) * 25
+            ] as [number, number, number],
+            size: 0.008 + (seedTwinkle * 0.015),
+            twinkleSpeed: 0.5 + seedTwinkle * 2.0,
+            twinkleOffset: seedTwinkle * Math.PI * 2
+        }
+    })
+
+    useFrame((state) => {
+        if (starsRef.current) {
+            starsRef.current.children.forEach((star, i) => {
+                const mesh = star as THREE.Mesh
+                const material = mesh.material as THREE.MeshStandardMaterial
+                const starData = stars[i]
+
+                // Twinkling effect
+                const twinkle = Math.sin(state.clock.elapsedTime * starData.twinkleSpeed + starData.twinkleOffset)
+                material.emissiveIntensity = 0.3 + twinkle * 0.7
+                material.opacity = 0.4 + twinkle * 0.4
+            })
+        }
+    })
+
+    return (
+        <group ref={starsRef}>
+            {stars.map((star, i) => (
+                <mesh key={`star-${i}`} position={star.position}>
+                    <sphereGeometry args={[star.size, 6, 4]} />
+                    <meshStandardMaterial
+                        color="#ffffff"
+                        emissive="#ffffff"
+                        emissiveIntensity={0.5}
+                        transparent
+                        opacity={0.6}
                     />
                 </mesh>
             ))}
@@ -600,8 +657,9 @@ function BackgroundScene() {
         camera.position.set(0, 0, 5)
     }, [camera])
 
-    // Define floating shapes positions and properties
+    // Define floating shapes positions and properties - significantly expanded
     const floatingShapes = [
+        // Original shapes
         { position: [-6, 3, -2] as [number, number, number], shape: 'octahedron' as const, color: '#9333ea', size: 0.3, speed: 1.2 },
         { position: [6, -2, -3] as [number, number, number], shape: 'torus' as const, color: '#ec4899', size: 0.25, speed: 0.8 },
         { position: [-5, -3, 2] as [number, number, number], shape: 'box' as const, color: '#06b6d4', size: 0.2, speed: 1.5 },
@@ -612,6 +670,26 @@ function BackgroundScene() {
         { position: [4, -4, -1] as [number, number, number], shape: 'box' as const, color: '#06b6d4', size: 0.25, speed: 1.4 },
         { position: [0, 6, -3] as [number, number, number], shape: 'octahedron' as const, color: '#84cc16', size: 0.3, speed: 0.7 },
         { position: [0, -6, 2] as [number, number, number], shape: 'torus' as const, color: '#f97316', size: 0.27, speed: 1.6 },
+
+        // Additional shapes for more density
+        { position: [-8, -2, 4] as [number, number, number], shape: 'sphere' as const, color: '#db2777', size: 0.18, speed: 1.8 },
+        { position: [8, 4, -2] as [number, number, number], shape: 'box' as const, color: '#7c3aed', size: 0.22, speed: 0.6 },
+        { position: [-3, -5, -4] as [number, number, number], shape: 'octahedron' as const, color: '#059669', size: 0.26, speed: 1.4 },
+        { position: [3, 5, 4] as [number, number, number], shape: 'torus' as const, color: '#dc2626', size: 0.2, speed: 1.1 },
+        { position: [-9, 1, -1] as [number, number, number], shape: 'sphere' as const, color: '#2563eb', size: 0.24, speed: 0.9 },
+        { position: [9, -1, 2] as [number, number, number], shape: 'box' as const, color: '#ea580c', size: 0.19, speed: 1.7 },
+        { position: [2, -7, 3] as [number, number, number], shape: 'octahedron' as const, color: '#0891b2', size: 0.21, speed: 1.2 },
+        { position: [-2, 7, -3] as [number, number, number], shape: 'torus' as const, color: '#be123c', size: 0.23, speed: 0.8 },
+        { position: [6, 0, 5] as [number, number, number], shape: 'sphere' as const, color: '#7c2d12', size: 0.17, speed: 1.5 },
+        { position: [-6, 0, -5] as [number, number, number], shape: 'box' as const, color: '#166534', size: 0.25, speed: 1.0 },
+
+        // Far background smaller shapes
+        { position: [-10, -4, -6] as [number, number, number], shape: 'octahedron' as const, color: '#4338ca', size: 0.15, speed: 2.0 },
+        { position: [10, 6, 6] as [number, number, number], shape: 'sphere' as const, color: '#be185d', size: 0.14, speed: 0.7 },
+        { position: [-1, 8, -5] as [number, number, number], shape: 'torus' as const, color: '#0369a1', size: 0.16, speed: 1.6 },
+        { position: [1, -8, 5] as [number, number, number], shape: 'box' as const, color: '#92400e', size: 0.13, speed: 1.3 },
+        { position: [11, 2, -3] as [number, number, number], shape: 'octahedron' as const, color: '#065f46', size: 0.18, speed: 0.5 },
+        { position: [-11, -2, 3] as [number, number, number], shape: 'sphere' as const, color: '#7c1d20', size: 0.16, speed: 1.9 },
     ]
 
     return (
@@ -633,6 +711,9 @@ function BackgroundScene() {
 
             {/* Floating particles */}
             <FloatingParticles />
+
+            {/* Twinkling background stars */}
+            <TwinklingStars />
 
             {/* Additional ambient elements with independent rotation */}
             <TorusKnotElement />
