@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Creative Developer Portfolio",
+  title: "Dhruv's Portfolio",
   description: "Interactive 3D portfolio showcasing cutting-edge web development with Three.js",
 };
 

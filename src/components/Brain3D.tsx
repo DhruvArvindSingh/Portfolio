@@ -7,94 +7,193 @@ import * as THREE from 'three'
 
 interface BrainModelProps {
     mouseX: number
-    mouseY: number
 }
 
 // Lightning bolt component
-function Lightning({ position, visible }: { position: [number, number, number], visible: boolean }) {
+function Lightning({ position, visible, useNegativeDirections = false, isDarkPhase = false }: { position: [number, number, number], visible: boolean, useNegativeDirections?: boolean, isDarkPhase?: boolean }) {
     const lightningRef = useRef<THREE.Group>(null)
 
     // Calculate the direction vector from origin (brain center) to position
-    const direction = new THREE.Vector3(position[0], position[1], position[2]).normalize()
+    // const directionVector = new THREE.Vector3(position[0], position[1], position[2]).normalize()
 
-    useFrame((state) => {
+    useFrame(() => {
         if (lightningRef.current && visible) {
-            // Make lightning more visible - less flickering
-            lightningRef.current.visible = Math.random() > 0.2
-            // Faster rotation while maintaining outward direction
-            lightningRef.current.rotation.z += (Math.random() - 0.5) * 0.3
-            lightningRef.current.rotation.x += (Math.random() - 0.5) * 0.2
-            lightningRef.current.rotation.y += (Math.random() - 0.5) * 0.2
-            // More dramatic scale changes
-            lightningRef.current.scale.setScalar(1.0 + Math.random() * 2.0)
+            // Dangerous flickering - almost always visible but intense
+            lightningRef.current.visible = Math.random() > 0.1
+            // More volatile rotation for dangerous effect
+            lightningRef.current.rotation.z += (Math.random() - 0.5) * 0.5
+            lightningRef.current.rotation.x += (Math.random() - 0.5) * 0.4
+            lightningRef.current.rotation.y += (Math.random() - 0.5) * 0.4
+            // Dramatic scale changes for energy surges
+            const energySurge = 1.0 + Math.random() * 1.5 + Math.sin(Date.now() * 0.01) * 0.3
+            lightningRef.current.scale.setScalar(energySurge)
         } else if (lightningRef.current) {
             lightningRef.current.visible = false
         }
     })
 
-    // Calculate rotation to point away from brain center
-    const angle = Math.atan2(direction.y, direction.x)
+    // // Calculate rotation to point away from brain center
+    // const angle = Math.atan2(directionVector.y, directionVector.x)
+
+    const directionMultiplier = useNegativeDirections ? -1 : 1;
+
+    // Generate zigzag lightning segments
+    const generateZigzagSegments = (startPos: [number, number, number], endPos: [number, number, number], segments: number = 6) => {
+        const lightningSegments = []
+
+        for (let i = 0; i < segments; i++) {
+            const progress = i / (segments - 1)
+            const nextProgress = (i + 1) / (segments - 1)
+
+            // Linear interpolation between start and end
+            const currentX = startPos[0] + (endPos[0] - startPos[0]) * progress
+            const currentY = startPos[1] + (endPos[1] - startPos[1]) * progress
+            const currentZ = startPos[2] + (endPos[2] - startPos[2]) * progress
+
+            const nextX = startPos[0] + (endPos[0] - startPos[0]) * nextProgress
+            const nextY = startPos[1] + (endPos[1] - startPos[1]) * nextProgress
+            const nextZ = startPos[2] + (endPos[2] - startPos[2]) * nextProgress
+
+            // Add subtle zigzag offset (reduced intensity)
+            const zigzagIntensity = Math.sin(progress * Math.PI) * 0.06 // Much less zigzag
+            const randomOffsetX = (Math.random() - 0.5) * zigzagIntensity
+            const randomOffsetY = (Math.random() - 0.5) * zigzagIntensity
+            const randomOffsetZ = (Math.random() - 0.5) * zigzagIntensity
+
+            // Apply offset to next position
+            const offsetNextX = nextX + randomOffsetX
+            const offsetNextY = nextY + randomOffsetY
+            const offsetNextZ = nextZ + randomOffsetZ
+
+            // Calculate segment center and direction
+            const centerX = (currentX + offsetNextX) / 2
+            const centerY = (currentY + offsetNextY) / 2
+            const centerZ = (currentZ + offsetNextZ) / 2
+
+            // Calculate segment length and rotation
+            const segmentLength = Math.sqrt(
+                Math.pow(offsetNextX - currentX, 2) +
+                Math.pow(offsetNextY - currentY, 2) +
+                Math.pow(offsetNextZ - currentZ, 2)
+            )
+
+            // Calculate rotation angles
+            const deltaX = offsetNextX - currentX
+            const deltaY = offsetNextY - currentY
+            const deltaZ = offsetNextZ - currentZ
+
+            const rotationY = Math.atan2(deltaX, deltaZ)
+            const rotationX = -Math.atan2(deltaY, Math.sqrt(deltaX * deltaX + deltaZ * deltaZ))
+
+            lightningSegments.push({
+                position: [centerX, centerY, centerZ] as [number, number, number],
+                rotation: [rotationX, rotationY, 0] as [number, number, number],
+                length: segmentLength,
+                thickness: Math.max(0.008, 0.015 - i * 0.001) // Smaller and gradually thinner
+            })
+        }
+
+        return lightningSegments
+    }
+
+    // Enhanced colors and brightness for dark phase
+    const intensityMultiplier = isDarkPhase ? 2.5 : 1.0; // Much brighter in dark phase
+    const baseIntensity = isDarkPhase ? 8.0 : 5.0; // Higher base intensity for dark phase
 
     return (
-        <group ref={lightningRef} position={position} rotation={[0, 0, angle]}>
-            {/* Main lightning bolt extending outward from brain - much longer */}
-            <mesh position={[0.6, 0, 0]}>
-                <boxGeometry args={[1.2, 0.025, 0.025]} />
-                <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={3.0} />
-            </mesh>
+        <group ref={lightningRef} position={position}>
+            {/* Zigzag lightning lines - 3 directions */}
 
-            {/* Branch extending further out - longer */}
-            <mesh position={[1.1, 0.15, 0]} rotation={[0, 0, Math.PI * 0.1]}>
-                <boxGeometry args={[0.8, 0.02, 0.02]} />
-                <meshStandardMaterial color="#88ffff" emissive="#88ffff" emissiveIntensity={2.5} />
-            </mesh>
+            {/* X direction zigzag */}
+            {generateZigzagSegments(
+                [0, 0, 0],
+                [0.5 * directionMultiplier, 0, 0]
+            ).map((segment, i) => (
+                <mesh key={`x-${i}`} position={segment.position} rotation={segment.rotation}>
+                    <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
+                    <meshStandardMaterial
+                        color={isDarkPhase ? "#00ffff" : "#00ddff"}
+                        emissive={isDarkPhase ? "#00ddff" : "#00aaff"}
+                        emissiveIntensity={(baseIntensity - i * 0.3) * intensityMultiplier}
+                        toneMapped={false}
+                    />
+                </mesh>
+            ))}
 
-            {/* Another branch - longer */}
-            <mesh position={[0.9, -0.12, 0]} rotation={[0, 0, -Math.PI * 0.15]}>
-                <boxGeometry args={[0.6, 0.02, 0.02]} />
-                <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={2.2} />
-            </mesh>
+            {/* Y direction zigzag */}
+            {generateZigzagSegments(
+                [0, 0, 0],
+                [0, 0.5 * directionMultiplier, 0]
+            ).map((segment, i) => (
+                <mesh key={`y-${i}`} position={segment.position} rotation={segment.rotation}>
+                    <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
+                    <meshStandardMaterial
+                        color={isDarkPhase ? "#ff44ff" : "#44ddff"}
+                        emissive={isDarkPhase ? "#ff00ff" : "#0088ff"}
+                        emissiveIntensity={(baseIntensity * 0.95 - i * 0.3) * intensityMultiplier}
+                        toneMapped={false}
+                    />
+                </mesh>
+            ))}
 
-            {/* Extended end branch - much longer */}
-            <mesh position={[1.4, 0.08, 0]} rotation={[0, 0, Math.PI * 0.2]}>
-                <boxGeometry args={[0.5, 0.015, 0.015]} />
-                <meshStandardMaterial color="#aaffff" emissive="#aaffff" emissiveIntensity={2.0} />
-            </mesh>
+            {/* Z direction zigzag */}
+            {generateZigzagSegments(
+                [0, 0, 0],
+                [0, 0, 0.5 * directionMultiplier]
+            ).map((segment, i) => (
+                <mesh key={`z-${i}`} position={segment.position} rotation={segment.rotation}>
+                    <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
+                    <meshStandardMaterial
+                        color={isDarkPhase ? "#ffff00" : "#66ccff"}
+                        emissive={isDarkPhase ? "#ffaa00" : "#0066ff"}
+                        emissiveIntensity={(baseIntensity * 0.9 - i * 0.3) * intensityMultiplier}
+                        toneMapped={false}
+                    />
+                </mesh>
+            ))}
 
-            {/* Additional long branch for more spread */}
-            <mesh position={[1.2, -0.2, 0]} rotation={[0, 0, -Math.PI * 0.25]}>
-                <boxGeometry args={[0.7, 0.018, 0.018]} />
-                <meshStandardMaterial color="#ccffff" emissive="#ccffff" emissiveIntensity={1.8} />
-            </mesh>
-
-            {/* Origin glow at brain surface */}
+            {/* Origin glow at brain surface - ultra bright in dark phase */}
             <mesh position={[0, 0, 0]}>
-                <sphereGeometry args={[0.06, 8, 6]} />
-                <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={4.0} />
+                <sphereGeometry args={[0.08, 12, 8]} />
+                <meshStandardMaterial
+                    color={isDarkPhase ? "#ffffff" : "#00aaff"}
+                    emissive={isDarkPhase ? "#88ffff" : "#0044ff"}
+                    emissiveIntensity={isDarkPhase ? 15.0 : 8.0}
+                    toneMapped={false}
+                />
+            </mesh>
+
+            {/* Additional outer glow - rainbow effect in dark phase */}
+            <mesh position={[0, 0, 0]}>
+                <sphereGeometry args={[0.12, 8, 6]} />
+                <meshStandardMaterial
+                    color={isDarkPhase ? "#ff88ff" : "#004499"}
+                    emissive={isDarkPhase ? "#aa44aa" : "#002266"}
+                    emissiveIntensity={isDarkPhase ? 8.0 : 3.0}
+                    transparent={true}
+                    opacity={isDarkPhase ? 0.8 : 0.6}
+                    toneMapped={false}
+                />
             </mesh>
         </group>
     )
 }
 
-function BrainModel({ mouseX, mouseY }: BrainModelProps) {
+function BrainModel({ mouseX }: BrainModelProps) {
     const brainRef = useRef<THREE.Group>(null)
     const { scene } = useGLTF('/brain_3D_model.glb')
     const [isBlack, setIsBlack] = useState(false)
-    const [transitionProgress, setTransitionProgress] = useState(0)
     const [screenSize, setScreenSize] = useState({ width: 1920, height: 1080 })
 
     // Clone the scene to avoid reusing the same geometry
     const clonedScene = scene.clone()
 
-    // Create 7 lightning positions spreading in all directions from brain surface
+    // Create 4 lightning positions spread evenly around the brain surface
     const lightningPositions: [number, number, number][] = [
-        [0.25, 0.35, 0.2],   // Top-right-front
-        [-0.25, 0.35, -0.2], // Top-left-back
-        [0.35, -0.25, 0.15], // Bottom-right-front
-        [-0.35, -0.25, -0.15], // Bottom-left-back
-        [0.0, 0.15, 0.4],    // Top-back
-        [0.4, 0.0, -0.15],   // Right-back
-        [-0.4, 0.0, 0.15]    // Left-front
+        [0.4, 0.2, 0.2],     // Top-right-front
+        [-0.3, 0.3, -0.3],   // Top-left-back
+        [0.2, -0.4, 0.1],    // Bottom-right-front
+        [-0.35, -0.1, 0.35]  // Left-front-bottom
     ]
 
     useEffect(() => {
@@ -120,30 +219,7 @@ function BrainModel({ mouseX, mouseY }: BrainModelProps) {
         return () => window.removeEventListener('resize', updateScreenSize)
     }, [])
 
-    useEffect(() => {
-        // Animate transition progress
-        let animationId: number
-        const startTime = Date.now()
-        const duration = 1000 // 1 second transition
-
-        const animate = () => {
-            const elapsed = Date.now() - startTime
-            const progress = Math.min(elapsed / duration, 1)
-
-            // Smooth easing function
-            const easedProgress = 1 - Math.pow(1 - progress, 3)
-            setTransitionProgress(easedProgress)
-
-            if (progress < 1) {
-                animationId = requestAnimationFrame(animate)
-            }
-        }
-
-        animate()
-        return () => cancelAnimationFrame(animationId)
-    }, [isBlack])
-
-    useFrame((state, delta) => {
+    useFrame((state) => {
         if (brainRef.current) {
             // Constant slow rotation that always works
             const constantRotationSpeed = 0.2 // Slow rotation speed
@@ -218,6 +294,8 @@ function BrainModel({ mouseX, mouseY }: BrainModelProps) {
                     key={index}
                     position={pos}
                     visible={isBlack}
+                    useNegativeDirections={index < 2}
+                    isDarkPhase={isBlack}
                 />
             ))}
         </group>
@@ -726,7 +804,7 @@ function BackgroundScene() {
 }
 
 // Brain scene (affected by cursor)
-function BrainScene({ mouseX, mouseY }: BrainModelProps) {
+function BrainScene({ mouseX }: BrainModelProps) {
     const { camera } = useThree()
 
     useEffect(() => {
@@ -745,7 +823,7 @@ function BrainScene({ mouseX, mouseY }: BrainModelProps) {
             <pointLight position={[-2, -2, 2]} intensity={0.3} color="#00ffff" />
 
             {/* Main brain model */}
-            <BrainModel mouseX={mouseX} mouseY={mouseY} />
+            <BrainModel mouseX={mouseX} />
         </>
     )
 }
@@ -795,7 +873,6 @@ export default function Brain3D() {
                 <Suspense fallback={null}>
                     <BrainScene
                         mouseX={mousePosition.x}
-                        mouseY={mousePosition.y}
                     />
                 </Suspense>
             </Canvas>

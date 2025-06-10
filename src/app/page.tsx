@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 // Client-side only Brain3D import
 const Brain3DClientOnly = () => {
   const [Brain3D, setBrain3D] = useState<React.ComponentType | null>(null)
 
   useEffect(() => {
-    // Dynamic import only on client side
+    // Dynamic import only on client side`
     import('../components/Brain3D').then((module) => {
       setBrain3D(() => module.default)
     })
@@ -37,7 +38,7 @@ export default function Home() {
         <header className="fixed top-0 left-0 right-0 z-50 p-4 sm:p-6 lg:p-8 bg-black/20 backdrop-blur-sm">
           <nav className="flex justify-between items-center max-w-7xl mx-auto">
             <div className="text-lg sm:text-xl font-bold tracking-wider">
-              PORTFOLIO
+              EDITABLE PORTFOLIO
             </div>
             <div className="hidden md:flex space-x-4 lg:space-x-8 text-sm tracking-wide">
               <a href="#hero" className="hover:text-purple-400 transition-colors">
@@ -79,9 +80,7 @@ export default function Home() {
                     </span>
                   </h1>
                   <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    {/* <p className="text-gray-300 text-base leading-relaxed mb-6 font-light"> */}
-                    I'm genuinely excited about <span className="text-purple-400 font-medium">new technologies and blockchain</span>, with significant grasp in <span className="text-cyan-400 font-medium">full-stack development and DevOps</span>. I love trying out the latest tools to build cool stuff, actively contribute to <span className="text-green-400 font-medium">open source</span>, and always encourage using open technologies. Right now, I’m also learning <span className="text-orange-400 font-medium">Rust</span>!
-                    {/* </p> */}
+                    I&apos;m genuinely excited about <span className="text-purple-400 font-medium">emerging technologies and blockchain</span>. With a solid foundation in <span className="text-cyan-400 font-medium">full-stack development and DevOps</span>, I love experimenting with the latest tools to build impactful projects. I&apos;m currently diving deep into <span className="text-orange-400 font-medium">Rust</span> and actively contributing to <span className="text-green-400 font-medium">open source</span>&mdash;I believe open collaboration drives real innovation.
                   </p>
                 </div>
 
@@ -103,9 +102,11 @@ export default function Home() {
                   {/* Extra Large circular profile image */}
                   <div className="relative w-80 h-80 mx-auto group">
                     <div className="w-full h-full overflow-hidden rounded-full border-4 border-gradient-to-br from-purple-400 via-pink-400 to-cyan-400 shadow-2xl shadow-purple-500/40 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-purple-500/60">
-                      <img
+                      <Image
                         src="/image.png"
                         alt="Profile"
+                        width={320}
+                        height={320}
                         className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
@@ -231,12 +232,12 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-1">Senior Full Stack Developer</h3>
-                            <p className="text-gray-300 mb-2">TechCorp Solutions</p>
+                            <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-1">Software Developer Intern</h3>
+                            <p className="text-gray-300 mb-2">NSUT: Eth Maintainers</p>
                           </div>
                           <div className="ml-4 flex-shrink-0">
                             <div className="bg-purple-500/20 rounded-full px-3 py-1 text-xs text-purple-400">
-                              2023 - Present
+                              2025 - Present
                             </div>
                           </div>
                         </div>
@@ -276,7 +277,7 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-1">Frontend Developer</h3>
+                            <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-1">Fronted Developer</h3>
                             <p className="text-gray-300 mb-2">Digital Innovations Inc.</p>
                           </div>
                           <div className="ml-4 flex-shrink-0">
@@ -578,7 +579,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-gray-300 text-base sm:text-lg mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
-              Ready to bring your ideas to life? Let's collaborate and create something amazing together.
+              Ready to bring your ideas to life? Let&apos;s collaborate and create something amazing together.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
