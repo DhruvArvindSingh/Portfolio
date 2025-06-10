@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Web Container</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dhruv's Portfolio - Web Container</h1>
+
+        <div class="status">
+            <div id="status">Initializing WebContainer...</div>
+            <div class="loader" id="loader"></div>
+        </div>
+
+        <div class="panels">
+            <div class="panel">
+                <h2>Terminal Output</h2>
+                <div id="terminal"></div>
+            </div>
+
+            <div class="panel">
+                <h2>Website Preview
+                    <button id="open-tab-btn"
+                        style="float: right; background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 0.9rem; margin-left: 5px;"
+                        onclick="openInNewTab()">↗ New Tab</button>
+                    <button id="fullscreen-btn"
+                        style="float: right; background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 0.9rem;"
+                        onclick="toggleFullscreen()">⛶ Fullscreen</button>
+                </h2>
+                <div id="preview-container">
+                    <div id="preview-url-bar"
+                        style="display: none; background: #f5f5f5; padding: 8px; border-bottom: 1px solid #ddd; font-size: 12px; word-break: break-all;">
+                        <span style="color: #666;">🔗 Preview URL: </span>
+                        <a id="preview-url-link" href="#" target="_blank"
+                            style="color: #2196F3; text-decoration: none;"></a>
+                        <button onclick="openInNewTab()"
+                            style="float: right; background: #2196F3; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                            ↗ New Tab
+                        </button>
+                    </div>
+                    <div id="preview-status">Starting development server...</div>
+                    <iframe id="website-preview" style="display: none;"
+                        allow="cross-origin-isolated; SharedArrayBuffer; autoplay; camera; microphone; geolocation"
+                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation allow-modals allow-downloads"
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="install-btn" disabled>Install Dependencies</button>
+            <button id="start-btn" disabled>Start Dev Server</button>
+            <button id="clear-terminal" onclick="clearTerminal()">Clear Terminal</button>
+        </div>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>

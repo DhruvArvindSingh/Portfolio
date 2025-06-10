@@ -22,6 +22,8 @@ const Brain3DClientOnly = () => {
 }
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
     <div className="bg-black text-white overflow-x-hidden min-h-screen" suppressHydrationWarning>
       {/* Fixed 3D Brain Background */}
@@ -56,13 +58,53 @@ export default function Home() {
             </div>
             {/* Mobile menu button */}
             <div className="md:hidden">
-              <button className="text-white">
+              <button
+                className="text-white hover:text-purple-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle mobile menu"
+              >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
             </div>
           </nav>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-600/30">
+              <div className="flex flex-col space-y-4 pt-4">
+                <a
+                  href="#hero"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  HOME
+                </a>
+                <a
+                  href="#experience"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  EXPERIENCE
+                </a>
+                <a
+                  href="#projects"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  PROJECTS
+                </a>
+                <a
+                  href="#contact"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  CONTACT
+                </a>
+              </div>
+            </div>
+          )}
         </header>
 
         {/* Hero Section */}
@@ -79,7 +121,7 @@ export default function Home() {
                       SINGH
                     </span>
                   </h1>
-                  <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 break-words">
                     I&apos;m genuinely excited about <span className="text-purple-400 font-medium">emerging technologies and blockchain</span>. With a solid foundation in <span className="text-cyan-400 font-medium">full-stack development and DevOps</span>, I love experimenting with the latest tools to build impactful projects. I&apos;m currently diving deep into <span className="text-orange-400 font-medium">Rust</span> and actively contributing to <span className="text-green-400 font-medium">open source</span>&mdash;I believe open collaboration drives real innovation.
                   </p>
                 </div>
@@ -90,8 +132,8 @@ export default function Home() {
                     View My Work
                   </a>
                   <a href="#contact" className="border border-gray-600 hover:border-purple-400 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-purple-400/10 text-center">
-                    <span className="lg:hidden">Get CV</span>
-                    <span className="hidden lg:inline">Get CV</span>
+                    <a href="https://drive.google.com/file/d/1Mml4Iad8reH6lA8h8ZMdkYo7_PLzvfAB/view?usp=sharing"><span className="lg:hidden">Get CV</span></a>
+                    <a href="https://drive.google.com/file/d/1Mml4Iad8reH6lA8h8ZMdkYo7_PLzvfAB/view?usp=sharing"><span className="hidden lg:inline">Get CV</span></a>
                   </a>
                 </div>
               </div>
@@ -101,7 +143,7 @@ export default function Home() {
                 <div className="text-center space-y-8">
                   {/* Extra Large circular profile image */}
                   <div className="relative w-80 h-80 mx-auto group">
-                    <div className="w-full h-full overflow-hidden rounded-full border-4 border-gradient-to-br from-purple-400 via-pink-400 to-cyan-400 shadow-2xl shadow-purple-500/40 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-purple-500/60">
+                    <div className="w-full h-full overflow-hidden rounded-full border-4 border-purple-400 shadow-2xl shadow-purple-500/40 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-purple-500/60">
                       <Image
                         src="/image.png"
                         alt="Profile"
@@ -117,7 +159,7 @@ export default function Home() {
                   {/* Enhanced Custom Bio */}
                   <div className="max-w-md mx-auto bg-gray-900/90 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20 shadow-xl">
                     <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-                      Full Stack Developer
+                      Full Stack and Blockchain Developer
                     </h3>
 
 
@@ -232,17 +274,29 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-1">Software Developer Intern</h3>
-                            <p className="text-gray-300 mb-2">NSUT: Eth Maintainers</p>
+                            <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-1">Blockchain Developer Intern</h3>
+                            <a href="https://github.com/seetadev/Eth-Maintenance/" className="text-gray-300 hover:text-purple-400 transition-colors mb-2 block flex items-center">
+                              NSUT: Web3 Maintainer Suite
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            </a>
                           </div>
-                          <div className="ml-4 flex-shrink-0">
-                            <div className="bg-purple-500/20 rounded-full px-3 py-1 text-xs text-purple-400">
-                              2025 - Present
+                          <div className="ml-4 flex-shrink-0 text-center justify-center items-center flex">
+                            <div className="bg-purple-500/20 rounded-full px-3 py-1 text-xs text-purple-400 break-words text-center whitespace-normal">
+                              2025 June - <br />  August (Ongoing)
                             </div>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4">Led development of scalable web applications using React, Node.js, and cloud technologies.</p>
-                        <a href="#" className="text-purple-400 hover:text-purple-300 text-sm underline">View Details →</a>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Selected for a 3-month open-source internship under C4GT 2025 to build cross-chain Web3 developer tools for predictive and reactive industrial maintenance using Filecoin, Chainlink, Scroll, and Polygon zkEVM.</p>
+                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
+                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">Solidity</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Filecoin</span>
+                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Chainlink</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Scroll</span>
+                          <span className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded">Polygon</span>
+                        </div>
+                        <a href="https://github.com/seetadev/Eth-Maintenance/issues/5" className="text-purple-400 hover:text-purple-300 text-sm underline break-all">View Details →</a>
                       </div>
                     </div>
                   </div>
@@ -251,17 +305,31 @@ export default function Home() {
                   <div className="hidden md:flex items-center justify-between w-full">
                     <div className="w-5/12 text-right pr-8">
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                        <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-2">Senior Full Stack Developer</h3>
-                        <p className="text-gray-300 mb-2">TechCorp Solutions</p>
-                        <p className="text-sm text-gray-400 mb-4">Led development of scalable web applications using React, Node.js, and cloud technologies.</p>
-                        <a href="#" className="text-purple-400 hover:text-purple-300 text-sm underline">View Details →</a>
+                        <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-2">Blockchain Developer Intern</h3>
+                        <a href="https://github.com/seetadev/Eth-Maintenance/" className="text-gray-300 hover:text-purple-400 transition-colors mb-2 block flex items-center justify-end">
+                          NSUT: Web3 Maintainer Suite
+                          <svg className="w-4 h-4 ml-1 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Selected for a 3-month open-source internship under C4GT 2025 to build cross-chain Web3 developer tools for predictive and reactive industrial maintenance using Filecoin, Chainlink, Scroll, and Polygon zkEVM.</p>
+                        <div className="flex gap-2 text-xs mb-4 justify-end">
+                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">Solidity</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Filecoin</span>
+                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Chainlink</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Scroll</span>
+                          <span className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded">Polygon</span>
+                        </div>
+                        <a href="https://github.com/seetadev/Eth-Maintenance/issues/5" className="text-purple-400 hover:text-purple-300 text-sm underline break-all">View Details →</a>
                       </div>
+
                     </div>
+
                     <div className="relative z-10 w-6 h-6 bg-purple-500 rounded-full border-4 border-black"></div>
                     <div className="w-5/12 pl-8">
                       <div className="text-sm text-gray-400">
                         <div className="bg-purple-500/20 rounded-full px-4 py-2 inline-block">
-                          2023 - Present
+                          2025 June - August (Ongoing)
                         </div>
                       </div>
                     </div>
@@ -277,16 +345,22 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-1">Fronted Developer</h3>
-                            <p className="text-gray-300 mb-2">Digital Innovations Inc.</p>
+                            <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-1">Open Source Contributor</h3>
+                            <p className="text-gray-300 mb-2">Stdlib</p>
                           </div>
-                          <div className="ml-4 flex-shrink-0">
+                          <div className="ml-4 flex-shrink-0 text-center justify-center items-center flex">
                             <div className="bg-pink-500/20 rounded-full px-3 py-1 text-xs text-pink-400">
-                              2021 - 2023
+                              2024 - December - <br /> Still Contributing
                             </div>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4">Specialized in creating interactive user interfaces and 3D web experiences using Three.js and WebGL.</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR's</p>
+                        <div className="flex gap-2 text-xs mb-4 justify-end">
+                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">JavaScript</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Julia</span>
+                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Fortran</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">C</span>
+                        </div>
                         <a href="#" className="text-pink-400 hover:text-pink-300 text-sm underline">View Details →</a>
                       </div>
                     </div>
@@ -297,66 +371,34 @@ export default function Home() {
                     <div className="w-5/12 text-right pr-8">
                       <div className="text-sm text-gray-400">
                         <div className="bg-pink-500/20 rounded-full px-4 py-2 inline-block">
-                          2021 - 2023
+                          2024 - December - Still Contributing
                         </div>
                       </div>
                     </div>
                     <div className="relative z-10 w-6 h-6 bg-pink-500 rounded-full border-4 border-black"></div>
                     <div className="w-5/12 pl-8">
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
-                        <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-2">Frontend Developer</h3>
-                        <p className="text-gray-300 mb-2">Digital Innovations Inc.</p>
-                        <p className="text-sm text-gray-400 mb-4">Specialized in creating interactive user interfaces and 3D web experiences using Three.js and WebGL.</p>
-                        <a href="#" className="text-pink-400 hover:text-pink-300 text-sm underline">View Details →</a>
+                        <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-2">Open Source Contributor</h3>
+                        <a href="https://github.com/stdlib-js/stdlib" className="text-gray-300 hover:text-pink-400 transition-colors mb-2 block flex items-center">
+                          Stdlib
+                          <svg className="w-4 h-4 ml-1 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR&apos;s</p>
+                        <div className="flex gap-2 text-xs mb-4 justify-start">
+                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">JavaScript</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Julia</span>
+                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Fortran</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">C</span>
+                        </div>
+                        <a href="https://github.com/search?q=DhruvArvindSingh&type=code&p=3" className="text-pink-400 hover:text-pink-300 text-sm underline">View Details →</a>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Experience 3 */}
-                <div className="flex items-start md:items-center md:justify-between">
-                  {/* Mobile/Tablet Layout */}
-                  <div className="md:hidden flex items-start w-full">
-                    <div className="relative z-10 w-6 h-6 bg-blue-500 rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-blue-400 mb-1">Junior Developer</h3>
-                            <p className="text-gray-300 mb-2">StartupTech</p>
-                          </div>
-                          <div className="ml-4 flex-shrink-0">
-                            <div className="bg-blue-500/20 rounded-full px-3 py-1 text-xs text-blue-400">
-                              2019 - 2021
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4">Built responsive web applications and gained expertise in modern JavaScript frameworks.</p>
-                        <a href="#" className="text-blue-400 hover:text-blue-300 text-sm underline">View Details →</a>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Desktop Layout */}
-                  <div className="hidden md:flex items-center justify-between w-full">
-                    <div className="w-5/12 text-right pr-8">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
-                        <h3 className="text-lg sm:text-xl font-bold text-blue-400 mb-2">Junior Developer</h3>
-                        <p className="text-gray-300 mb-2">StartupTech</p>
-                        <p className="text-sm text-gray-400 mb-4">Built responsive web applications and gained expertise in modern JavaScript frameworks.</p>
-                        <a href="#" className="text-blue-400 hover:text-blue-300 text-sm underline">View Details →</a>
-                      </div>
-                    </div>
-                    <div className="relative z-10 w-6 h-6 bg-blue-500 rounded-full border-4 border-black"></div>
-                    <div className="w-5/12 pl-8">
-                      <div className="text-sm text-gray-400">
-                        <div className="bg-blue-500/20 rounded-full px-4 py-2 inline-block">
-                          2019 - 2021
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -392,8 +434,8 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-cyan-400 mb-1">3D Interactive Portfolio</h3>
-                            <p className="text-gray-300 mb-2">Personal Project</p>
+                            <h3 className="text-lg sm:text-xl font-bold text-cyan-400 mb-1">Animath.in</h3>
+                            <p className="text-gray-300 mb-2">Code based Video Creation</p>
                           </div>
                           <div className="ml-4 flex-shrink-0">
                             <div className="bg-cyan-500/20 rounded-full px-3 py-1 text-xs text-cyan-400">
@@ -401,15 +443,27 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4">Built with Three.js, React Three Fiber, and Next.js. Features interactive 3D brain model with dynamic animations.</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.</p>
                         <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Three.js</span>
-                          <span className="bg-purple-500/20 text-purple-400 px-2 py-1 rounded">React</span>
-                          <span className="bg-pink-500/20 text-pink-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">CloudFront</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Kafka</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Manim</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Python</span>
                         </div>
                         <div className="flex gap-4 flex-wrap">
-                          <a href="#" className="text-cyan-400 hover:text-cyan-300 text-sm underline">Live Demo →</a>
-                          <a href="#" className="text-cyan-400 hover:text-cyan-300 text-sm underline">GitHub →</a>
+                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-cyan-400 hover:text-cyan-300 text-sm underline">System Design →</a>
+                          <a href="http://animath.in" className="text-cyan-400 hover:text-cyan-300 text-sm underline">Web Link →</a>
+                          <a href="https://github.com/DhruvArvindSingh/Manim" className="text-cyan-400 hover:text-cyan-300 text-sm underline">GitHub →</a>
                         </div>
                       </div>
                     </div>
@@ -419,17 +473,29 @@ export default function Home() {
                   <div className="hidden md:flex items-center justify-between w-full">
                     <div className="w-5/12 text-right pr-8">
                       <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
-                        <h3 className="text-xl font-bold text-cyan-400 mb-2">3D Interactive Portfolio</h3>
-                        <p className="text-gray-300 mb-2">Personal Project</p>
-                        <p className="text-sm text-gray-400 mb-4">Built with Three.js, React Three Fiber, and Next.js. Features interactive 3D brain model with dynamic animations.</p>
-                        <div className="flex gap-2 text-xs mb-4 justify-end">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Three.js</span>
-                          <span className="bg-purple-500/20 text-purple-400 px-2 py-1 rounded">React</span>
-                          <span className="bg-pink-500/20 text-pink-400 px-2 py-1 rounded">Next.js</span>
+                        <h3 className="text-xl font-bold text-cyan-400 mb-2">Animath.in</h3>
+                        <p className="text-gray-300 mb-2">Code based Video Creation</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.</p>
+                        <div className="flex flex-wrap gap-2 text-xs mb-4 justify-end">
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">CloudFront</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Kafka</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Manim</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Python</span>
                         </div>
                         <div className="flex gap-4 justify-end">
-                          <a href="#" className="text-cyan-400 hover:text-cyan-300 text-sm underline">Live Demo →</a>
-                          <a href="#" className="text-cyan-400 hover:text-cyan-300 text-sm underline">GitHub →</a>
+                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-cyan-400 hover:text-cyan-300 text-sm underline">System Design →</a>
+                          <a href="http://animath.in" className="text-cyan-400 hover:text-cyan-300 text-sm underline">Web Link →</a>
+                          <a href="https://github.com/DhruvArvindSingh/Manim" className="text-cyan-400 hover:text-cyan-300 text-sm underline">GitHub →</a>
                         </div>
                       </div>
                     </div>
@@ -437,7 +503,7 @@ export default function Home() {
                     <div className="w-5/12 pl-8">
                       <div className="text-sm text-gray-400">
                         <div className="bg-cyan-500/20 rounded-full px-4 py-2 inline-block">
-                          2024
+                          2025
                         </div>
                       </div>
                     </div>
@@ -453,24 +519,33 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-emerald-400 mb-1">E-Commerce Platform</h3>
-                            <p className="text-gray-300 mb-2">Client Project</p>
+                            <h3 className="text-lg sm:text-xl font-bold text-emerald-400 mb-1">DeployNet</h3>
+                            <p className="text-gray-300 mb-2">Cloud Based Deployment Platform</p>
                           </div>
                           <div className="ml-4 flex-shrink-0">
                             <div className="bg-emerald-500/20 rounded-full px-3 py-1 text-xs text-emerald-400">
-                              2023
+                              2025
                             </div>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4">Full-stack e-commerce solution with advanced analytics, payment integration, and real-time inventory management.</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">DeployNet is a modern deployment platform that allows you to deploy both anything from static and dynamic web applications or even a simple script of any language directly cloned from github with zero configuration using AWS services.</p>
                         <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">React</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Node.js</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">MongoDB</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Redis</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
                         </div>
                         <div className="flex gap-4 flex-wrap">
-                          <a href="#" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Live Demo →</a>
-                          <a href="#" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Case Study →</a>
+                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-emerald-400 hover:text-emerald-300 text-sm underline">System Design →</a>
+                          <a href="http://deploynet.in" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Web Link →</a>
+                          <a href="https://github.com/DhruvArvindSingh/Instant-Deployer" className="text-emerald-400 hover:text-emerald-300 text-sm underline">GitHub →</a>
                         </div>
                       </div>
                     </div>
@@ -481,24 +556,33 @@ export default function Home() {
                     <div className="w-5/12 text-right pr-8">
                       <div className="text-sm text-gray-400">
                         <div className="bg-emerald-500/20 rounded-full px-4 py-2 inline-block">
-                          2023
+                          2025
                         </div>
                       </div>
                     </div>
                     <div className="relative z-10 w-6 h-6 bg-emerald-500 rounded-full border-4 border-black"></div>
                     <div className="w-5/12 pl-8">
                       <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-lg border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
-                        <h3 className="text-xl font-bold text-emerald-400 mb-2">E-Commerce Platform</h3>
-                        <p className="text-gray-300 mb-2">Client Project</p>
-                        <p className="text-sm text-gray-400 mb-4">Full-stack e-commerce solution with advanced analytics, payment integration, and real-time inventory management.</p>
-                        <div className="flex gap-2 text-xs mb-4">
-                          <span className="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">React</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Node.js</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">MongoDB</span>
+                        <h3 className="text-xl font-bold text-emerald-400 mb-2">DeployNet.in</h3>
+                        <p className="text-gray-300 mb-2">Cloud Based Deployment Platform</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">DeployNet is a modern deployment platform that allows you to deploy both anything from static and dynamic web applications or even a simple script of any language directly cloned from github with zero configuration using AWS services.</p>
+                        <div className="flex flex-wrap gap-2 text-xs mb-4">
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Redis</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
                         </div>
                         <div className="flex gap-4">
-                          <a href="#" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Live Demo →</a>
-                          <a href="#" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Case Study →</a>
+                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-emerald-400 hover:text-emerald-300 text-sm underline">System Design →</a>
+                          <a href="http://deploynet.in" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Web Link →</a>
+                          <a href="https://github.com/DhruvArvindSingh/Instant-Deployer" className="text-emerald-400 hover:text-emerald-300 text-sm underline">GitHub →</a>
                         </div>
                       </div>
                     </div>
@@ -514,24 +598,28 @@ export default function Home() {
                       <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-orange-400 mb-1">AR Visualization App</h3>
-                            <p className="text-gray-300 mb-2">Innovation Lab</p>
+                            <h3 className="text-lg sm:text-xl font-bold text-orange-400 mb-1">Collab-Draw</h3>
+                            <p className="text-gray-300 mb-2">Collaborative Drawing App</p>
                           </div>
                           <div className="ml-4 flex-shrink-0">
                             <div className="bg-orange-500/20 rounded-full px-3 py-1 text-xs text-orange-400">
-                              2022
+                              2024
                             </div>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4">Augmented reality application for product visualization using WebXR and machine learning for object recognition.</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Collab-Draw is a collaborative drawing app that allows you to draw with your friends in real-time. It is built with Next.js, Tailwind CSS, and Socket.io.</p>
                         <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">WebXR</span>
-                          <span className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">TensorFlow.js</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">WebGL</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Tailwind CSS</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
                         </div>
                         <div className="flex gap-4 flex-wrap">
-                          <a href="#" className="text-orange-400 hover:text-orange-300 text-sm underline">Live Demo →</a>
-                          <a href="#" className="text-orange-400 hover:text-orange-300 text-sm underline">GitHub →</a>
+                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-orange-400 hover:text-orange-300 text-sm underline">System Design →</a>
+                          <a href="http://collab-draw.in" className="text-orange-400 hover:text-orange-300 text-sm underline">Web Link →</a>
+                          <a href="https://github.com/DhruvArvindSingh/Collab-draw" className="text-orange-400 hover:text-orange-300 text-sm underline">GitHub →</a>
                         </div>
                       </div>
                     </div>
@@ -541,17 +629,22 @@ export default function Home() {
                   <div className="hidden md:flex items-center justify-between w-full">
                     <div className="w-5/12 text-right pr-8">
                       <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-lg border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
-                        <h3 className="text-xl font-bold text-orange-400 mb-2">AR Visualization App</h3>
-                        <p className="text-gray-300 mb-2">Innovation Lab</p>
-                        <p className="text-sm text-gray-400 mb-4">Augmented reality application for product visualization using WebXR and machine learning for object recognition.</p>
+                        <h3 className="text-xl font-bold text-orange-400 mb-2">Collab-Draw</h3>
+                        <p className="text-gray-300 mb-2">Collaborative Drawing App</p>
+                        <p className="text-sm text-gray-400 mb-4 break-words">Collab-Draw is a collaborative drawing app that allows you to draw with your friends in real-time. It is built with Next.js, Tailwind CSS, and Socket.io.</p>
                         <div className="flex gap-2 text-xs mb-4 justify-end">
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">WebXR</span>
-                          <span className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">TensorFlow.js</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">WebGL</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
+                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
+                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
                         </div>
                         <div className="flex gap-4 justify-end">
-                          <a href="#" className="text-orange-400 hover:text-orange-300 text-sm underline">Live Demo →</a>
-                          <a href="#" className="text-orange-400 hover:text-orange-300 text-sm underline">GitHub →</a>
+                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-orange-400 hover:text-orange-300 text-sm underline">System Design →</a>
+                          <a href="http://collab-draw.in" className="text-orange-400 hover:text-orange-300 text-sm underline">Web Link →</a>
+                          <a href="https://github.com/DhruvArvindSingh/Collab-draw" className="text-orange-400 hover:text-orange-300 text-sm underline">GitHub →</a>
                         </div>
                       </div>
                     </div>
@@ -559,7 +652,7 @@ export default function Home() {
                     <div className="w-5/12 pl-8">
                       <div className="text-sm text-gray-400">
                         <div className="bg-orange-500/20 rounded-full px-4 py-2 inline-block">
-                          2022
+                          2024
                         </div>
                       </div>
                     </div>
