@@ -2,20 +2,254 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import ProjectCard from '../components/ProjectCard'
+import ExperienceCard from '../components/ExperienceCard'
+import Brain3D from '../components/Brain3D'
+import { ColorKey } from '../lib/colorMap'
+
+// Data arrays for experiences and projects
+const experiences: Array<{
+  title: string
+  company: string
+  companyUrl?: string
+  description: string
+  period: string
+  technologies: { name: string; color: ColorKey }[]
+  links: { label: string; url: string }[]
+  color: ColorKey
+}> = [
+    {
+      title: "Blockchain Developer Intern",
+      company: "NSUT: Web3 Maintainer Suite",
+      companyUrl: "https://github.com/seetadev/Eth-Maintenance/",
+      description: "Selected for a 3-month open-source internship under C4GT 2025 to build cross-chain Web3 developer tools for predictive and reactive industrial maintenance using Filecoin, Chainlink, Scroll, and Polygon zkEVM.",
+      period: "2025 June - August (Ongoing)",
+      technologies: [
+        { name: "Solidity", color: "gray" },
+        { name: "Filecoin", color: "blue" },
+        { name: "Chainlink", color: "blue" },
+        { name: "Scroll", color: "orange" },
+        { name: "Polygon", color: "purple" }
+      ],
+      links: [
+        { label: "View Details", url: "https://github.com/seetadev/Eth-Maintenance/issues/5" }
+      ],
+      color: "purple"
+    },
+    {
+      title: "Open Source Contributor",
+      company: "Stdlib",
+      companyUrl: "https://github.com/stdlib-js/stdlib",
+      description: "Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR's",
+      period: "2024 - December - Still Contributing",
+      technologies: [
+        { name: "JavaScript", color: "gray" },
+        { name: "Julia", color: "blue" },
+        { name: "Fortran", color: "blue" },
+        { name: "C", color: "orange" }
+      ],
+      links: [
+        { label: "View Details", url: "https://github.com/search?q=DhruvArvindSingh&type=code&p=3" }
+      ],
+      color: "pink"
+    }
+  ]
+
+const projects: Array<{
+  title: string
+  subtitle: string
+  description: string
+  year: string
+  technologies: { name: string; color: ColorKey }[]
+  links: { label: string; url: string }[]
+  color: ColorKey
+}> = [
+    {
+      title: "Animath.in",
+      subtitle: "Code based Video Creation",
+      description: "Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.",
+      year: "2025",
+      technologies: [
+        { name: "Next.js", color: "cyan" },
+        { name: "Tailwind CSS", color: "cyan" },
+        { name: "EC2", color: "orange" },
+        { name: "ECS", color: "orange" },
+        { name: "ECR", color: "orange" },
+        { name: "S3", color: "orange" },
+        { name: "CloudFront", color: "orange" },
+        { name: "Express", color: "red" },
+        { name: "Socket.io", color: "red" },
+        { name: "Kafka", color: "red" },
+        { name: "PostgreSQL", color: "blue" },
+        { name: "Docker", color: "green" },
+        { name: "Manim", color: "green" },
+        { name: "Python", color: "green" }
+      ],
+      links: [
+        { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
+        { label: "Web Link", url: "http://animath.in" },
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Manim" }
+      ],
+      color: "cyan"
+    },
+    {
+      title: "DeployNet.in",
+      subtitle: "Cloud Based Deployment Platform",
+      description: "DeployNet is a modern deployment platform that allows you to deploy both anything from static and dynamic web applications or even a simple script of any language directly cloned from github with zero configuration using AWS services.",
+      year: "2025",
+      technologies: [
+        { name: "Next.js", color: "cyan" },
+        { name: "Tailwind CSS", color: "cyan" },
+        { name: "EC2", color: "orange" },
+        { name: "ECS", color: "orange" },
+        { name: "ECR", color: "orange" },
+        { name: "S3", color: "orange" },
+        { name: "Express", color: "red" },
+        { name: "Socket.io", color: "red" },
+        { name: "Redis", color: "red" },
+        { name: "PostgreSQL", color: "blue" },
+        { name: "Docker", color: "green" }
+      ],
+      links: [
+        { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
+        { label: "Web Link", url: "http://deploynet.in" },
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Instant-Deployer" }
+      ],
+      color: "emerald"
+    },
+    {
+      title: "Collab-Draw",
+      subtitle: "Collaborative Drawing App",
+      description: "Collab-Draw is a real-time collaborative drawing app that lets you sketch and create with friends on a shared canvas. Built using Next.js, Tailwind CSS, and Socket.io, it delivers fast, interactive, and seamless drawing sessions.",
+      year: "2024",
+      technologies: [
+        { name: "Next.js", color: "cyan" },
+        { name: "Tailwind CSS", color: "cyan" },
+        { name: "EC2", color: "orange" },
+        { name: "Express", color: "red" },
+        { name: "Socket.io", color: "red" },
+        { name: "PostgreSQL", color: "blue" },
+        { name: "Docker", color: "green" }
+      ],
+      links: [
+        { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
+        { label: "Web Link", url: "http://collab-draw.in" },
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Collab-draw" }
+      ],
+      color: "orange"
+    },
+    {
+      title: "Crypto Wallet App",
+      subtitle: "Cross Platform Crypto Wallet",
+      description: "A cross platform crypto wallet app that allows you to manage your crypto assets and transactions. It is built with React Native, TypeScript, and Web3.js. It is a simple and easy to use wallet app that allows you to send ,receive and track prices of crypto assets.",
+      year: "2024",
+      technologies: [
+        { name: "React Native", color: "violet" },
+        { name: "TypeScript", color: "violet" },
+        { name: "Web3.js", color: "yellow" },
+        { name: "Expo", color: "blue" },
+        { name: "Express", color: "red" },
+        { name: "CoinGecko API", color: "green" },
+        { name: "Moralis API", color: "purple" }
+      ],
+      links: [
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Crypto_Wallet" },
+        { label: "Documentation", url: "https://github.com/DhruvArvindSingh/Crypto_Wallet" }
+      ],
+      color: "violet"
+    },
+    {
+      title: "Portfolio",
+      subtitle: "Portfolio Website",
+      description: "This is my portfolio website that I built with Next.js, Tailwind CSS, Three.js, and TypeScript. It is a simple and easy to use portfolio website that allows you to showcase your projects and skills.",
+      year: "2025",
+      technologies: [
+        { name: "Next.js", color: "cyan" },
+        { name: "Tailwind CSS", color: "cyan" },
+        { name: "TypeScript", color: "violet" },
+        { name: "Three.js", color: "emerald" }
+      ],
+      links: [
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Portfolio" },
+        { label: "Web Link", url: "https://github.com/DhruvArvindSingh/Portfolio" }
+      ],
+      color: "teal"
+    }
+  ]
+
+const additionalProjects: Array<{
+  title: string
+  subtitle: string
+  description: string
+  year: string
+  technologies: { name: string; color: ColorKey }[]
+  links: { label: string; url: string }[]
+  color: ColorKey
+}> = [
+    {
+      title: "GovIDBot",
+      subtitle: "AI-powered Government Document Automation",
+      description: "GovIDBot is a smart AI chatbot that collects user details through conversation or ID image uploads and automates applications for services like Aadhaar, PAN, and more. It streamlines KYC, form submissions, and document verification using OCR and NLP technologies. Stores encrypted data in the database for security.",
+      year: "2025",
+      technologies: [
+        { name: "Express", color: "indigo" },
+        { name: "PostgreSQL", color: "indigo" },
+        { name: "Gemini API", color: "green" },
+        { name: "Open AI API", color: "blue" },
+        { name: "sha256", color: "yellow" },
+        { name: "aes256", color: "purple" }
+      ],
+      links: [
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Pulse" },
+        { label: "API Docs", url: "https://github.com/DhruvArvindSingh/Pulse" }
+      ],
+      color: "indigo"
+    },
+    {
+      title: "Ludo Game",
+      subtitle: "Multiplayer Ludo Game",
+      description: "A multiplayer ludo game that allows you to play with your friends. It is built with vanilla javascript, ejs, socket.io, node.js and express. It is a simple and easy to use ludo game that allows you to play with your friends.It has both random room and custom room options.",
+      year: "2024",
+      technologies: [
+        { name: "JavaScript", color: "orange" },
+        { name: "EJS", color: "emerald" },
+        { name: "Socket.io", color: "purple" },
+        { name: "Node.js", color: "emerald" },
+        { name: "Express", color: "cyan" }
+      ],
+      links: [
+        { label: "Website Link", url: "https://multiplayer-ludo-game.onrender.com/" },
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Multiplayer-Ludo-Game" }
+      ],
+      color: "rose"
+    },
+    {
+      title: "Library Management System",
+      subtitle: "Library Management System using C++",
+      description: "A library management system that allows you to manage your library through console. It is built with C++ using classs with .csv file for storing books and users info wiith realtime storage update and over 20+ features.",
+      year: "2023",
+      technologies: [
+        { name: "C++", color: "blue" },
+        { name: "CSV", color: "emerald" },
+        { name: "OOP", color: "purple" },
+      ],
+      links: [
+        { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Library-Management-System-in-C-/" }
+      ],
+      color: "amber"
+    }
+  ]
 
 // Client-side only Brain3D import
 const Brain3DClientOnly = () => {
-  const [Brain3D, setBrain3D] = useState<React.ComponentType | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    // Dynamic import only on client side`
-    import('../components/Brain3D').then((module) => {
-      setBrain3D(() => module.default)
-    })
+    setIsMounted(true)
   }, [])
 
-  if (!Brain3D) {
-    return <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-purple-900" />
+  if (!isMounted) {
+    return null
   }
 
   return <Brain3D />
@@ -23,6 +257,52 @@ const Brain3DClientOnly = () => {
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [showAllProjects, setShowAllProjects] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState('')
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus('')
+
+    try {
+      // Create mailto URL with form data
+      const subject = encodeURIComponent(formData.subject || 'Portfolio Contact Form')
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      )
+      const mailtoUrl = `mailto:dhruvsinghxd@gmail.com?subject=${subject}&body=${body}`
+
+      // Open default email client
+      window.location.href = mailtoUrl
+
+      setSubmitStatus('Email client opened! Please send the email from your default email application.')
+
+      // Reset form after a delay
+      setTimeout(() => {
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setSubmitStatus('')
+      }, 5000)
+
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setSubmitStatus('Error opening email client. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <div className="bg-black text-white overflow-x-hidden min-h-screen" suppressHydrationWarning>
@@ -40,7 +320,7 @@ export default function Home() {
         <header className="fixed top-0 left-0 right-0 z-50 p-4 sm:p-6 lg:p-8 bg-black/20 backdrop-blur-sm">
           <nav className="flex justify-between items-center max-w-7xl mx-auto">
             <div className="text-lg sm:text-xl font-bold tracking-wider">
-              EDITABLE PORTFOLIO
+              PORTFOLIO
             </div>
             <div className="hidden md:flex space-x-4 lg:space-x-8 text-sm tracking-wide">
               <a href="#hero" className="hover:text-purple-400 transition-colors">
@@ -131,9 +411,8 @@ export default function Home() {
                   <a href="#projects" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center">
                     View My Work
                   </a>
-                  <a href="#contact" className="border border-gray-600 hover:border-purple-400 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-purple-400/10 text-center">
-                    <a href="https://drive.google.com/file/d/1Mml4Iad8reH6lA8h8ZMdkYo7_PLzvfAB/view?usp=sharing"><span className="lg:hidden">Get CV</span></a>
-                    <a href="https://drive.google.com/file/d/1Mml4Iad8reH6lA8h8ZMdkYo7_PLzvfAB/view?usp=sharing"><span className="hidden lg:inline">Get CV</span></a>
+                  <a href="https://drive.google.com/file/d/1Mml4Iad8reH6lA8h8ZMdkYo7_PLzvfAB/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="border border-gray-600 hover:border-purple-400 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-purple-400/10 text-center">
+                    Get CV
                   </a>
                 </div>
               </div>
@@ -265,140 +544,9 @@ export default function Home() {
 
               {/* Experience Items */}
               <div className="space-y-8 md:space-y-16">
-                {/* Experience 1 */}
-                <div className="flex items-start md:items-center md:justify-between">
-                  {/* Mobile/Tablet Layout */}
-                  <div className="md:hidden flex items-start w-full">
-                    <div className="relative z-10 w-6 h-6 bg-purple-500 rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-1">Blockchain Developer Intern</h3>
-                            <a href="https://github.com/seetadev/Eth-Maintenance/" className="text-gray-300 hover:text-purple-400 transition-colors mb-2 block flex items-center">
-                              NSUT: Web3 Maintainer Suite
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                              </svg>
-                            </a>
-                          </div>
-                          <div className="ml-4 flex-shrink-0 text-center justify-center items-center flex">
-                            <div className="bg-purple-500/20 rounded-full px-3 py-1 text-xs text-purple-400 break-words text-center whitespace-normal">
-                              2025 June - <br />  August (Ongoing)
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Selected for a 3-month open-source internship under C4GT 2025 to build cross-chain Web3 developer tools for predictive and reactive industrial maintenance using Filecoin, Chainlink, Scroll, and Polygon zkEVM.</p>
-                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">Solidity</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Filecoin</span>
-                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Chainlink</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Scroll</span>
-                          <span className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded">Polygon</span>
-                        </div>
-                        <a href="https://github.com/seetadev/Eth-Maintenance/issues/5" className="text-purple-400 hover:text-purple-300 text-sm underline break-all">View Details →</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Desktop Layout */}
-                  <div className="hidden md:flex items-center justify-between w-full">
-                    <div className="w-5/12 text-right pr-8">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                        <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-2">Blockchain Developer Intern</h3>
-                        <a href="https://github.com/seetadev/Eth-Maintenance/" className="text-gray-300 hover:text-purple-400 transition-colors mb-2 block flex items-center justify-end">
-                          NSUT: Web3 Maintainer Suite
-                          <svg className="w-4 h-4 ml-1 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Selected for a 3-month open-source internship under C4GT 2025 to build cross-chain Web3 developer tools for predictive and reactive industrial maintenance using Filecoin, Chainlink, Scroll, and Polygon zkEVM.</p>
-                        <div className="flex gap-2 text-xs mb-4 justify-end">
-                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">Solidity</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Filecoin</span>
-                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Chainlink</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Scroll</span>
-                          <span className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded">Polygon</span>
-                        </div>
-                        <a href="https://github.com/seetadev/Eth-Maintenance/issues/5" className="text-purple-400 hover:text-purple-300 text-sm underline break-all">View Details →</a>
-                      </div>
-
-                    </div>
-
-                    <div className="relative z-10 w-6 h-6 bg-purple-500 rounded-full border-4 border-black"></div>
-                    <div className="w-5/12 pl-8">
-                      <div className="text-sm text-gray-400">
-                        <div className="bg-purple-500/20 rounded-full px-4 py-2 inline-block">
-                          2025 June - August (Ongoing)
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Experience 2 */}
-                <div className="flex items-start md:items-center md:justify-between">
-                  {/* Mobile/Tablet Layout */}
-                  <div className="md:hidden flex items-start w-full">
-                    <div className="relative z-10 w-6 h-6 bg-pink-500 rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-1">Open Source Contributor</h3>
-                            <p className="text-gray-300 mb-2">Stdlib</p>
-                          </div>
-                          <div className="ml-4 flex-shrink-0 text-center justify-center items-center flex">
-                            <div className="bg-pink-500/20 rounded-full px-3 py-1 text-xs text-pink-400">
-                              2024 - December - <br /> Still Contributing
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR's</p>
-                        <div className="flex gap-2 text-xs mb-4 justify-end">
-                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">JavaScript</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Julia</span>
-                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Fortran</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">C</span>
-                        </div>
-                        <a href="#" className="text-pink-400 hover:text-pink-300 text-sm underline">View Details →</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Desktop Layout */}
-                  <div className="hidden md:flex items-center justify-between w-full">
-                    <div className="w-5/12 text-right pr-8">
-                      <div className="text-sm text-gray-400">
-                        <div className="bg-pink-500/20 rounded-full px-4 py-2 inline-block">
-                          2024 - December - Still Contributing
-                        </div>
-                      </div>
-                    </div>
-                    <div className="relative z-10 w-6 h-6 bg-pink-500 rounded-full border-4 border-black"></div>
-                    <div className="w-5/12 pl-8">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
-                        <h3 className="text-lg sm:text-xl font-bold text-pink-400 mb-2">Open Source Contributor</h3>
-                        <a href="https://github.com/stdlib-js/stdlib" className="text-gray-300 hover:text-pink-400 transition-colors mb-2 block flex items-center">
-                          Stdlib
-                          <svg className="w-4 h-4 ml-1 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR&apos;s</p>
-                        <div className="flex gap-2 text-xs mb-4 justify-start">
-                          <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded">JavaScript</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Julia</span>
-                          <span className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded">Fortran</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">C</span>
-                        </div>
-                        <a href="https://github.com/search?q=DhruvArvindSingh&type=code&p=3" className="text-pink-400 hover:text-pink-300 text-sm underline">View Details →</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
+                {experiences.map((experience, index) => (
+                  <ExperienceCard key={index} {...experience} isLeft={index % 2 === 0} />
+                ))}
               </div>
             </div>
           </div>
@@ -425,292 +573,357 @@ export default function Home() {
 
               {/* Project Items */}
               <div className="space-y-8 md:space-y-16">
-                {/* Project 1 */}
-                <div className="flex items-start md:items-center md:justify-between">
-                  {/* Mobile/Tablet Layout */}
-                  <div className="md:hidden flex items-start w-full">
-                    <div className="relative z-10 w-6 h-6 bg-cyan-500 rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-cyan-400 mb-1">Animath.in</h3>
-                            <p className="text-gray-300 mb-2">Code based Video Creation</p>
-                          </div>
-                          <div className="ml-4 flex-shrink-0">
-                            <div className="bg-cyan-500/20 rounded-full px-3 py-1 text-xs text-cyan-400">
-                              2024
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.</p>
-                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">CloudFront</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Kafka</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Manim</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Python</span>
-                        </div>
-                        <div className="flex gap-4 flex-wrap">
-                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-cyan-400 hover:text-cyan-300 text-sm underline">System Design →</a>
-                          <a href="http://animath.in" className="text-cyan-400 hover:text-cyan-300 text-sm underline">Web Link →</a>
-                          <a href="https://github.com/DhruvArvindSingh/Manim" className="text-cyan-400 hover:text-cyan-300 text-sm underline">GitHub →</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                {projects.map((project, index) => (
+                  <ProjectCard key={index} {...project} isLeft={index % 2 === 0} />
+                ))}
 
-                  {/* Desktop Layout */}
-                  <div className="hidden md:flex items-center justify-between w-full">
-                    <div className="w-5/12 text-right pr-8">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
-                        <h3 className="text-xl font-bold text-cyan-400 mb-2">Animath.in</h3>
-                        <p className="text-gray-300 mb-2">Code based Video Creation</p>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.</p>
-                        <div className="flex flex-wrap gap-2 text-xs mb-4 justify-end">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">CloudFront</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Kafka</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Manim</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Python</span>
-                        </div>
-                        <div className="flex gap-4 justify-end">
-                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-cyan-400 hover:text-cyan-300 text-sm underline">System Design →</a>
-                          <a href="http://animath.in" className="text-cyan-400 hover:text-cyan-300 text-sm underline">Web Link →</a>
-                          <a href="https://github.com/DhruvArvindSingh/Manim" className="text-cyan-400 hover:text-cyan-300 text-sm underline">GitHub →</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="relative z-10 w-6 h-6 bg-cyan-500 rounded-full border-4 border-black"></div>
-                    <div className="w-5/12 pl-8">
-                      <div className="text-sm text-gray-400">
-                        <div className="bg-cyan-500/20 rounded-full px-4 py-2 inline-block">
-                          2025
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Project 2 */}
-                <div className="flex items-start md:items-center md:justify-between">
-                  {/* Mobile/Tablet Layout */}
-                  <div className="md:hidden flex items-start w-full">
-                    <div className="relative z-10 w-6 h-6 bg-emerald-500 rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-emerald-400 mb-1">DeployNet</h3>
-                            <p className="text-gray-300 mb-2">Cloud Based Deployment Platform</p>
-                          </div>
-                          <div className="ml-4 flex-shrink-0">
-                            <div className="bg-emerald-500/20 rounded-full px-3 py-1 text-xs text-emerald-400">
-                              2025
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words">DeployNet is a modern deployment platform that allows you to deploy both anything from static and dynamic web applications or even a simple script of any language directly cloned from github with zero configuration using AWS services.</p>
-                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Redis</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
-                        </div>
-                        <div className="flex gap-4 flex-wrap">
-                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-emerald-400 hover:text-emerald-300 text-sm underline">System Design →</a>
-                          <a href="http://deploynet.in" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Web Link →</a>
-                          <a href="https://github.com/DhruvArvindSingh/Instant-Deployer" className="text-emerald-400 hover:text-emerald-300 text-sm underline">GitHub →</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Desktop Layout */}
-                  <div className="hidden md:flex items-center justify-between w-full">
-                    <div className="w-5/12 text-right pr-8">
-                      <div className="text-sm text-gray-400">
-                        <div className="bg-emerald-500/20 rounded-full px-4 py-2 inline-block">
-                          2025
-                        </div>
-                      </div>
-                    </div>
-                    <div className="relative z-10 w-6 h-6 bg-emerald-500 rounded-full border-4 border-black"></div>
-                    <div className="w-5/12 pl-8">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-lg border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
-                        <h3 className="text-xl font-bold text-emerald-400 mb-2">DeployNet.in</h3>
-                        <p className="text-gray-300 mb-2">Cloud Based Deployment Platform</p>
-                        <p className="text-sm text-gray-400 mb-4 break-words">DeployNet is a modern deployment platform that allows you to deploy both anything from static and dynamic web applications or even a simple script of any language directly cloned from github with zero configuration using AWS services.</p>
-                        <div className="flex flex-wrap gap-2 text-xs mb-4">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">ECR</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">S3</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Redis</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
-                        </div>
-                        <div className="flex gap-4">
-                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-emerald-400 hover:text-emerald-300 text-sm underline">System Design →</a>
-                          <a href="http://deploynet.in" className="text-emerald-400 hover:text-emerald-300 text-sm underline">Web Link →</a>
-                          <a href="https://github.com/DhruvArvindSingh/Instant-Deployer" className="text-emerald-400 hover:text-emerald-300 text-sm underline">GitHub →</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Project 3 */}
-                <div className="flex items-start md:items-center md:justify-between">
-                  {/* Mobile/Tablet Layout */}
-                  <div className="md:hidden flex items-start w-full">
-                    <div className="relative z-10 w-6 h-6 bg-orange-500 rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="text-lg sm:text-xl font-bold text-orange-400 mb-1">Collab-Draw</h3>
-                            <p className="text-gray-300 mb-2">Collaborative Drawing App</p>
-                          </div>
-                          <div className="ml-4 flex-shrink-0">
-                            <div className="bg-orange-500/20 rounded-full px-3 py-1 text-xs text-orange-400">
-                              2024
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Collab-Draw is a collaborative drawing app that allows you to draw with your friends in real-time. It is built with Next.js, Tailwind CSS, and Socket.io.</p>
-                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Next.js</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Tailwind CSS</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
-                        </div>
-                        <div className="flex gap-4 flex-wrap">
-                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-orange-400 hover:text-orange-300 text-sm underline">System Design →</a>
-                          <a href="http://collab-draw.in" className="text-orange-400 hover:text-orange-300 text-sm underline">Web Link →</a>
-                          <a href="https://github.com/DhruvArvindSingh/Collab-draw" className="text-orange-400 hover:text-orange-300 text-sm underline">GitHub →</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Desktop Layout */}
-                  <div className="hidden md:flex items-center justify-between w-full">
-                    <div className="w-5/12 text-right pr-8">
-                      <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-lg border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
-                        <h3 className="text-xl font-bold text-orange-400 mb-2">Collab-Draw</h3>
-                        <p className="text-gray-300 mb-2">Collaborative Drawing App</p>
-                        <p className="text-sm text-gray-400 mb-4 break-words">Collab-Draw is a collaborative drawing app that allows you to draw with your friends in real-time. It is built with Next.js, Tailwind CSS, and Socket.io.</p>
-                        <div className="flex gap-2 text-xs mb-4 justify-end">
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Next.js</span>
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">Tailwind CSS</span>
-                          <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded">EC2</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Express</span>
-                          <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded">Socket.io</span>
-                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">PostgreSQL</span>
-                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded">Docker</span>
-                        </div>
-                        <div className="flex gap-4 justify-end">
-                          <a href="https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" className="text-orange-400 hover:text-orange-300 text-sm underline">System Design →</a>
-                          <a href="http://collab-draw.in" className="text-orange-400 hover:text-orange-300 text-sm underline">Web Link →</a>
-                          <a href="https://github.com/DhruvArvindSingh/Collab-draw" className="text-orange-400 hover:text-orange-300 text-sm underline">GitHub →</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="relative z-10 w-6 h-6 bg-orange-500 rounded-full border-4 border-black"></div>
-                    <div className="w-5/12 pl-8">
-                      <div className="text-sm text-gray-400">
-                        <div className="bg-orange-500/20 rounded-full px-4 py-2 inline-block">
-                          2024
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {/* Additional Projects - Hidden by default */}
+                {showAllProjects && (
+                  <>
+                    {additionalProjects.map((project, index) => (
+                      <ProjectCard key={index + projects.length} {...project} isLeft={(index + projects.length) % 2 === 0} />
+                    ))}
+                  </>
+                )}
               </div>
+            </div>
+
+            {/* Show All Projects Button - Below the timeline */}
+            <div className="flex justify-center mt-16">
+              <button
+                onClick={() => setShowAllProjects(!showAllProjects)}
+                className="group relative z-10 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-500 transform hover:scale-110 flex items-center gap-3 shadow-2xl hover:shadow-purple-500/25 border border-white/10 backdrop-blur-sm"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                <div className="relative z-10 flex items-center gap-3">
+                  {showAllProjects ? (
+                    <>
+                      <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      </svg>
+                      Show Less Projects
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                      Show All Projects
+                    </>
+                  )}
+                </div>
+              </button>
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
-          <div className="max-w-5xl w-full mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                GET IN TOUCH
-              </span>
-            </h2>
-            <p className="text-gray-300 text-base sm:text-lg mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
-              Ready to bring your ideas to life? Let&apos;s collaborate and create something amazing together.
-            </p>
+        <section id="contact" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none relative overflow-hidden">
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Floating Particles */}
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-pulse"></div>
+            <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-cyan-400/40 rounded-full animate-ping"></div>
+            <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-pink-400/20 rounded-full animate-bounce"></div>
+            <div className="absolute bottom-1/3 right-1/3 w-1.5 h-1.5 bg-emerald-400/30 rounded-full animate-pulse"></div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
-              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                <div className="text-purple-400 text-2xl mb-4">✉</div>
-                <h3 className="text-base sm:text-lg font-bold mb-2">Email</h3>
-                <a href="mailto:contact@example.com" className="text-gray-300 hover:text-purple-400 transition-colors text-sm sm:text-base break-all">
-                  contact@example.com
-                </a>
+            {/* Gradient Orbs */}
+            <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-cyan-500/10 to-transparent rounded-full blur-3xl animate-pulse delay-1000"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-pink-500/5 to-purple-500/5 rounded-full blur-2xl animate-pulse delay-500"></div>
+          </div>
+
+          <div className="max-w-7xl w-full mx-auto relative z-10">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <div className="inline-block relative">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 relative">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 animate-gradient-x">
+                    LET&apos;S CONNECT
+                  </span>
+                  <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 blur-xl rounded-lg opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </h2>
+              </div>
+              <p className="text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed">
+                Ready to bring your <span className="text-purple-400 font-semibold">ideas to life</span>? Let&apos;s collaborate and create something <span className="text-cyan-400 font-semibold">extraordinary</span> together.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+              {/* Contact Form */}
+              <div className="space-y-8">
+                <div className="bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl border border-purple-500/20 shadow-2xl relative overflow-hidden group">
+                  {/* Form Background Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold mb-6 text-center">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                        Send Me a Message
+                      </span>
+                    </h3>
+
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                      {/* Name Input */}
+                      <div className="group">
+                        <label className="block text-sm font-medium text-gray-300 mb-2 group-focus-within:text-purple-400 transition-colors">
+                          Full Name
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 bg-black/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-500"
+                            placeholder="John Doe"
+                            required
+                          />
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                      </div>
+
+                      {/* Email Input */}
+                      <div className="group">
+                        <label className="block text-sm font-medium text-gray-300 mb-2 group-focus-within:text-cyan-400 transition-colors">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 bg-black/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-500"
+                            placeholder="john@example.com"
+                            required
+                          />
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                      </div>
+
+                      {/* Subject Input */}
+                      <div className="group">
+                        <label className="block text-sm font-medium text-gray-300 mb-2 group-focus-within:text-pink-400 transition-colors">
+                          Subject
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            name="subject"
+                            value={formData.subject}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 bg-black/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-500"
+                            placeholder="Project Collaboration"
+                          />
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-pink-500/10 to-purple-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                      </div>
+
+                      {/* Message Textarea */}
+                      <div className="group">
+                        <label className="block text-sm font-medium text-gray-300 mb-2 group-focus-within:text-emerald-400 transition-colors">
+                          Message
+                        </label>
+                        <div className="relative">
+                          <textarea
+                            rows={5}
+                            name="message"
+                            value={formData.message}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 bg-black/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all duration-300 resize-none group-hover:border-gray-500"
+                            placeholder="Tell me about your project or just say hello..."
+                            required
+                          ></textarea>
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                      </div>
+
+                      {/* Submit Button */}
+                      <div className="pt-4">
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="group relative w-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 hover:from-purple-600 hover:via-pink-600 hover:to-cyan-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/25 overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                          <span className="relative z-10 flex items-center justify-center gap-2">
+                            {isSubmitting ? (
+                              <>
+                                <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                Sending...
+                              </>
+                            ) : (
+                              <>
+                                Send Message
+                                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                              </>
+                            )}
+                          </span>
+                        </button>
+                      </div>
+
+                      {/* Status Message */}
+                      {submitStatus && (
+                        <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
+                          <p className="text-green-400 text-sm font-medium text-center">
+                            {submitStatus}
+                          </p>
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                </div>
+
+                {/* Quick Contact Info */}
+                <div className="bg-gray-900/90 backdrop-blur-md p-6 rounded-2xl border border-cyan-500/20 shadow-xl">
+                  <h4 className="text-lg font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+                    Quick Contact
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 text-gray-300 hover:text-cyan-400 transition-colors">
+                      <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400">Email</p>
+                        <a href="mailto:dhruvsinghxd@gmail.com" className="font-medium">dhruvsinghxd@gmail.com</a>
+                      </div>
+                    </div>
+
+
+
+                    <div className="flex items-center gap-3 text-gray-300 hover:text-emerald-400 transition-colors">
+                      <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400">Location</p>
+                        <p className="font-medium">Navi Mumbai, India</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
-                <div className="text-pink-400 text-2xl mb-4">in</div>
-                <h3 className="text-base sm:text-lg font-bold mb-2">LinkedIn</h3>
-                <a href="#" className="text-gray-300 hover:text-pink-400 transition-colors text-sm sm:text-base">
-                  /in/yourprofile
-                </a>
-              </div>
+              {/* Social Links & Interactive Cards */}
+              <div className="space-y-8">
+                {/* Social Media Cards */}
+                <div className="grid grid-cols-2 gap-4">
+                  {/* LinkedIn Card */}
+                  <a href="https://www.linkedin.com/in/dhruv-singh-94340b28a/" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-2xl border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-2">LinkedIn</h3>
+                      <p className="text-blue-300 text-sm">Professional Network</p>
+                    </div>
+                  </a>
 
-              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
-                <div className="text-cyan-400 text-2xl mb-4">🐙</div>
-                <h3 className="text-base sm:text-lg font-bold mb-2">GitHub</h3>
-                <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors text-sm sm:text-base">
-                  /yourusername
-                </a>
-              </div>
+                  {/* GitHub Card */}
+                  <a href="https://github.com/DhruvArvindSingh" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-gray-900/50 to-gray-800/30 p-6 rounded-2xl border border-gray-500/30 hover:border-gray-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/25 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 bg-gray-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.237 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-2">GitHub</h3>
+                      <p className="text-gray-300 text-sm">Code Repository</p>
+                    </div>
+                  </a>
 
-              <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
-                <div className="text-blue-400 text-2xl mb-4 font-bold">𝕏</div>
-                <h3 className="text-base sm:text-lg font-bold mb-2">X (Twitter)</h3>
-                <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors text-sm sm:text-base">
-                  @yourusername
-                </a>
+                  {/* Twitter/X Card */}
+                  <a href="https://x.com/dhruvsingh17991" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-sky-900/50 to-sky-800/30 p-6 rounded-2xl border border-sky-500/30 hover:border-sky-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-sky-500/25 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 bg-sky-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-6 h-6 text-sky-400" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-2">X (Twitter)</h3>
+                      <p className="text-sky-300 text-sm">Latest Updates</p>
+                    </div>
+                  </a>
+
+                  {/* Discord Card */}
+                  <a href="https://discord.com/users/756584429249626120" className="group relative bg-gradient-to-br from-indigo-900/50 to-indigo-800/30 p-6 rounded-2xl border border-indigo-500/30 hover:border-indigo-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/25 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-6 h-6 text-indigo-400" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418Z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-2">Discord</h3>
+                      <p className="text-indigo-300 text-sm">Chat & Collaborate</p>
+                    </div>
+                  </a>
+                </div>
+
+                {/* Availability Status */}
+                <div className="bg-gradient-to-r from-emerald-900/50 to-green-800/30 p-6 rounded-2xl border border-emerald-500/30 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-500/10 animate-pulse"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="relative">
+                        <div className="w-4 h-4 bg-emerald-500 rounded-full animate-pulse"></div>
+                        <div className="absolute inset-0 w-4 h-4 bg-emerald-500 rounded-full animate-ping"></div>
+                      </div>
+                      <h3 className="text-lg font-semibold text-emerald-400">Currently Available</h3>
+                    </div>
+                    <p className="text-gray-300 text-sm mb-4">
+                      I&apos;m actively looking for new opportunities and interesting projects to work on. Let&apos;s discuss how we can collaborate!
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs rounded-full border border-emerald-500/30">Freelance</span>
+                      <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs rounded-full border border-emerald-500/30">Full-time</span>
+                      <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs rounded-full border border-emerald-500/30">Consulting</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Fun Fact Card */}
+                <div className="bg-gradient-to-r from-amber-900/50 to-orange-800/30 p-6 rounded-2xl border border-amber-500/30 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                        <span className="text-amber-400 text-lg">💡</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-amber-400">Fun Fact</h3>
+                    </div>
+                    <p className="text-gray-300 text-sm">
+                      I&apos;ve written over <span className="text-amber-400 font-semibold">100,000 lines</span> of code this year and I&apos;m still counting! When I&apos;m not coding, you can find me exploring new technologies or contributing to open source projects.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="text-sm text-gray-400">
-              © 2024 Portfolio. All rights reserved.
+            {/* Bottom CTA */}
+            <div className="text-center mt-16">
+              <div className="inline-block bg-gray-900/90 backdrop-blur-md px-8 py-4 rounded-2xl border border-gray-600/30">
+                <p className="text-gray-400 text-sm">
+                  © 2024 Dhruv Singh. Built with <span className="text-red-400">❤️</span> using Next.js & Three.js
+                </p>
+              </div>
             </div>
           </div>
         </section>

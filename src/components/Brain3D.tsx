@@ -38,7 +38,7 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
     const directionMultiplier = useNegativeDirections ? -1 : 1;
 
     // Generate zigzag lightning segments
-    const generateZigzagSegments = (startPos: [number, number, number], endPos: [number, number, number], segments: number = 6) => {
+    const generateZigzagSegments = (startPos: [number, number, number], endPos: [number, number, number], segments: number = 20) => {
         const lightningSegments = []
 
         for (let i = 0; i < segments; i++) {
@@ -55,7 +55,7 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
             const nextZ = startPos[2] + (endPos[2] - startPos[2]) * nextProgress
 
             // Add subtle zigzag offset (reduced intensity)
-            const zigzagIntensity = Math.sin(progress * Math.PI) * 0.06 // Much less zigzag
+            const zigzagIntensity = Math.sin(progress * Math.PI) * 0.02 // Minimal zigzag
             const randomOffsetX = (Math.random() - 0.5) * zigzagIntensity
             const randomOffsetY = (Math.random() - 0.5) * zigzagIntensity
             const randomOffsetZ = (Math.random() - 0.5) * zigzagIntensity
@@ -89,7 +89,7 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
                 position: [centerX, centerY, centerZ] as [number, number, number],
                 rotation: [rotationX, rotationY, 0] as [number, number, number],
                 length: segmentLength,
-                thickness: Math.max(0.008, 0.015 - i * 0.001) // Smaller and gradually thinner
+                thickness: Math.max(0.008, 0.015 - i * 0.001) // Medium width lightning lines
             })
         }
 
@@ -97,8 +97,8 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
     }
 
     // Enhanced colors and brightness for dark phase
-    const intensityMultiplier = isDarkPhase ? 2.5 : 1.0; // Much brighter in dark phase
-    const baseIntensity = isDarkPhase ? 8.0 : 5.0; // Higher base intensity for dark phase
+    const intensityMultiplier = isDarkPhase ? 4.0 : 2.0; // Much brighter in dark phase
+    const baseIntensity = isDarkPhase ? 15.0 : 10.0; // Higher base intensity for dark phase
 
     return (
         <group ref={lightningRef} position={position}>
@@ -107,7 +107,7 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
             {/* X direction zigzag */}
             {generateZigzagSegments(
                 [0, 0, 0],
-                [0.5 * directionMultiplier, 0, 0]
+                [0.8 * directionMultiplier, 0, 0]
             ).map((segment, i) => (
                 <mesh key={`x-${i}`} position={segment.position} rotation={segment.rotation}>
                     <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
@@ -123,7 +123,7 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
             {/* Y direction zigzag */}
             {generateZigzagSegments(
                 [0, 0, 0],
-                [0, 0.5 * directionMultiplier, 0]
+                [0, 0.8 * directionMultiplier, 0]
             ).map((segment, i) => (
                 <mesh key={`y-${i}`} position={segment.position} rotation={segment.rotation}>
                     <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
@@ -139,7 +139,7 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
             {/* Z direction zigzag */}
             {generateZigzagSegments(
                 [0, 0, 0],
-                [0, 0, 0.5 * directionMultiplier]
+                [0, 0, 0.8 * directionMultiplier]
             ).map((segment, i) => (
                 <mesh key={`z-${i}`} position={segment.position} rotation={segment.rotation}>
                     <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
@@ -152,18 +152,35 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
                 </mesh>
             ))}
 
-            {/* Origin glow at brain surface - ultra bright in dark phase */}
+            {/* Diagonal direction for spread - simplified to one diagonal */}
+            {/* 3D diagonal */}
+            {generateZigzagSegments(
+                [0, 0, 0],
+                [0.6 * directionMultiplier, 0.6 * directionMultiplier, 0.6 * directionMultiplier]
+            ).map((segment, i) => (
+                <mesh key={`xyz-${i}`} position={segment.position} rotation={segment.rotation}>
+                    <boxGeometry args={[segment.thickness, segment.thickness, segment.length]} />
+                    <meshStandardMaterial
+                        color={isDarkPhase ? "#ffffff" : "#8888ff"}
+                        emissive={isDarkPhase ? "#aaaaaa" : "#0044aa"}
+                        emissiveIntensity={(baseIntensity * 0.7 - i * 0.3) * intensityMultiplier}
+                        toneMapped={false}
+                    />
+                </mesh>
+            ))}
+
+            {/* Core energy source at brain center - ultra bright in dark phase */}
             <mesh position={[0, 0, 0]}>
-                <sphereGeometry args={[0.08, 12, 8]} />
+                <sphereGeometry args={[0.12, 12, 8]} />
                 <meshStandardMaterial
                     color={isDarkPhase ? "#ffffff" : "#00aaff"}
                     emissive={isDarkPhase ? "#88ffff" : "#0044ff"}
-                    emissiveIntensity={isDarkPhase ? 15.0 : 8.0}
+                    emissiveIntensity={isDarkPhase ? 25.0 : 15.0}
                     toneMapped={false}
                 />
             </mesh>
 
-            {/* Additional outer glow - rainbow effect in dark phase */}
+            {/* Outer energy field - rainbow effect in dark phase */}
             <mesh position={[0, 0, 0]}>
                 <sphereGeometry args={[0.12, 8, 6]} />
                 <meshStandardMaterial
@@ -171,7 +188,20 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
                     emissive={isDarkPhase ? "#aa44aa" : "#002266"}
                     emissiveIntensity={isDarkPhase ? 8.0 : 3.0}
                     transparent={true}
-                    opacity={isDarkPhase ? 0.8 : 0.6}
+                    opacity={isDarkPhase ? 0.6 : 0.3}
+                    toneMapped={false}
+                />
+            </mesh>
+
+            {/* Pulsing energy shell */}
+            <mesh position={[0, 0, 0]}>
+                <sphereGeometry args={[0.18, 6, 4]} />
+                <meshStandardMaterial
+                    color={isDarkPhase ? "#00ffff" : "#002244"}
+                    emissive={isDarkPhase ? "#0088aa" : "#001122"}
+                    emissiveIntensity={isDarkPhase ? 5.0 : 1.5}
+                    transparent={true}
+                    opacity={isDarkPhase ? 0.4 : 0.15}
                     toneMapped={false}
                 />
             </mesh>
@@ -188,12 +218,11 @@ function BrainModel({ mouseX }: BrainModelProps) {
     // Clone the scene to avoid reusing the same geometry
     const clonedScene = scene.clone()
 
-    // Create 4 lightning positions spread evenly around the brain surface
+    // Create 3 lightning positions starting from inside the brain center and spreading outward
     const lightningPositions: [number, number, number][] = [
-        [0.4, 0.2, 0.2],     // Top-right-front
-        [-0.3, 0.3, -0.3],   // Top-left-back
-        [0.2, -0.4, 0.1],    // Bottom-right-front
-        [-0.35, -0.1, 0.35]  // Left-front-bottom
+        [0, 0, 0],           // Center of brain (origin point)
+        [0, 0, 0],           // Center of brain (origin point) 
+        [0, 0, 0],           // Center of brain (origin point)
     ]
 
     useEffect(() => {
