@@ -411,7 +411,7 @@ export default function Home() {
                   <a href="#projects" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center">
                     View My Work
                   </a>
-                  <a href="https://drive.google.com/file/d/1Mml4Iad8reH6lA8h8ZMdkYo7_PLzvfAB/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="border border-gray-600 hover:border-purple-400 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-purple-400/10 text-center">
+                  <a href="https://drive.google.com/file/d/1tSaMX7MNzzzPduvLHpEFDWDt0we3fK9q/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className="border border-gray-600 hover:border-purple-400 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-purple-400/10 text-center">
                     Get CV
                   </a>
                 </div>
