@@ -3,7 +3,7 @@ name: Re-Deployment
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   remote-ssh:
