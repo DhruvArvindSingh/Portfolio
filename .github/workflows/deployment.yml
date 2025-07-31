@@ -22,5 +22,12 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
             echo "✅ Connected successfully to remote VM"
             ls -al
-            uptime
+            if [ -d "Portfolio" ]; then
+                echo "Portfolio directory exists. Pulling latest changes..."
+                cd Portfolio
+                git pull origin master
+                npm i
+                npm run build
+                pm2 restart all
+            fi
           EOF

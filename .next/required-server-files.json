@@ -96,7 +96,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/home/dhruv-singh/Code/Portfolio",
+    "outputFileTracingRoot": "/home/dhruv-singh/C_drive/Code/Portfolio",
     "experimental": {
       "nodeMiddleware": false,
       "cacheLife": {
@@ -279,10 +279,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "/home/dhruv-singh/Code/Portfolio"
+      "root": "/home/dhruv-singh/C_drive/Code/Portfolio"
     }
   },
-  "appDir": "/home/dhruv-singh/Code/Portfolio",
+  "appDir": "/home/dhruv-singh/C_drive/Code/Portfolio",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",
@@ -304,6 +304,6 @@
     ".next/server/next-font-manifest.json"
   ],
   "ignore": [
-    "node_modules/.pnpm/next@15.3.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/@ampproject/toolbox-optimizer/**/*"
+    "node_modules/next/dist/compiled/@ampproject/toolbox-optimizer/**/*"
   ]
 }
