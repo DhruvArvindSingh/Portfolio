@@ -76,7 +76,7 @@ jobs:
 
       - name: Generate code with Kimi K2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           OPENROUTER_API_KEY: ${{ secrets.KIMI_K2_API_KEY }}
           TASK_DESCRIPTION: ${{ steps.task.outputs.description }}
           TARGET_BRANCH: ${{ steps.task.outputs.branch }}
@@ -152,6 +152,12 @@ jobs:
               for match in code_block_pattern.finditer(ai_output):
                   path = match.group(1).strip()
                   code = match.group(2).strip()
+                  # Ignore unwanted files
+                  if path in {"bash", "env", "KIMI_GENERATED.md"}:
+                      continue
+                  # Only allow valid filenames (basic check)
+                  if not re.match(r'^[\w./-]+$', path):
+                      continue
                   files[path] = code
               return files
 
@@ -163,14 +169,12 @@ jobs:
                   with open(path, 'w', encoding='utf-8') as f:
                       f.write(code)
 
-          def create_branch_and_commit(branch_name, files_dict, summary_content):
+          def create_branch_and_commit(branch_name, files_dict):
               try:
                   subprocess.run(['git', 'config', 'user.name', 'Kimi K2 Bot'], check=True)
                   subprocess.run(['git', 'config', 'user.email', 'kimi-bot@example.com'], check=True)
                   subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
-                  with open('KIMI_GENERATED.md', 'w') as f:
-                      f.write(summary_content)
-                  for file in list(files_dict.keys()) + ['KIMI_GENERATED.md']:
+                  for file in files_dict.keys():
                       subprocess.run(['git', 'add', file], check=True)
                   subprocess.run([
                       'git', 'commit', '-m',
@@ -250,7 +254,7 @@ jobs:
               files_dict = parse_ai_output(ai_output)
               write_files(files_dict)
               print(f"🌿 Creating branch: {branch_name}")
-              if create_branch_and_commit(branch_name, files_dict, ai_output):
+              if create_branch_and_commit(branch_name, files_dict):
                   print("📝 Creating pull request...")
                   pr_url = create_pull_request(branch_name, task_description, ai_output)
                   if pr_url:
