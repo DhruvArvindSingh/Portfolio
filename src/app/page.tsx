@@ -171,7 +171,7 @@ const projects: Array<{
       ],
       links: [
         { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Portfolio" },
-        { label: "Web Link", url: "https://github.com/DhruvArvindSingh/Portfolio" }
+        { label: "Web Link", url: "http://dsingh.fun/" }
       ],
       color: "teal"
     }

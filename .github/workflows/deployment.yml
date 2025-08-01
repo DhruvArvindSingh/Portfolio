@@ -27,7 +27,6 @@ jobs:
                 cd Portfolio
                 git pull origin master
                 npm i
-                npm run build
                 pm2 restart all
             fi
           EOF
