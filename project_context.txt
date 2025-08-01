@@ -1,0 +1,113 @@
+Project structure:
+.
+├── README.md
+├── claude-code-router
+│   ├── CLAUDE.md
+│   ├── LICENSE
+│   ├── README.md
+│   ├── README_zh.md
+│   ├── blog
+│   │   ├── en
+│   │   ├── images
+│   │   └── zh
+│   ├── config.example.json
+│   ├── config.json
+│   ├── custom-router.example.js
+│   ├── docker-compose.yml
+│   ├── dockerfile
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── pnpm-lock.yaml
+│   ├── scripts
+│   │   └── build.js
+│   ├── src
+│   │   ├── cli.ts
+│   │   ├── constants.ts
+│   │   ├── index.ts
+│   │   ├── middleware
+│   │   ├── server.ts
+│   │   └── utils
+│   ├── tsconfig.json
+│   └── ui
+│       ├── CLAUDE.md
+│       ├── PROJECT.md
+│       ├── README.md
+│       ├── components.json
+│       ├── config.example.json
+│       ├── eslint.config.js
+│       ├── index.html
+│       ├── package-lock.json
+│       ├── package.json
+│       ├── pnpm-lock.yaml
+│       ├── public
+│       ├── src
+│       ├── tsconfig.app.json
+│       ├── tsconfig.json
+│       ├── tsconfig.tsbuildinfo
+│       └── vite.config.ts
+├── codebase_files.txt
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── project_context.txt
+├── public
+│   ├── brain_3D_model.glb
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── image.png
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src
+│   ├── app
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components
+│   │   ├── Brain3D.tsx
+│   │   ├── ExperienceCard.tsx
+│   │   └── ProjectCard.tsx
+│   └── lib
+│       └── colorMap.ts
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
+
+18 directories, 58 files
+Package.json content:
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "restart": "pm2 restart all",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.1.2",
+    "@react-three/fiber": "^9.1.2",
+    "@types/three": "^0.177.0",
+    "next": "15.3.3",
+    "pm2": "^6.0.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.177.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
