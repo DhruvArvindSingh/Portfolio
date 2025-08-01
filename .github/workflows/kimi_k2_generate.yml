@@ -41,30 +41,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-
-      - name: Install dependencies and configure Claude Code Router
-        run: |
-          git clone https://github.com/musistudio/claude-code-router.git
-          cd claude-code-router
-          npm i
           
-          # Create configuration for Kimi K2
-          cat > config.json << 'EOF'
-          {
-            "default_model": "kimi-k2",
-            "models": {
-              "kimi-k2": {
-                "api_key_env": "OPENROUTER_API_KEY",
-                "api_base": "https://openrouter.ai/api/v1",
-                "model_name": "moonshotai/kimi-k2"
-              }
-            }
-          }
-          EOF
-          
-          # Set the API key environment variable
-          echo "OPENROUTER_API_KEY=${{ secrets.KIMI_K2_API_KEY }}" >> $GITHUB_ENV
-
       - name: Extract task description
         id: task
         run: |
@@ -107,50 +84,41 @@ jobs:
           cat << 'EOF' > kimi_generator.py
           import json
           import os
+          import re
           import requests
           import subprocess
           import tempfile
           import time
-          
-          
+
           def generate_with_openrouter(prompt, model="moonshotai/kimi-k2"):
-              """Generate code using OpenRouter API with Kimi K2"""
               api_key = os.environ['OPENROUTER_API_KEY']
-              
               headers = {
                   'Authorization': f'Bearer {api_key}',
                   'Content-Type': 'application/json',
                   'HTTP-Referer': 'https://github.com',
                   'X-Title': 'GitHub Actions Code Generation'
               }
-              
               data = {
                   'model': model,
                   'messages': [
-                      {
-                          'role': 'user',
-                          'content': prompt
-                      }
+                      {'role': 'user', 'content': prompt}
                   ],
                   'max_tokens': 8000,
                   'temperature': 0.1
               }
-              
               response = requests.post(
                   'https://openrouter.ai/api/v1/chat/completions',
                   headers=headers,
                   json=data,
                   timeout=120
               )
-              
               if response.status_code == 200:
                   result = response.json()
                   return result['choices'][0]['message']['content']
               else:
                   raise Exception(f"OpenRouter API error: {response.status_code} - {response.text}")
-          
+
           def read_file_safely(filepath, max_lines=100):
-              """Read file content safely, limiting lines for context"""
               try:
                   with open(filepath, 'r', encoding='utf-8') as f:
                       lines = f.readlines()
@@ -159,141 +127,77 @@ jobs:
                       return ''.join(lines)
               except Exception as e:
                   return f"Error reading file: {str(e)}"
-          
+
           def analyze_codebase():
-              """Analyze the current codebase structure"""
               context = ""
-              
-              # Read project context
               if os.path.exists('project_context.txt'):
                   context += read_file_safely('project_context.txt')
-              
-              # Read key configuration files
               key_files = ['package.json', 'tsconfig.json', 'vite.config.ts', 'capacitor.config.ts']
               for file in key_files:
                   if os.path.exists(file):
                       context += f"\n\n=== {file} ===\n"
                       context += read_file_safely(file, 50)
-              
-              # Sample some source files to understand patterns
               if os.path.exists('codebase_files.txt'):
                   with open('codebase_files.txt', 'r') as f:
-                      files = [line.strip() for line in f.readlines()[:10]]  # First 10 files
-                  
+                      files = [line.strip() for line in f.readlines()[:10]]
                   for file in files:
                       if os.path.exists(file):
                           context += f"\n\n=== {file} ===\n"
                           context += read_file_safely(file, 30)
-              
               return context
-          
-          def generate_code_with_kimi(task_description, codebase_context):
-              """Generate code using Kimi K2 via OpenRouter"""
-              
-              prompt = f"""
-          You are an expert software developer working on a Next.js TypeScript application.
-          
-          TASK: {task_description}
-          
-          CURRENT CODEBASE CONTEXT:
-          {codebase_context}
-          
-          Please generate the necessary code changes to implement the requested feature. Your response should include:
-          
-          1. **FILES_TO_CREATE**: List any new files that need to be created with their full paths
-          2. **FILES_TO_MODIFY**: List any existing files that need to be modified
-          3. **CODE_CHANGES**: Provide the actual code for new files or specific changes for existing files
-          4. **INSTRUCTIONS**: Any additional setup or configuration steps needed
-          
-          Follow these guidelines:
-          - Use TypeScript and React hooks
-          - Follow Next.js patterns and best practices
-          - Maintain consistency with existing code style
-          - Include proper error handling
-          - Add appropriate TypeScript types
-          - Use existing utilities and patterns from the codebase
-          - Ensure responsive design
-          
-          Format your response clearly with sections for each file change.
-          """
-          
-              return generate_with_openrouter(prompt)
-          
-          def create_branch_and_commit(branch_name, generated_content):
-              """Create a new branch and commit the generated code"""
-              try:
 
+          def parse_ai_output(ai_output):
+              files = {}
+              code_block_pattern = re.compile(r'```([\w./\\-]+)\n([\s\S]*?)```', re.MULTILINE)
+              for match in code_block_pattern.finditer(ai_output):
+                  path = match.group(1).strip()
+                  code = match.group(2).strip()
+                  files[path] = code
+              return files
+
+          def write_files(files_dict):
+              for path, code in files_dict.items():
+                  os.makedirs(os.path.dirname(path), exist_ok=True)
+                  with open(path, 'w', encoding='utf-8') as f:
+                      f.write(code)
+
+          def create_branch_and_commit(branch_name, files_dict, summary_content):
+              try:
                   subprocess.run(['git', 'config', 'user.name', 'Kimi K2 Bot'], check=True)
                   subprocess.run(['git', 'config', 'user.email', 'kimi-bot@example.com'], check=True)
-
-                  # Create and checkout new branch
                   subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
-                  
-                  # Create a summary file with the generated content
                   with open('KIMI_GENERATED.md', 'w') as f:
-                      f.write(f"# Kimi K2 Generated Code\n\n")
-                      f.write(f"**Task**: {os.environ['TASK_DESCRIPTION']}\n\n")
-                      f.write(f"**Generated on**: {subprocess.check_output(['date']).decode().strip()}\n\n")
-                      f.write("## Generated Content\n\n")
-                      f.write("```\n")
-                      f.write(generated_content)
-                      f.write("\n```\n")
-                  
-                  # Stage and commit changes
-                  subprocess.run(['git', 'add', '.'], check=True)
-                  subprocess.run(['git', 'commit', '-m', f'Add Kimi K2 generated code\n\nTask: {os.environ["TASK_DESCRIPTION"]}\n\nGenerated by Kimi K2 via OpenRouter'], check=True)
-                  
-                  # Push branch
+                      f.write(summary_content)
+                  for file in list(files_dict.keys()) + ['KIMI_GENERATED.md']:
+                      subprocess.run(['git', 'add', file], check=True)
+                  subprocess.run([
+                      'git', 'commit', '-m',
+                      f'Add Kimi K2 generated code\n\nTask: {os.environ["TASK_DESCRIPTION"]}\n\nGenerated by Kimi K2 via OpenRouter'
+                  ], check=True)
                   subprocess.run(['git', 'push', '-u', 'origin', branch_name], check=True)
-                  
                   return True
               except subprocess.CalledProcessError as e:
                   print(f"Git operation failed: {e}")
                   return False
-          
-          def create_pull_request(branch_name, task_description, generated_content):
-              """Create a pull request with the generated code"""
+
+          def create_pull_request(branch_name, task_description, summary_content):
               github_token = os.environ['GITHUB_TOKEN']
               repo = os.environ['GITHUB_REPOSITORY']
-              
               headers = {
                   'Authorization': f'token {github_token}',
                   'Accept': 'application/vnd.github.v3+json'
               }
-              
-              pr_body = f"""## 🤖 Kimi K2 Generated Code
-          
-          **Task Description:** {task_description}
-          
-          This pull request contains code generated by Kimi K2 via OpenRouter based on the requested feature.
-          
-          ## Generated Changes
-          
-          ```
-          {generated_content[:2000]}{'...' if len(generated_content) > 2000 else ''}
-          ```
-          
-          ## Review Notes
-          
-          - Please review the generated code carefully
-          - Test the functionality before merging
-          - Make any necessary adjustments for your specific requirements
-          - Check for integration with existing codebase
-          
-          ---
-          *This PR was created automatically by Kimi K2*
-          """
-              
+              pr_body = f"""## 🤖 Kimi K2 Generated Code\n\n**Task Description:** {task_description}\n\nThis pull request contains code generated by Kimi K2 via OpenRouter based on the requested feature.\n\n## Generated Changes\n\n```
+          {summary_content[:2000]}{'...' if len(summary_content) > 2000 else ''}
+          ```\n\n## Review Notes\n\n- Please review the generated code carefully\n- Test the functionality before merging\n- Make any necessary adjustments for your specific requirements\n- Check for integration with existing codebase\n\n---\n*This PR was created automatically by Kimi K2*"""
               pr_data = {
                   'title': f'🤖 Kimi K2 Generated: {task_description[:50]}{"..." if len(task_description) > 50 else ""}',
                   'head': branch_name,
                   'base': 'main',
                   'body': pr_body
               }
-              
               url = f'https://api.github.com/repos/{repo}/pulls'
               response = requests.post(url, headers=headers, json=pr_data)
-              
               if response.status_code == 201:
                   pr_url = response.json()['html_url']
                   print(f"✅ Pull request created: {pr_url}")
@@ -302,28 +206,51 @@ jobs:
                   print(f"❌ Failed to create PR: {response.status_code}")
                   print(response.text)
                   return None
-          
+
+          def generate_code_with_kimi(task_description, codebase_context):
+              prompt = f"""
+          You are an expert software developer working on a Next.js TypeScript application.
+
+          TASK: {task_description}
+
+          CURRENT CODEBASE CONTEXT:
+          {codebase_context}
+
+          Please generate the necessary code changes to implement the requested feature. Your response should include:
+
+          1. **FILES_TO_CREATE**: List any new files that need to be created with their full paths
+          2. **FILES_TO_MODIFY**: List any existing files that need to be modified
+          3. **CODE_CHANGES**: Provide the actual code for new files or specific changes for existing files
+          4. **INSTRUCTIONS**: Any additional setup or configuration steps needed
+
+          Follow these guidelines:
+          - Use TypeScript and React hooks
+          - Follow Next.js patterns and best practices
+          - Maintain consistency with existing code style
+          - Include proper error handling
+          - Add appropriate TypeScript types
+          - Use existing utilities and patterns from the codebase
+          - Ensure responsive design
+
+          Format your response clearly with sections for each file change.
+          """
+              return generate_with_openrouter(prompt)
+
           def main():
               task_description = os.environ['TASK_DESCRIPTION']
               branch_name = os.environ['TARGET_BRANCH']
-              
               print(f"🚀 Generating code for task: {task_description}")
-              
-              # Analyze codebase
               print("📊 Analyzing codebase...")
               codebase_context = analyze_codebase()
-              
-              # Generate code with Kimi K2
               print("🧠 Generating code with Kimi K2...")
-              generated_content = generate_code_with_kimi(task_description, codebase_context)
-              
-              # Create branch and commit
+              ai_output = generate_code_with_kimi(task_description, codebase_context)
+              print("📄 Parsing AI output and writing files...")
+              files_dict = parse_ai_output(ai_output)
+              write_files(files_dict)
               print(f"🌿 Creating branch: {branch_name}")
-              if create_branch_and_commit(branch_name, generated_content):
-                  # Create pull request
+              if create_branch_and_commit(branch_name, files_dict, ai_output):
                   print("📝 Creating pull request...")
-                  pr_url = create_pull_request(branch_name, task_description, generated_content)
-                  
+                  pr_url = create_pull_request(branch_name, task_description, ai_output)
                   if pr_url:
                       print(f"🎉 Code generation completed successfully!")
                       print(f"Pull request: {pr_url}")
@@ -331,9 +258,9 @@ jobs:
                       print("⚠️ Code generated but PR creation failed")
               else:
                   print("❌ Failed to create branch and commit changes")
-          
+
           if __name__ == "__main__":
               main()
           EOF
-          
+
           python kimi_generator.py
