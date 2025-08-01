@@ -26,8 +26,8 @@ jobs:
                 echo "📦 Portfolio directory exists. Pulling latest changes..."
                 cd Portfolio
                 git pull origin master
-                npm install
-                pm2 restart all
+                /home/gcp-portfolio/.nvm/versions/node/v22.16.0/bin/npm install
+                /home/gcp-portfolio/.nvm/versions/node/v22.16.0/bin/pm2 restart all
             else
                 echo "❌ Portfolio directory not found!"
             fi
