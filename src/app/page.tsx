@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import ProjectCard from '../components/ProjectCard'
 import ExperienceCard from '../components/ExperienceCard'
 import Brain3D from '../components/Brain3D'
 import { ColorKey } from '../lib/colorMap'
+import { useScrollAnimation } from '../lib/useScrollAnimation'
 
 // Data arrays for experiences and projects
 const experiences: Array<{
@@ -258,6 +259,19 @@ const Brain3DClientOnly = () => {
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  const heroRef = useRef<HTMLDivElement>(null)
+  const experienceRef = useRef<HTMLDivElement>(null)
+  const projectsRef = useRef<HTMLDivElement>(null)
+  const contactRef = useRef<HTMLDivElement>(null)
+
+  const isHeroVisible = useScrollAnimation(heroRef)
+  const isExperienceVisible = useScrollAnimation(experienceRef)
+  const isProjectsVisible = useScrollAnimation(projectsRef)
+  const isContactVisible = useScrollAnimation(contactRef)
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -266,6 +280,32 @@ export default function Home() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState('')
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowBackToTop(true)
+      } else {
+        setShowBackToTop(false)
+      }
+
+      const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+      const progress = (window.scrollY / totalHeight) * 100
+      setScrollProgress(progress)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -316,6 +356,9 @@ export default function Home() {
 
       {/* Scrollable Content */}
       <div className="relative z-10">
+        {/* Scroll Progress Bar */}
+        <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-gradient-to-r from-purple-500 to-cyan-500" style={{ width: `${scrollProgress}%` }} />
+
         {/* Fixed Header */}
         <header className="fixed top-0 left-0 right-0 z-50 p-4 sm:p-6 lg:p-8 bg-black/20 backdrop-blur-sm">
           <nav className="flex justify-between items-center max-w-7xl mx-auto">
@@ -388,7 +431,7 @@ export default function Home() {
         </header>
 
         {/* Hero Section */}
-        <section id="hero" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24">
+        <section ref={heroRef} id="hero" className={`min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 transition-opacity duration-1000 ease-in ${isHeroVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="max-w-7xl w-full mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Text Content */}
@@ -524,7 +567,7 @@ export default function Home() {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
+        <section ref={experienceRef} id="experience" className={`min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none transition-opacity duration-1000 ease-in ${isExperienceVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="max-w-7xl w-full mx-auto">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
@@ -537,23 +580,17 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Timeline */}
-            <div className="relative">
-              {/* Timeline Line - Center on desktop, left on mobile */}
-              <div className="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-1 h-full bg-gradient-to-b from-purple-500 to-pink-500"></div>
-
-              {/* Experience Items */}
-              <div className="space-y-8 md:space-y-16">
-                {experiences.map((experience, index) => (
-                  <ExperienceCard key={index} {...experience} isLeft={index % 2 === 0} />
-                ))}
-              </div>
+            {/* Experience Grid */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {experiences.map((experience, index) => (
+                <ExperienceCard key={index} {...experience} />
+              ))}
             </div>
           </div>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
+        <section ref={projectsRef} id="projects" className={`min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none transition-opacity duration-1000 ease-in ${isProjectsVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="max-w-7xl w-full mx-auto">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
@@ -618,7 +655,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none relative overflow-hidden">
+        <section ref={contactRef} id="contact" className={`min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none relative overflow-hidden transition-opacity duration-1000 ease-in ${isContactVisible ? 'opacity-100' : 'opacity-0'}`}>
           {/* Animated Background Elements */}
           <div className="absolute inset-0 pointer-events-none">
             {/* Floating Particles */}
@@ -928,6 +965,19 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 bg-purple-600/50 text-white p-3 rounded-full shadow-lg hover:bg-purple-700/80 transition-all duration-300 backdrop-blur-sm"
+          aria-label="Go to top"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
+      )}
     </div>
   )
 }
