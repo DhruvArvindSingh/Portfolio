@@ -29,23 +29,24 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                         delayMs={revealDelayMs}
                         variant="experience"
                         accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                        badge={<span className="whitespace-nowrap">{period}</span>}
                     >
                         <div className="flex justify-between items-start mb-3">
-                            <div className="flex-1">
+                            <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                {period}
+                            </div>
+                            <div className="flex-1 text-right">
                                 <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                 {companyUrl ? (
-                                    <a href={companyUrl} className={`text-gray-300 hover:${colors.textHover} transition-colors mb-2 block flex items-center font-medium`}>
+                                    <a href={companyUrl} className={`text-gray-300 hover:${colors.textHover} transition-colors mb-2 block flex items-center justify-end font-medium`}>
                                         {company}
                                         <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
                                     </a>
                                 ) : (
-                                    <p className="text-gray-300 mb-2 font-medium">{company}</p>
+                                    <p className="text-gray-300 mb-2 font-medium text-right">{company}</p>
                                 )}
                             </div>
-                            <div className="ml-4 flex-shrink-0 text-center justify-center items-center flex" />
                         </div>
                         <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                         <div className="flex gap-2 text-xs mb-4 flex-wrap">
@@ -82,9 +83,15 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 delayMs={revealDelayMs}
                                 variant="experience"
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                                badge={<span className="whitespace-nowrap">{period}</span>}
                             >
-                                <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                <div className="flex justify-between items-start mb-3">
+                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                        {period}
+                                    </div>
+                                    <div className="flex-1 text-right">
+                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                    </div>
+                                </div>
                                 {companyUrl ? (
                                     <a href={companyUrl} className={`text-gray-300 hover:${colors.textHover} transition-colors mb-2 block flex items-center justify-end font-medium`}>
                                         {company}
@@ -93,7 +100,7 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                         </svg>
                                     </a>
                                 ) : (
-                                    <p className="text-gray-300 mb-2 font-medium">{company}</p>
+                                    <p className="text-gray-300 mb-2 font-medium text-right">{company}</p>
                                 )}
                                 <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                                 <div className="flex gap-2 text-xs mb-4 justify-end flex-wrap">
@@ -131,9 +138,15 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 delayMs={revealDelayMs}
                                 variant="experience"
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                                badge={<span className="whitespace-nowrap">{period}</span>}
                             >
-                                <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                <div className="flex justify-between items-start mb-3">
+                                    <div className="flex-1 text-left">
+                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                    </div>
+                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                        {period}
+                                    </div>
+                                </div>
                                 {companyUrl ? (
                                     <a href={companyUrl} className={`text-gray-300 hover:${colors.textHover} transition-colors mb-2 block flex items-center font-medium`}>
                                         {company}
@@ -142,7 +155,7 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                         </svg>
                                     </a>
                                 ) : (
-                                    <p className="text-gray-300 mb-2 font-medium">{company}</p>
+                                    <p className="text-gray-300 mb-2 font-medium text-left">{company}</p>
                                 )}
                                 <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                                 <div className="flex gap-2 text-xs mb-4 justify-start flex-wrap">

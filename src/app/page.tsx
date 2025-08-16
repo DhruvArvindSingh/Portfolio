@@ -66,7 +66,7 @@ const projects: Array<{
   color: ColorKey
 }> = [
     {
-      title: "Animath.in",
+      title: "Animath",
       subtitle: "Code based Video Creation",
       description: "Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.",
       year: "2025",
@@ -88,13 +88,13 @@ const projects: Array<{
       ],
       links: [
         { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
-        { label: "Web Link", url: "http://animath.in" },
+        { label: "Web Link", url: "https://animath.dsingh.fun" },
         { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Manim" }
       ],
       color: "cyan"
     },
     {
-      title: "DeployNet.in",
+      title: "Deployer",
       subtitle: "Cloud Based Deployment Platform",
       description: "DeployNet is a modern deployment platform that allows you to deploy both anything from static and dynamic web applications or even a simple script of any language directly cloned from github with zero configuration using AWS services.",
       year: "2025",
@@ -113,7 +113,7 @@ const projects: Array<{
       ],
       links: [
         { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
-        { label: "Web Link", url: "http://deploynet.in" },
+        { label: "Web Link", url: "http://deployer.dsingh.fun" },
         { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Instant-Deployer" }
       ],
       color: "emerald"
@@ -172,7 +172,7 @@ const projects: Array<{
       ],
       links: [
         { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Portfolio" },
-        { label: "Web Link", url: "http://dsingh.fun/" }
+        { label: "Web Link", url: "https://portfolio.dsingh.fun" }
       ],
       color: "teal"
     }

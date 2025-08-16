@@ -27,14 +27,15 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                         side={isLeft ? 'left' : 'right'}
                         delayMs={revealDelayMs}
                         accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                        badge={<span className="whitespace-nowrap">{year}</span>}
                     >
                         <div className="flex justify-between items-start mb-3">
-                            <div className="flex-1">
-                                <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                <p className="text-gray-300 mb-2 font-medium">{subtitle}</p>
+                            <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                {year}
                             </div>
-                            <div className="ml-4 flex-shrink-0" />
+                            <div className="flex-1 text-right">
+                                <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                <p className="text-gray-300 mb-2 font-medium text-right">{subtitle}</p>
+                            </div>
                         </div>
                         <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                         <div className="flex gap-2 text-xs mb-4 flex-wrap">
@@ -70,10 +71,16 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                                 side={'left'}
                                 delayMs={revealDelayMs}
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                                badge={<span className="whitespace-nowrap">{year}</span>}
                             >
-                                <h3 className={`text-xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                <p className="text-gray-300 mb-2 font-medium">{subtitle}</p>
+                                <div className="flex justify-between items-start mb-3">
+                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                        {year}
+                                    </div>
+                                    <div className="flex-1 text-right">
+                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                    </div>
+                                </div>
+                                <p className="text-gray-300 mb-2 font-medium text-right">{subtitle}</p>
                                 <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                                 <div className="flex gap-2 text-xs mb-4 justify-end flex-wrap">
                                     {technologies.map((tech, index) => {
@@ -109,10 +116,16 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                                 side={'right'}
                                 delayMs={revealDelayMs}
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                                badge={<span className="whitespace-nowrap">{year}</span>}
                             >
-                                <h3 className={`text-xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                <p className="text-gray-300 mb-2 font-medium">{subtitle}</p>
+                                <div className="flex justify-between items-start mb-3">
+                                    <div className="flex-1 text-left">
+                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                    </div>
+                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                        {year}
+                                    </div>
+                                </div>
+                                <p className="text-gray-300 mb-2 font-medium text-left">{subtitle}</p>
                                 <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                                 <div className="flex flex-wrap gap-2 text-xs mb-4">
                                     {technologies.map((tech, index) => {
