@@ -52,6 +52,7 @@ docker build -t portfolio .
 
 # Run the container
 docker run -p 3000:3000 portfolio
+
 ```
 
 #### Using Docker Compose
