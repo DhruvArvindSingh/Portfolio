@@ -6,6 +6,7 @@ import ProjectCard from '../components/ProjectCard'
 import ExperienceCard from '../components/ExperienceCard'
 import Brain3D from '../components/Brain3D'
 import { ColorKey } from '../lib/colorMap'
+import Footer from '../components/Footer'
 
 // Data arrays for experiences and projects
 const experiences: Array<{
@@ -258,6 +259,7 @@ const Brain3DClientOnly = () => {
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -266,6 +268,16 @@ export default function Home() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState('')
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -317,22 +329,22 @@ export default function Home() {
       {/* Scrollable Content */}
       <div className="relative z-10">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 p-4 sm:p-6 lg:p-8 bg-black/20 backdrop-blur-sm">
+        <header className={`fixed top-0 left-0 right-0 z-50 p-4 sm:p-6 lg:p-8 transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md' : 'bg-black/20 backdrop-blur-sm'}`}>
           <nav className="flex justify-between items-center max-w-7xl mx-auto">
             <div className="text-lg sm:text-xl font-bold tracking-wider">
               PORTFOLIO
             </div>
             <div className="hidden md:flex space-x-4 lg:space-x-8 text-sm tracking-wide">
-              <a href="#hero" className="hover:text-purple-400 transition-colors">
+              <a href="#hero" className="hover:text-purple-400 transition-all duration-200 transform hover:scale-105">
                 HOME
               </a>
-              <a href="#experience" className="hover:text-purple-400 transition-colors">
+              <a href="#experience" className="hover:text-purple-400 transition-all duration-200 transform hover:scale-105">
                 EXPERIENCE
               </a>
-              <a href="#projects" className="hover:text-purple-400 transition-colors">
+              <a href="#projects" className="hover:text-purple-400 transition-all duration-200 transform hover:scale-105">
                 PROJECTS
               </a>
-              <a href="#contact" className="hover:text-purple-400 transition-colors">
+              <a href="#contact" className="hover:text-purple-400 transition-all duration-200 transform hover:scale-105">
                 CONTACT
               </a>
             </div>
@@ -344,47 +356,49 @@ export default function Home() {
                 aria-label="Toggle mobile menu"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  {isMobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
                 </svg>
               </button>
             </div>
           </nav>
 
           {/* Mobile Menu */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-gray-600/30">
-              <div className="flex flex-col space-y-4 pt-4">
-                <a
-                  href="#hero"
-                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  HOME
-                </a>
-                <a
-                  href="#experience"
-                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  EXPERIENCE
-                </a>
-                <a
-                  href="#projects"
-                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  PROJECTS
-                </a>
-                <a
-                  href="#contact"
-                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  CONTACT
-                </a>
-              </div>
+          <div className={`md:hidden mt-4 pb-4 border-t border-gray-600/30 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 max-h-96' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+            <div className="flex flex-col space-y-4 pt-4">
+              <a
+                href="#hero"
+                className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                HOME
+              </a>
+              <a
+                href="#experience"
+                className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                EXPERIENCE
+              </a>
+              <a
+                href="#projects"
+                className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                PROJECTS
+              </a>
+              <a
+                href="#contact"
+                className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                CONTACT
+              </a>
             </div>
-          )}
+          </div>
         </header>
 
         {/* Hero Section */}
@@ -418,10 +432,10 @@ export default function Home() {
               </div>
 
               {/* Interactive Area */}
-              <div className="hidden lg:flex items-center justify-center">
+              <div className="flex items-center justify-center mt-16 lg:mt-0">
                 <div className="text-center space-y-8">
                   {/* Extra Large circular profile image */}
-                  <div className="relative w-80 h-80 mx-auto group">
+                  <div className="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto group">
                     <div className="w-full h-full overflow-hidden rounded-full border-4 border-purple-400 shadow-2xl shadow-purple-500/40 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-purple-500/60">
                       <Image
                         src="/image.png"
@@ -444,62 +458,62 @@ export default function Home() {
 
                     {/* Enhanced Technology Tags */}
                     <div className="flex justify-center flex-wrap gap-3 mb-4">
-                      <span className="bg-gradient-to-r from-purple-500/30 to-purple-600/30 border border-purple-400/40 text-purple-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-purple-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-purple-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-purple-500/30 to-purple-600/30 border border-purple-400/40 text-purple-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-purple-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-purple-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <circle cx="12" cy="13.26" r="2.72"></circle>
                           <path d="M12 2l3.09 6.26L22 9l-5.47 5.47L17.82 21 12 17.77 6.18 21l1.29-6.53L2 9l6.91-.74L12 2z"></path>
                         </svg>
                         React
                       </span>
-                      <span className="bg-gradient-to-r from-orange-500/30 to-orange-600/30 border border-orange-400/40 text-orange-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-orange-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-orange-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-orange-500/30 to-orange-600/30 border border-orange-400/40 text-orange-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-orange-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-orange-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
                         </svg>
                         Three.js
                       </span>
-                      <span className="bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/40 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-blue-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/40 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-blue-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-.1200-1.955-1.712a3.902 3.902 0 0 1-.643-.104 10.997 10.997 0 0 1-5.849-4.670c-.395-.621-.637-1.28-.637-1.941 0-.844.311-1.629.863-2.181.552-.552 1.337-.863 2.181-.863.844 0 1.629.311 2.181.863.552.552.863 1.337.863 2.181 0 .661-.242 1.32-.637 1.941a10.997 10.997 0 0 1-5.849 4.670c-.245.066-.434.096-.643.104-1.055.612-1.935 1.699-1.955 1.712-.028.024.012.052.219.158 1.346.687 2.712 1.086 4.323 1.264.364.04 1.936.04 2.299 0 .934-.103 1.755-.275 2.534-.525 4.349-1.403 7.557-5.189 8.209-9.695.096-.659.108-.854.108-1.748s-.012-1.088-.108-1.747C21.75 4.185 18.557.346 15.15.041 14.793.01 14.53.007 14.18.007 13.84.007 13.59.01 13.23.041 12.62.07 12.137.01 11.572 0z"></path>
                         </svg>
                         Next.js
                       </span>
-                      <span className="bg-gradient-to-r from-teal-500/30 to-teal-600/30 border border-teal-400/40 text-teal-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-teal-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-teal-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-teal-500/30 to-teal-600/30 border border-teal-400/40 text-teal-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-teal-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-teal-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"></path>
                         </svg>
                         Tailwind
                       </span>
-                      <span className="bg-gradient-to-r from-yellow-500/30 to-yellow-600/30 border border-yellow-400/40 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-yellow-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-yellow-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-yellow-500/30 to-yellow-600/30 border border-yellow-400/40 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-yellow-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-yellow-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M13.527 2.657l-7.867 3.314a2.252 2.252 0 0 0-1.313 2.039v8.09c0 .846.49 1.621 1.266 2.005l7.983 3.95c.776.384 1.694.384 2.47 0l7.983-3.95a2.252 2.252 0 0 0 1.266-2.005V8.01c0-.846-.49-1.621-1.266-2.005L15.066 2.055a2.252 2.252 0 0 0-1.539-.602 2.252 2.252 0 0 0-.539 1.204zm-.594 13.038v.005a.896.896 0 0 1-.896.896h-3.584a.896.896 0 0 1-.896-.896v-7.074a.896.896 0 0 1 .896-.896h3.584a.896.896 0 0 1 .896.896v7.069z"></path>
                         </svg>
                         AWS
                       </span>
-                      <span className="bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/40 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-blue-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/40 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-blue-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M12 2l3.09 6.26L22 9l-5.47 5.47L17.82 21 12 17.77 6.18 21l1.29-6.53L2 9l6.91-.74L12 2z"></path>
                         </svg>
                         Digital Ocean
                       </span>
-                      <span className="bg-gradient-to-r from-green-500/30 to-green-600/30 border border-green-400/40 text-green-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-green-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-green-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-green-500/30 to-green-600/30 border border-green-400/40 text-green-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-green-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-green-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M24 18.588a1.529 1.529 0 0 1-1.895-.72l-3.45-4.771-.5-.667-4.003 5.444a1.466 1.466 0 0 1-1.802.708l5.158-6.92-4.798-6.251a1.595 1.595 0 0 1 1.9-.666L18.204 10.3l3.842-5.197c.546-.739 1.63-.872 2.222-.211a1.588 1.588 0 0 1-.211 2.247L19.329 12l4.728 6.146a1.587 1.587 0 0 1-.057 2.042z"></path>
                         </svg>
                         Express
                       </span>
-                      <span className="bg-gradient-to-r from-indigo-500/30 to-indigo-600/30 border border-indigo-400/40 text-indigo-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-indigo-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-indigo-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-indigo-500/30 to-indigo-600/30 border border-indigo-400/40 text-indigo-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-indigo-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-indigo-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M1.5 6.5A.5.5 0 0 1 2 6h5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-9zM7.5 6h9a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-9A.5.5 0 0 1 7.5 6zm10.5.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-9z"></path>
                         </svg>
                         Socket
                       </span>
-                      <span className="bg-gradient-to-r from-red-500/30 to-red-600/30 border border-red-400/40 text-red-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-red-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-red-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-red-500/30 to-red-600/30 border border-red-400/40 text-red-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-red-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-red-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M5.8 21l.4-2h9.6l.4 2h-10.4zm-.2-3l1.9-9h9l1.9 9H5.6zM12 2l3 3h4l-5 5-2-2-2 2L5 5h4l3-3z"></path>
                         </svg>
                         NoSQL
                       </span>
-                      <span className="bg-gradient-to-r from-emerald-500/30 to-emerald-600/30 border border-emerald-400/40 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-emerald-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-emerald-500/40 flex items-center gap-2">
+                      <span className="bg-gradient-to-r from-emerald-500/30 to-emerald-600/30 border border-emerald-400/40 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-emerald-500/20 transform transition-all duration-200 hover:scale-105 hover:shadow-emerald-500/40 hover:-translate-y-1 flex items-center gap-2">
                         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                           <path d="M16.5 12c0-4.142-3.358-7.5-7.5-7.5s-7.5 3.358-7.5 7.5c0 4.142 3.358 7.5 7.5 7.5s7.5-3.358 7.5-7.5zm5.5 0c0 6.627-5.373 12-12 12s-12-5.373-12-12 5.373-12 12-12 12 5.373 12 12z"></path>
                         </svg>
@@ -592,7 +606,7 @@ export default function Home() {
             <div className="flex justify-center mt-16">
               <button
                 onClick={() => setShowAllProjects(!showAllProjects)}
-                className="group relative z-10 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-500 transform hover:scale-110 flex items-center gap-3 shadow-2xl hover:shadow-purple-500/25 border border-white/10 backdrop-blur-sm"
+                className="group relative z-10 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-10 py-5 rounded-full font-bold transition-all duration-500 transform hover:scale-110 flex items-center gap-3 shadow-2xl shadow-purple-500/40 hover:shadow-purple-500/60 border border-white/10 backdrop-blur-sm"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
                 <div className="relative z-10 flex items-center gap-3">
@@ -770,7 +784,7 @@ export default function Home() {
 
                       {/* Status Message */}
                       {submitStatus && (
-                        <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
+                        <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 animate-fade-in">
                           <p className="text-green-400 text-sm font-medium text-center">
                             {submitStatus}
                           </p>
@@ -821,7 +835,7 @@ export default function Home() {
                 {/* Social Media Cards */}
                 <div className="grid grid-cols-2 gap-4">
                   {/* LinkedIn Card */}
-                  <a href="https://www.linkedin.com/in/dhruv-singh-94340b28a/" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-2xl border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 overflow-hidden">
+                  <a href="https://www.linkedin.com/in/dhruv-singh-94340b28a/" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-2xl border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 overflow-hidden hover:-translate-y-1">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative z-10">
                       <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -835,7 +849,7 @@ export default function Home() {
                   </a>
 
                   {/* GitHub Card */}
-                  <a href="https://github.com/DhruvArvindSingh" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-gray-900/50 to-gray-800/30 p-6 rounded-2xl border border-gray-500/30 hover:border-gray-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/25 overflow-hidden">
+                  <a href="https://github.com/DhruvArvindSingh" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-gray-900/50 to-gray-800/30 p-6 rounded-2xl border border-gray-500/30 hover:border-gray-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/25 overflow-hidden hover:-translate-y-1">
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative z-10">
                       <div className="w-12 h-12 bg-gray-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -849,7 +863,7 @@ export default function Home() {
                   </a>
 
                   {/* Twitter/X Card */}
-                  <a href="https://x.com/dhruvsingh17991" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-sky-900/50 to-sky-800/30 p-6 rounded-2xl border border-sky-500/30 hover:border-sky-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-sky-500/25 overflow-hidden">
+                  <a href="https://x.com/dhruvsingh17991" target="_blank" rel="noopener noreferrer" className="group relative bg-gradient-to-br from-sky-900/50 to-sky-800/30 p-6 rounded-2xl border border-sky-500/30 hover:border-sky-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-sky-500/25 overflow-hidden hover:-translate-y-1">
                     <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative z-10">
                       <div className="w-12 h-12 bg-sky-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -863,7 +877,7 @@ export default function Home() {
                   </a>
 
                   {/* Discord Card */}
-                  <a href="https://discord.com/users/756584429249626120" className="group relative bg-gradient-to-br from-indigo-900/50 to-indigo-800/30 p-6 rounded-2xl border border-indigo-500/30 hover:border-indigo-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/25 overflow-hidden">
+                  <a href="https://discord.com/users/756584429249626120" className="group relative bg-gradient-to-br from-indigo-900/50 to-indigo-800/30 p-6 rounded-2xl border border-indigo-500/30 hover:border-indigo-400/60 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/25 overflow-hidden hover:-translate-y-1">
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative z-10">
                       <div className="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -919,14 +933,10 @@ export default function Home() {
 
             {/* Bottom CTA */}
             <div className="text-center mt-16">
-              <div className="inline-block bg-gray-900/90 backdrop-blur-md px-8 py-4 rounded-2xl border border-gray-600/30">
-                <p className="text-gray-400 text-sm">
-                  © 2024 Dhruv Singh. Built with <span className="text-red-400">❤️</span> using Next.js & Three.js
-                </p>
-              </div>
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   )

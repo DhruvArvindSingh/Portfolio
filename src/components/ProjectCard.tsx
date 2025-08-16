@@ -1,4 +1,5 @@
 import { colorMap, ColorKey } from '../lib/colorMap'
+import { useEffect, useRef, useState } from 'react'
 
 // Project Card Component
 interface ProjectCardProps {
@@ -14,9 +15,40 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ title, subtitle, description, year, technologies, links, color, isLeft = false }: ProjectCardProps) => {
     const colors = colorMap[color]
+    const [inView, setInView] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+      const currentRef = ref.current;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setInView(true);
+            observer.unobserve(entry.target);
+          }
+        },
+        {
+          threshold: 0.1,
+        }
+      );
+
+      if (currentRef) {
+        observer.observe(currentRef);
+      }
+
+      return () => {
+        if (currentRef) {
+          try {
+            observer.unobserve(currentRef);
+          } catch (e) {
+            console.error("Failed to unobserve", e)
+          }
+        }
+      };
+    }, []);
 
     return (
-        <div className="flex items-start md:items-center md:justify-between group">
+        <div ref={ref} className={`flex items-start md:items-center md:justify-between group transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Mobile/Tablet Layout */}
             <div className="md:hidden flex items-start w-full">
                 <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0 shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>

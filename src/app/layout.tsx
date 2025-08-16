@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Dhruv's Portfolio",
   description: "Interactive 3D portfolio showcasing cutting-edge web development with Three.js",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
