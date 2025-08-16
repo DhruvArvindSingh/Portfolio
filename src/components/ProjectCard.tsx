@@ -21,38 +21,38 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
         <div className="flex items-start md:items-center md:justify-between group">
             {/* Mobile/Tablet Layout */}
             <div className="md:hidden flex items-start w-full">
-                <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0 shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
+                <div className={`relative z-10 w-8 h-8 ${colors.bg} rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0 shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
                 <div className="flex-1">
                     <AlienCard
                         side={isLeft ? 'left' : 'right'}
                         delayMs={revealDelayMs}
                         accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
                     >
-                        <div className="flex justify-between items-start mb-3">
-                            <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                        <div className="flex justify-between items-start mb-4">
+                            <div className="px-4 py-2 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
                                 {year}
                             </div>
                             <div className="flex-1 text-right">
-                                <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                <p className="text-gray-300 mb-2 font-medium text-right">{subtitle}</p>
+                                <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                <p className="text-gray-200 mb-3 font-medium text-right text-lg">{subtitle}</p>
                             </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
+                        <p className="text-base text-gray-300 mb-6 break-words leading-relaxed">{description}</p>
+                        <div className="flex gap-3 text-sm mb-6 flex-wrap">
                             {technologies.map((tech, index) => {
                                 const techColors = colorMap[tech.color]
                                 return (
-                                    <span key={index} className={`${techColors.bgLight} ${techColors.text} px-3 py-1.5 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
+                                    <span key={index} className={`${techColors.bgLight} ${techColors.text} px-4 py-2 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
                                         {tech.name}
                                     </span>
                                 )
                             })}
                         </div>
-                        <div className="flex gap-4 flex-wrap">
+                        <div className="flex gap-6 flex-wrap">
                             {links.map((link, index) => (
-                                <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-sm font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2`}>
+                                <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-2 hover:gap-3`}>
                                     {link.label}
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                 </a>
@@ -66,37 +66,37 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
             <div className="hidden md:flex items-center justify-between w-full">
                 {isLeft ? (
                     <>
-                        <div className="w-5/12 text-right pr-8">
+                        <div className="w-5/12 text-right pr-12">
                             <AlienCard
                                 side={'left'}
                                 delayMs={revealDelayMs}
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
                             >
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="px-4 py-2 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
                                         {year}
                                     </div>
                                     <div className="flex-1 text-right">
-                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                        <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                     </div>
                                 </div>
-                                <p className="text-gray-300 mb-2 font-medium text-right">{subtitle}</p>
-                                <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                                <div className="flex gap-2 text-xs mb-4 justify-end flex-wrap">
+                                <p className="text-gray-200 mb-3 font-medium text-right text-lg">{subtitle}</p>
+                                <p className="text-base text-gray-300 mb-6 break-words leading-relaxed">{description}</p>
+                                <div className="flex gap-3 text-sm mb-6 justify-end flex-wrap">
                                     {technologies.map((tech, index) => {
                                         const techColors = colorMap[tech.color]
                                         return (
-                                            <span key={index} className={`${techColors.bgLight} ${techColors.text} px-3 py-1.5 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
+                                            <span key={index} className={`${techColors.bgLight} ${techColors.text} px-4 py-2 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
                                                 {tech.name}
                                             </span>
                                         )
                                     })}
                                 </div>
-                                <div className="flex gap-4 justify-end">
+                                <div className="flex gap-6 justify-end">
                                     {links.map((link, index) => (
-                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-sm font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2`}>
+                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-2 hover:gap-3`}>
                                             {link.label}
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                             </svg>
                                         </a>
@@ -104,44 +104,44 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                                 </div>
                             </AlienCard>
                         </div>
-                        <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
-                        <div className="w-5/12 pl-8" />
+                        <div className={`relative z-10 w-8 h-8 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
+                        <div className="w-5/12 pl-12" />
                     </>
                 ) : (
                     <>
-                        <div className="w-5/12 text-right pr-8" />
-                        <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
-                        <div className="w-5/12 pl-8">
+                        <div className="w-5/12 text-right pr-12" />
+                        <div className={`relative z-10 w-8 h-8 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
+                        <div className="w-5/12 pl-12">
                             <AlienCard
                                 side={'right'}
                                 delayMs={revealDelayMs}
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
                             >
-                                <div className="flex justify-between items-start mb-3">
+                                <div className="flex justify-between items-start mb-4">
                                     <div className="flex-1 text-left">
-                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                        <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                     </div>
-                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                    <div className="px-4 py-2 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
                                         {year}
                                     </div>
                                 </div>
-                                <p className="text-gray-300 mb-2 font-medium text-left">{subtitle}</p>
-                                <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                                <div className="flex flex-wrap gap-2 text-xs mb-4">
+                                <p className="text-gray-200 mb-3 font-medium text-left text-lg">{subtitle}</p>
+                                <p className="text-base text-gray-300 mb-6 break-words leading-relaxed">{description}</p>
+                                <div className="flex flex-wrap gap-3 text-sm mb-6">
                                     {technologies.map((tech, index) => {
                                         const techColors = colorMap[tech.color]
                                         return (
-                                            <span key={index} className={`${techColors.bgLight} ${techColors.text} px-3 py-1.5 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
+                                            <span key={index} className={`${techColors.bgLight} ${techColors.text} px-4 py-2 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
                                                 {tech.name}
                                             </span>
                                         )
                                     })}
                                 </div>
-                                <div className="flex gap-4">
+                                <div className="flex gap-6">
                                     {links.map((link, index) => (
-                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-sm font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2`}>
+                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-2 hover:gap-3`}>
                                             {link.label}
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                             </svg>
                                         </a>

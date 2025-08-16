@@ -100,10 +100,10 @@ export default function AlienCard({
                     </div>
 
                     {/* Actual content */}
-                    <div className="relative z-10 p-6 sm:p-7">
+                    <div className="relative z-10 p-8 sm:p-10">
                         {badge && (
                             <div className="mb-3 flex justify-end">
-                                <div className={`px-3 py-1 text-xs font-semibold rounded-full ${accentClasses?.text ?? 'text-purple-400'} bg-black/60 border ${accentClasses?.borderLight ?? 'border-purple-500/20'}`}>
+                                <div className={`px-3 py-1 text-sm font-semibold rounded-full ${accentClasses?.text ?? 'text-purple-400'} bg-black/60 border ${accentClasses?.borderLight ?? 'border-purple-500/20'}`}>
                                     {badge}
                                 </div>
                             </div>
