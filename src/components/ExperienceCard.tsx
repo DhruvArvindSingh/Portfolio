@@ -31,11 +31,11 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                         accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
                     >
                         <div className="flex justify-between items-start mb-3">
-                            <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                            <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
                                 {period}
                             </div>
                             <div className="flex-1 text-right">
-                                <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                 {companyUrl ? (
                                     <a href={companyUrl} className={`text-gray-300 hover:${colors.textHover} transition-colors mb-2 block flex items-center justify-end font-medium`}>
                                         {company}
@@ -48,8 +48,8 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 )}
                             </div>
                         </div>
-                        <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                        <div className="flex gap-2 text-xs mb-4 flex-wrap">
+                        <p className="text-base text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
+                        <div className="flex gap-2 text-sm mb-4 flex-wrap">
                             {technologies.map((tech, index) => {
                                 const techColors = colorMap[tech.color]
                                 return (
@@ -61,7 +61,7 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                         </div>
                         <div className="flex gap-4 flex-wrap">
                             {links.map((link, index) => (
-                                <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-sm font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2 break-all`}>
+                                <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2 break-all`}>
                                     {link.label}
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -85,11 +85,11 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
                             >
                                 <div className="flex justify-between items-start mb-3">
-                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
                                         {period}
                                     </div>
                                     <div className="flex-1 text-right">
-                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                        <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                     </div>
                                 </div>
                                 {companyUrl ? (
@@ -102,8 +102,8 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 ) : (
                                     <p className="text-gray-300 mb-2 font-medium text-right">{company}</p>
                                 )}
-                                <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                                <div className="flex gap-2 text-xs mb-4 justify-end flex-wrap">
+                                <p className="text-base text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
+                                <div className="flex gap-2 text-sm mb-4 justify-end flex-wrap">
                                     {technologies.map((tech, index) => {
                                         const techColors = colorMap[tech.color]
                                         return (
@@ -115,7 +115,7 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 </div>
                                 <div className="flex gap-4 justify-end">
                                     {links.map((link, index) => (
-                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-sm font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2 break-all`}>
+                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2 break-all`}>
                                             {link.label}
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -141,9 +141,9 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                             >
                                 <div className="flex justify-between items-start mb-3">
                                     <div className="flex-1 text-left">
-                                        <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
+                                        <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                     </div>
-                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-xs text-gray-300 font-medium backdrop-blur-sm">
+                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
                                         {period}
                                     </div>
                                 </div>
@@ -157,8 +157,8 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 ) : (
                                     <p className="text-gray-300 mb-2 font-medium text-left">{company}</p>
                                 )}
-                                <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                                <div className="flex gap-2 text-xs mb-4 justify-start flex-wrap">
+                                <p className="text-base text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
+                                <div className="flex gap-2 text-sm mb-4 justify-start flex-wrap">
                                     {technologies.map((tech, index) => {
                                         const techColors = colorMap[tech.color]
                                         return (
@@ -170,7 +170,7 @@ const ExperienceCard = ({ title, company, companyUrl, description, period, techn
                                 </div>
                                 <div className="flex gap-4">
                                     {links.map((link, index) => (
-                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-sm font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2 break-all`}>
+                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2 break-all`}>
                                             {link.label}
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
