@@ -100,3 +100,121 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* Alien card drop-in + beam */
+@keyframes alien-drop {
+  0% {
+    transform: translate3d(0, -28px, 0) rotateX(8deg) scale(0.96);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translate3d(0, 6px, 0) rotateX(0deg) scale(1.01);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes beam-pulse {
+
+  0%,
+  100% {
+    opacity: 0.0;
+    filter: blur(6px);
+  }
+
+  50% {
+    opacity: 0.35;
+    filter: blur(8px);
+  }
+}
+
+.alien-card-wrapper {
+  opacity: 0;
+  transform: translate3d(0, -24px, 0) scale(0.98);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms ease;
+}
+
+.alien-card-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  animation: alien-drop 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ufo-beam {
+  margin-top: -2px;
+  width: 120px;
+  height: 140px;
+  background: radial-gradient(ellipse at top, var(--beam-color, rgba(168, 85, 247, 0.28)), var(--beam-color-soft, rgba(168, 85, 247, 0.06)) 60%, transparent 70%);
+  clip-path: polygon(48% 0%, 52% 0%, 90% 100%, 10% 100%);
+  opacity: 0;
+  transform: translateZ(0);
+}
+
+.ufo-beam-on {
+  animation: beam-pulse 1.8s ease-in-out infinite;
+}
+
+/* Reveal-in animation (IntersectionObserver driven) */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) scale(0.98);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms ease;
+  will-change: opacity, transform, filter;
+  filter: saturate(0.8) blur(0.3px);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: saturate(1) blur(0);
+}
+
+.reveal-up {
+  transform: translate3d(0, 24px, 0) scale(0.98);
+}
+
+.reveal-down {
+  transform: translate3d(0, -24px, 0) scale(0.98);
+}
+
+.reveal-left {
+  transform: translate3d(-24px, 0, 0) scale(0.98);
+}
+
+.reveal-right {
+  transform: translate3d(24px, 0, 0) scale(0.98);
+}
+
+/* Interactive card subtle 3D hover */
+.interactive-card {
+  transform-style: preserve-3d;
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease, filter 350ms ease;
+  perspective: 1000px;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) rotateX(1deg) rotateY(-1deg) scale(1.01);
+  box-shadow: 0 12px 40px rgba(168, 85, 247, 0.2), 0 6px 18px rgba(236, 72, 153, 0.12);
+  filter: brightness(1.03);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  z-index: 70;
+  /* above header (50) */
+  background: linear-gradient(90deg, #a855f7, #ec4899, #06b6d4);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+  transition: width 120ms linear;
+}

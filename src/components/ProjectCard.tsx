@@ -1,4 +1,5 @@
 import { colorMap, ColorKey } from '../lib/colorMap'
+import AlienCard from './AlienCard'
 
 // Project Card Component
 interface ProjectCardProps {
@@ -10,9 +11,10 @@ interface ProjectCardProps {
     links: { label: string; url: string }[]
     color: ColorKey
     isLeft?: boolean
+    revealDelayMs?: number
 }
 
-const ProjectCard = ({ title, subtitle, description, year, technologies, links, color, isLeft = false }: ProjectCardProps) => {
+const ProjectCard = ({ title, subtitle, description, year, technologies, links, color, isLeft = false, revealDelayMs = 0 }: ProjectCardProps) => {
     const colors = colorMap[color]
 
     return (
@@ -21,17 +23,18 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
             <div className="md:hidden flex items-start w-full">
                 <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0 shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
                 <div className="flex-1">
-                    <div className={`bg-gray-900/90 backdrop-blur-md p-4 sm:p-6 rounded-xl border ${colors.borderLight} hover:${colors.borderHover} transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl ${colors.shadow}`}>
+                    <AlienCard
+                        side={isLeft ? 'left' : 'right'}
+                        delayMs={revealDelayMs}
+                        accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
+                        badge={<span className="whitespace-nowrap">{year}</span>}
+                    >
                         <div className="flex justify-between items-start mb-3">
                             <div className="flex-1">
                                 <h3 className={`text-lg sm:text-xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                 <p className="text-gray-300 mb-2 font-medium">{subtitle}</p>
                             </div>
-                            <div className="ml-4 flex-shrink-0">
-                                <div className={`${colors.bgLight} rounded-full px-3 py-1 text-xs ${colors.text} font-semibold border ${colors.borderLight}`}>
-                                    {year}
-                                </div>
-                            </div>
+                            <div className="ml-4 flex-shrink-0" />
                         </div>
                         <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
                         <div className="flex gap-2 text-xs mb-4 flex-wrap">
@@ -54,7 +57,7 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                                 </a>
                             ))}
                         </div>
-                    </div>
+                    </AlienCard>
                 </div>
             </div>
 
@@ -63,7 +66,12 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                 {isLeft ? (
                     <>
                         <div className="w-5/12 text-right pr-8">
-                            <div className={`bg-gray-900/90 backdrop-blur-md p-4 sm:p-6 rounded-xl border ${colors.borderLight} hover:${colors.borderHover} transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl ${colors.shadow}`}>
+                            <AlienCard
+                                side={'left'}
+                                delayMs={revealDelayMs}
+                                accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
+                                badge={<span className="whitespace-nowrap">{year}</span>}
+                            >
                                 <h3 className={`text-xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                 <p className="text-gray-300 mb-2 font-medium">{subtitle}</p>
                                 <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
@@ -87,29 +95,22 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                                         </a>
                                     ))}
                                 </div>
-                            </div>
+                            </AlienCard>
                         </div>
                         <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
-                        <div className="w-5/12 pl-8">
-                            <div className="text-sm text-gray-400">
-                                <div className={`${colors.bgLight} rounded-full px-4 py-2 inline-block font-semibold ${colors.text} border ${colors.borderLight}`}>
-                                    {year}
-                                </div>
-                            </div>
-                        </div>
+                        <div className="w-5/12 pl-8" />
                     </>
                 ) : (
                     <>
-                        <div className="w-5/12 text-right pr-8">
-                            <div className="text-sm text-gray-400">
-                                <div className={`${colors.bgLight} rounded-full px-4 py-2 inline-block font-semibold ${colors.text} border ${colors.borderLight}`}>
-                                    {year}
-                                </div>
-                            </div>
-                        </div>
+                        <div className="w-5/12 text-right pr-8" />
                         <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
                         <div className="w-5/12 pl-8">
-                            <div className={`bg-gray-900/90 backdrop-blur-md p-6 rounded-xl border ${colors.borderLight} hover:${colors.borderHover} transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl ${colors.shadow}`}>
+                            <AlienCard
+                                side={'right'}
+                                delayMs={revealDelayMs}
+                                accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
+                                badge={<span className="whitespace-nowrap">{year}</span>}
+                            >
                                 <h3 className={`text-xl font-bold ${colors.text} mb-2 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
                                 <p className="text-gray-300 mb-2 font-medium">{subtitle}</p>
                                 <p className="text-sm text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
@@ -133,7 +134,7 @@ const ProjectCard = ({ title, subtitle, description, year, technologies, links, 
                                         </a>
                                     ))}
                                 </div>
-                            </div>
+                            </AlienCard>
                         </div>
                     </>
                 )}
