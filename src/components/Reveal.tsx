@@ -14,6 +14,11 @@ interface RevealProps {
     className?: string
 }
 
+/**
+ * @description A component that reveals its children with a slide-in animation when it becomes visible in the viewport.
+ * @param {RevealProps} props The props for the component.
+ * @returns {JSX.Element} The reveal component.
+ */
 export default function Reveal({ children, direction = 'up', delayMs = 0, className = '' }: RevealProps) {
     const ref = useRef<HTMLDivElement | null>(null)
     const [visible, setVisible] = useState(false)

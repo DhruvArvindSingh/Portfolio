@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   description: "Interactive 3D portfolio showcasing cutting-edge web development with Three.js",
 };
 
+/**
+ * @description The root layout of the application.
+ * @param {Readonly<{children: React.ReactNode}>} props The props for the component.
+ * @returns {JSX.Element} The root layout component.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState } from 'react'
 
+/**
+ * @description A component that displays a progress bar indicating the scroll position of the page.
+ * @returns {JSX.Element} The scroll progress bar component.
+ */
 export default function ScrollProgressBar() {
     const [progress, setProgress] = useState(0)
 
