@@ -1,7 +1,8 @@
 # Dhruv Singh's Portfolio
 
 This repository contains the source code for Dhruv Singh's personal portfolio website.
-website: [https://portfolio.dsingh.fun](https://portfolio.dsingh.fun)
+
+Link: [https://portfolio.dsingh.fun](https://portfolio.dsingh.fun)
 
 ## About Dhruv Singh
 
