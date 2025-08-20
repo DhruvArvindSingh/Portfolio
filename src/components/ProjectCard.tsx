@@ -14,6 +14,11 @@ interface ProjectCardProps {
     revealDelayMs?: number
 }
 
+/**
+ * @description A card component that displays information about a project.
+ * @param {ProjectCardProps} props The props for the component.
+ * @returns {JSX.Element} The project card component.
+ */
 const ProjectCard = ({ title, subtitle, description, year, technologies, links, color, isLeft = false, revealDelayMs = 0 }: ProjectCardProps) => {
     const colors = colorMap[color]
 

@@ -1,3 +1,8 @@
+/**
+ * @description A map of color palettes for consistent styling across components.
+ * Each color palette includes Tailwind CSS classes for background, border, text, and shadow.
+ * @type {Record<string, Record<string, string>>}
+ */
 // Color mapping for consistent styling across components
 export const colorMap = {
     purple: {

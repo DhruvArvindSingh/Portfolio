@@ -23,6 +23,11 @@ interface AlienCardProps {
     badge?: React.ReactNode
 }
 
+/**
+ * @description A card component with a UFO animation that displays content.
+ * @param {AlienCardProps} props The props for the component.
+ * @returns {JSX.Element} The alien card component.
+ */
 export default function AlienCard({
     children,
     side = 'left',

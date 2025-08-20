@@ -9,6 +9,10 @@ import { ColorKey } from '../lib/colorMap'
 import Reveal from '../components/Reveal'
 
 // Data arrays for experiences and projects
+/**
+ * @description An array of experience objects.
+ * @type {Array<{title: string, company: string, companyUrl?: string, description: string, period: string, technologies: {name: string, color: ColorKey}[], links: {label: string, url: string}[], color: ColorKey}>}
+ */
 const experiences: Array<{
   title: string
   company: string
@@ -56,6 +60,10 @@ const experiences: Array<{
     }
   ]
 
+/**
+ * @description An array of project objects.
+ * @type {Array<{title: string, subtitle: string, description: string, year: string, technologies: {name: string, color: ColorKey}[], links: {label: string, url: string}[], color: ColorKey}>}
+ */
 const projects: Array<{
   title: string
   subtitle: string
@@ -178,6 +186,10 @@ const projects: Array<{
     }
   ]
 
+/**
+ * @description An array of additional project objects.
+ * @type {Array<{title: string, subtitle: string, description: string, year: string, technologies: {name: string, color: ColorKey}[], links: {label: string, url: string}[], color: ColorKey}>}
+ */
 const additionalProjects: Array<{
   title: string
   subtitle: string
@@ -256,6 +268,10 @@ const Brain3DClientOnly = () => {
   return <Brain3D />
 }
 
+/**
+ * @description The home page of the portfolio.
+ * @returns {JSX.Element} The home page component.
+ */
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showAllProjects, setShowAllProjects] = useState(false)

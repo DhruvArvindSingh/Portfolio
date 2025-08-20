@@ -9,6 +9,15 @@ interface BrainModelProps {
     mouseX: number
 }
 
+/**
+ * @description A component that renders a lightning effect.
+ * @param {object} props The props for the component.
+ * @param {[number, number, number]} props.position The position of the lightning effect.
+ * @param {boolean} props.visible Whether the lightning effect is visible.
+ * @param {boolean} [props.useNegativeDirections] Whether to use negative directions for the lightning effect.
+ * @param {boolean} [props.isDarkPhase] Whether the brain is in a dark phase.
+ * @returns {JSX.Element} The lightning component.
+ */
 // Lightning bolt component
 function Lightning({ position, visible, useNegativeDirections = false, isDarkPhase = false }: { position: [number, number, number], visible: boolean, useNegativeDirections?: boolean, isDarkPhase?: boolean }) {
     const lightningRef = useRef<THREE.Group>(null)
@@ -209,6 +218,11 @@ function Lightning({ position, visible, useNegativeDirections = false, isDarkPha
     )
 }
 
+/**
+ * @description A component that renders the 3D brain model and handles its animations.
+ * @param {BrainModelProps} props The props for the component.
+ * @returns {JSX.Element} The brain model component.
+ */
 function BrainModel({ mouseX }: BrainModelProps) {
     const brainRef = useRef<THREE.Group>(null)
     const { scene } = useGLTF('/brain_3D_model.glb')
@@ -331,6 +345,16 @@ function BrainModel({ mouseX }: BrainModelProps) {
     )
 }
 
+/**
+ * @description A component that renders a floating decorative shape.
+ * @param {object} props The props for the component.
+ * @param {[number, number, number]} props.position The position of the shape.
+ * @param {'sphere' | 'box' | 'octahedron' | 'torus'} props.shape The shape of the object.
+ * @param {string} props.color The color of the shape.
+ * @param {number} props.size The size of the shape.
+ * @param {number} props.speed The speed of the floating animation.
+ * @returns {JSX.Element} The floating shape component.
+ */
 // Floating decorative element
 function FloatingShape({ position, shape, color, size, speed }: {
     position: [number, number, number],
@@ -383,6 +407,10 @@ function FloatingShape({ position, shape, color, size, speed }: {
     )
 }
 
+/**
+ * @description A component that renders a rotating torus knot element.
+ * @returns {JSX.Element} The torus knot element component.
+ */
 // Rotating Torus Knot Element
 function TorusKnotElement() {
     const meshRef = useRef<THREE.Mesh>(null)
@@ -403,6 +431,10 @@ function TorusKnotElement() {
     )
 }
 
+/**
+ * @description A component that renders a rotating dodecahedron element.
+ * @returns {JSX.Element} The dodecahedron element component.
+ */
 // Rotating Dodecahedron Element
 function DodecahedronElement() {
     const meshRef = useRef<THREE.Mesh>(null)
@@ -423,6 +455,10 @@ function DodecahedronElement() {
     )
 }
 
+/**
+ * @description A component that renders a rotating floating particle system.
+ * @returns {JSX.Element} The floating particles component.
+ */
 // Rotating floating particle system 
 function FloatingParticles() {
     const particlesRef = useRef<THREE.Group>(null)
@@ -472,6 +508,10 @@ function FloatingParticles() {
     )
 }
 
+/**
+ * @description A component that renders additional twinkling stars.
+ * @returns {JSX.Element} The twinkling stars component.
+ */
 // Additional twinkling stars component
 function TwinklingStars() {
     const starsRef = useRef<THREE.Group>(null)
@@ -528,6 +568,13 @@ function TwinklingStars() {
     )
 }
 
+/**
+ * @description A component that renders an animated fire particle for the rocket.
+ * @param {object} props The props for the component.
+ * @param {[number, number, number]} props.position The position of the particle.
+ * @param {number} props.delay The delay of the animation.
+ * @returns {JSX.Element} The rocket fire particle component.
+ */
 // Animated Fire Particle for Rocket
 function RocketFireParticle({ position, delay }: { position: [number, number, number], delay: number }) {
     const meshRef = useRef<THREE.Mesh>(null)
@@ -571,6 +618,10 @@ function RocketFireParticle({ position, delay }: { position: [number, number, nu
     )
 }
 
+/**
+ * @description A component that renders a beautiful rocket with animations.
+ * @returns {JSX.Element} The beautiful rocket component.
+ */
 // Beautiful Rocket Component
 function BeautifulRocket() {
     const rocketRef = useRef<THREE.Group>(null)
@@ -756,6 +807,10 @@ function BeautifulRocket() {
     )
 }
 
+/**
+ * @description A component that renders the background scene, which is not affected by the cursor.
+ * @returns {JSX.Element} The background scene component.
+ */
 // Background elements scene (not affected by cursor)
 function BackgroundScene() {
     const { camera } = useThree()
@@ -832,6 +887,11 @@ function BackgroundScene() {
     )
 }
 
+/**
+ * @description A component that renders the brain scene, which is affected by the cursor.
+ * @param {BrainModelProps} props The props for the component.
+ * @returns {JSX.Element} The brain scene component.
+ */
 // Brain scene (affected by cursor)
 function BrainScene({ mouseX }: BrainModelProps) {
     const { camera } = useThree()
@@ -857,6 +917,10 @@ function BrainScene({ mouseX }: BrainModelProps) {
     )
 }
 
+/**
+ * @description A component that renders a 3D brain model with animations and interactive elements.
+ * @returns {JSX.Element} The 3D brain component.
+ */
 export default function Brain3D() {
     const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 })
 
