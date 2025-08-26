@@ -147,10 +147,10 @@ body {
 
 .ufo-beam {
   margin-top: -2px;
-  width: 120px;
-  height: 140px;
+  width: 180px;
+  height: 210px;
   background: radial-gradient(ellipse at top, var(--beam-color, rgba(168, 85, 247, 0.28)), var(--beam-color-soft, rgba(168, 85, 247, 0.06)) 60%, transparent 70%);
-  clip-path: polygon(48% 0%, 52% 0%, 90% 100%, 10% 100%);
+  clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%);
   opacity: 0;
   transform: translateZ(0);
 }

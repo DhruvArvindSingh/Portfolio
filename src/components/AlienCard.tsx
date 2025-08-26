@@ -63,15 +63,15 @@ export default function AlienCard({
     // Variant palette
     const ufoPrimary = variant === 'experience' ? '#22c55e' : '#a855f7'
     const ufoSecondary = variant === 'experience' ? '#84cc16' : '#ec4899'
-    const beamColor = variant === 'experience' ? 'rgba(16,185,129,0.28)' : 'rgba(168,85,247,0.28)'
-    const beamColorSoft = variant === 'experience' ? 'rgba(16,185,129,0.06)' : 'rgba(168,85,247,0.06)'
+    const beamColor = variant === 'experience' ? 'rgba(16,185,129,0.5)' : 'rgba(168,85,247,0.5)'
+    const beamColorSoft = variant === 'experience' ? 'rgba(16,185,129,0.2)' : 'rgba(168,85,247,0.2)'
 
     return (
         <div ref={ref} className={`relative`}>
             {/* UFO + Tractor Beam */}
             <div className={`pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center h-10 w-24 ${visible ? 'alien-visible' : ''}`}>
                 {/* Simple SVG UFO */}
-                <svg width="64" height="24" viewBox="0 0 64 24" className={`drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] ${visible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
+                <svg width="64" height="24" viewBox="0 0 64 24" className={`transform scale-150 drop-shadow-[0_0_16px_rgba(168,85,247,0.8)] ${visible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
                     <ellipse cx="32" cy="12" rx="18" ry="6" fill={ufoPrimary} opacity="0.9" />
                     <ellipse cx="32" cy="10" rx="10" ry="3" fill={ufoSecondary} opacity="0.9" />
                     <circle cx="24" cy="12" r="1.6" fill="#06b6d4" />

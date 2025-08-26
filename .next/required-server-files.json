@@ -97,7 +97,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/home/dhruv-singh/C_drive/Code/Portfolio",
+    "outputFileTracingRoot": "/home/runner/work/Portfolio/Portfolio",
     "experimental": {
       "nodeMiddleware": false,
       "cacheLife": {
@@ -155,7 +155,7 @@
       "middlewarePrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 15,
+      "cpus": 3,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -280,10 +280,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "/home/dhruv-singh/C_drive/Code/Portfolio"
+      "root": "/home/runner/work/Portfolio/Portfolio"
     }
   },
-  "appDir": "/home/dhruv-singh/C_drive/Code/Portfolio",
+  "appDir": "/home/runner/work/Portfolio/Portfolio",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",
