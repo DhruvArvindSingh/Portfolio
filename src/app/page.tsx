@@ -412,10 +412,10 @@ export default function Home() {
               <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
                 <div>
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none mb-4">
-                    NISCHAL
+                    Shashwat
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                      YERRAMSETTY
+                      Patel
                     </span>
                   </h1>
                   <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 break-words">
