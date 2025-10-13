@@ -7,6 +7,14 @@ import ExperienceCard from '../components/ExperienceCard'
 import Brain3D from '../components/Brain3D'
 import { ColorKey } from '../lib/colorMap'
 import Reveal from '../components/Reveal'
+import SkillsRadar from '../components/SkillsRadar'
+import StatsCounter from '../components/StatsCounter'
+import ThemeToggle from '../components/ThemeToggle'
+import ParticleCursor from '../components/ParticleCursor'
+import Testimonials from '../components/Testimonials'
+import BlogPreview from '../components/BlogPreview'
+import Newsletter from '../components/Newsletter'
+import LoadingAnimation from '../components/LoadingAnimation'
 
 // Data arrays for experiences and projects
 /**
@@ -275,6 +283,7 @@ const Brain3DClientOnly = () => {
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const [projectFilter, setProjectFilter] = useState<string>('All')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -283,6 +292,17 @@ export default function Home() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState('')
+
+  // Get unique technologies for filtering
+  const allTechnologies = Array.from(
+    new Set(projects.flatMap(p => p.technologies.map(t => t.name)))
+  )
+  const projectCategories = ['All', ...allTechnologies.slice(0, 8)] // Show top 8 techs
+
+  // Filter projects based on selected technology
+  const filteredProjects = projectFilter === 'All'
+    ? projects
+    : projects.filter(p => p.technologies.some(t => t.name === projectFilter))
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -323,6 +343,15 @@ export default function Home() {
 
   return (
     <div className="bg-black text-white overflow-x-hidden min-h-screen" suppressHydrationWarning>
+      {/* Loading Animation */}
+      <LoadingAnimation />
+
+      {/* Particle Cursor */}
+      <ParticleCursor />
+
+      {/* Theme Toggle */}
+      <ThemeToggle />
+
       {/* Fixed 3D Brain Background */}
       <div className="fixed inset-0 z-0">
         <Brain3DClientOnly />
@@ -346,8 +375,17 @@ export default function Home() {
               <a href="#experience" className="hover:text-purple-400 transition-colors">
                 EXPERIENCE
               </a>
+              <a href="#skills" className="hover:text-purple-400 transition-colors">
+                SKILLS
+              </a>
               <a href="#projects" className="hover:text-purple-400 transition-colors">
                 PROJECTS
+              </a>
+              <a href="#testimonials" className="hover:text-purple-400 transition-colors">
+                TESTIMONIALS
+              </a>
+              <a href="#blog" className="hover:text-purple-400 transition-colors">
+                BLOG
               </a>
               <a href="#contact" className="hover:text-purple-400 transition-colors">
                 CONTACT
@@ -386,11 +424,32 @@ export default function Home() {
                   EXPERIENCE
                 </a>
                 <a
+                  href="#skills"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  SKILLS
+                </a>
+                <a
                   href="#projects"
                   className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   PROJECTS
+                </a>
+                <a
+                  href="#testimonials"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  TESTIMONIALS
+                </a>
+                <a
+                  href="#blog"
+                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  BLOG
                 </a>
                 <a
                   href="#contact"
@@ -578,6 +637,40 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Stats Section */}
+        <section className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
+          <div className="max-w-7xl w-full mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
+                  ACHIEVEMENTS
+                </span>
+              </h2>
+              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4">
+                Numbers that speak for themselves
+              </p>
+            </div>
+            <StatsCounter />
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
+          <div className="max-w-7xl w-full mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
+                  SKILLS
+                </span>
+              </h2>
+              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4">
+                Interactive visualization of my technical expertise
+              </p>
+            </div>
+            <SkillsRadar />
+          </div>
+        </section>
+
         {/* Projects Section */}
         <section id="projects" className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
           <div className="max-w-7xl w-full mx-auto">
@@ -587,9 +680,25 @@ export default function Home() {
                   PROJECTS
                 </span>
               </h2>
-              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4">
+              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4 mb-8">
                 Showcasing innovative solutions and creative implementations
               </p>
+
+              {/* Project Filter */}
+              <div className="flex flex-wrap gap-3 justify-center max-w-4xl mx-auto">
+                {projectCategories.map((tech) => (
+                  <button
+                    key={tech}
+                    onClick={() => setProjectFilter(tech)}
+                    className={`px-4 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${projectFilter === tech
+                        ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/50'
+                        : 'bg-gray-800/50 text-gray-300 border border-gray-600/30 hover:border-cyan-400/50'
+                      }`}
+                  >
+                    {tech}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Projects Timeline */}
@@ -599,7 +708,7 @@ export default function Home() {
 
               {/* Project Items */}
               <div className="space-y-8 md:space-y-16">
-                {projects.map((project, index) => (
+                {filteredProjects.map((project, index) => (
                   <ProjectCard
                     key={index}
                     {...project}
@@ -650,6 +759,47 @@ export default function Home() {
                 </div>
               </button>
             </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section id="testimonials" className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
+          <div className="max-w-7xl w-full mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400">
+                  TESTIMONIALS
+                </span>
+              </h2>
+              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4">
+                What people say about working with me
+              </p>
+            </div>
+            <Testimonials />
+          </div>
+        </section>
+
+        {/* Blog Section */}
+        <section id="blog" className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
+          <div className="max-w-7xl w-full mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+                  LATEST BLOG POSTS
+                </span>
+              </h2>
+              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4">
+                Insights, tutorials, and thoughts on technology
+              </p>
+            </div>
+            <BlogPreview />
+          </div>
+        </section>
+
+        {/* Newsletter Section */}
+        <section className="snap-start min-h-[50vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-black/20 backdrop-blur-none">
+          <div className="max-w-7xl w-full mx-auto">
+            <Newsletter />
           </div>
         </section>
 
