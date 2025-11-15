@@ -19,7 +19,7 @@ export default function Newsletter() {
             setTimeout(() => {
                 setStatus('idle')
             }, 3000)
-        } catch (error) {
+        } catch {
             setStatus('error')
         }
     }
@@ -67,4 +67,3 @@ export default function Newsletter() {
         </div>
     )
 }
-

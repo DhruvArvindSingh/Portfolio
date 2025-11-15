@@ -15,35 +15,11 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
     {
-        name: 'Sarah Johnson',
-        role: 'CTO',
-        company: 'TechCorp',
-        image: '/image.png', // Using placeholder, replace with actual testimonial images
-        content: 'Working with Dhruv was an absolute pleasure. His expertise in full-stack development and blockchain technology helped us build a robust and scalable platform. Highly recommended!',
-        rating: 5
-    },
-    {
-        name: 'Michael Chen',
-        role: 'Lead Developer',
-        company: 'StartupHub',
-        image: '/image.png',
-        content: 'Dhruv\'s contributions to our open-source project were invaluable. His code quality and attention to detail are exceptional. A true professional!',
-        rating: 5
-    },
-    {
-        name: 'Emily Rodriguez',
-        role: 'Product Manager',
-        company: 'InnovateLabs',
-        image: '/image.png',
-        content: 'Outstanding developer with great communication skills. Dhruv delivered our project ahead of schedule and exceeded all expectations. Would definitely work with him again!',
-        rating: 5
-    },
-    {
-        name: 'David Thompson',
-        role: 'Engineering Manager',
-        company: 'CloudSystems',
-        image: '/image.png',
-        content: 'Dhruv has a rare combination of technical excellence and creative problem-solving. His work on our AWS infrastructure was flawless.',
+        name: 'Manu Sheel Gupta',
+        role: 'Cofounder of SeetaLabs',
+        company: 'SeetaLabs',
+        image: '/manu-sheel-gupta.jpg',
+        content: 'Dhruv Arvind Singh made impactful contributions to the Web3 Maintainer Suite project under C4GT. He integrated diverse database solutions to enable robust billing and invoicing for industrial maintenance scenarios. Dhruv further scaled the system for interoperability across multiple cloud platforms, including AWS and GCP, while seamlessly integrating decentralized storage. His work showcases strong technical depth and a clear focus on practical, scalable innovation.',
         rating: 5
     }
 ]

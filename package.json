@@ -17,6 +17,8 @@
     "pm2": "^6.0.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-email": "^4.3.0",
+    "resend": "^6.1.2",
     "three": "^0.177.0"
   },
   "devDependencies": {

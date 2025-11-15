@@ -98,8 +98,7 @@ export default function AlienCard({
                     )}
                     {/* Hologram scan lines overlay */}
                     <div className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(transparent_12px,rgba(255,255,255,0.5)_12px,rgba(255,255,255,0.5)_13px,transparent_13px)] bg-[length:100%_13px]" />
-                    {/* Moving nebula sheen */
-          /* eslint-disable-next-line react/no-unknown-property */}
+                    {/* Moving nebula sheen */}
                     <div className="pointer-events-none absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <div className="absolute -inset-1 blur-2xl bg-[conic-gradient(from_180deg_at_50%_50%,rgba(168,85,247,0.18)_0deg,rgba(236,72,153,0.18)_120deg,rgba(6,182,212,0.18)_240deg,rgba(168,85,247,0.18)_360deg)] animate-[spin_8s_linear_infinite]" />
                     </div>
@@ -120,5 +119,3 @@ export default function AlienCard({
         </div>
     )
 }
-
-

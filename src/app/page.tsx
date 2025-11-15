@@ -9,10 +9,8 @@ import { ColorKey } from '../lib/colorMap'
 import Reveal from '../components/Reveal'
 import SkillsRadar from '../components/SkillsRadar'
 import StatsCounter from '../components/StatsCounter'
-import ThemeToggle from '../components/ThemeToggle'
 import ParticleCursor from '../components/ParticleCursor'
 import Testimonials from '../components/Testimonials'
-import BlogPreview from '../components/BlogPreview'
 import Newsletter from '../components/Newsletter'
 import LoadingAnimation from '../components/LoadingAnimation'
 
@@ -350,7 +348,6 @@ export default function Home() {
       <ParticleCursor />
 
       {/* Theme Toggle */}
-      <ThemeToggle />
 
       {/* Fixed 3D Brain Background */}
       <div className="fixed inset-0 z-0">
@@ -383,9 +380,6 @@ export default function Home() {
               </a>
               <a href="#testimonials" className="hover:text-purple-400 transition-colors">
                 TESTIMONIALS
-              </a>
-              <a href="#blog" className="hover:text-purple-400 transition-colors">
-                BLOG
               </a>
               <a href="#contact" className="hover:text-purple-400 transition-colors">
                 CONTACT
@@ -445,13 +439,6 @@ export default function Home() {
                   TESTIMONIALS
                 </a>
                 <a
-                  href="#blog"
-                  className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  BLOG
-                </a>
-                <a
                   href="#contact"
                   className="text-white hover:text-purple-400 transition-colors text-sm tracking-wide"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -471,10 +458,10 @@ export default function Home() {
               <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
                 <div>
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none mb-4">
-                    Shashwat
+                    DHRUV
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                      Patel
+                      SINGH
                     </span>
                   </h1>
                   <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 break-words">
@@ -776,23 +763,6 @@ export default function Home() {
               </p>
             </div>
             <Testimonials />
-          </div>
-        </section>
-
-        {/* Blog Section */}
-        <section id="blog" className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-black/20 backdrop-blur-none">
-          <div className="max-w-7xl w-full mx-auto">
-            <div className="text-center mb-12 sm:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-                  LATEST BLOG POSTS
-                </span>
-              </h2>
-              <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4">
-                Insights, tutorials, and thoughts on technology
-              </p>
-            </div>
-            <BlogPreview />
           </div>
         </section>
 
