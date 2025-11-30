@@ -31,6 +31,7 @@ jobs:
                 cd Portfolio
                 git pull origin master
                 npm install
+                npm run build
                 pm2 restart all
             else
                 echo "❌ Portfolio directory not found!"
