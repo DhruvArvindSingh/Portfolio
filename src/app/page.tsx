@@ -458,7 +458,7 @@ export default function Home() {
               <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
                 <div>
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none mb-4">
-                    DHRUV
+                    NISCHAL
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                       SINGH
@@ -678,8 +678,8 @@ export default function Home() {
                     key={tech}
                     onClick={() => setProjectFilter(tech)}
                     className={`px-4 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${projectFilter === tech
-                        ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/50'
-                        : 'bg-gray-800/50 text-gray-300 border border-gray-600/30 hover:border-cyan-400/50'
+                      ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/50'
+                      : 'bg-gray-800/50 text-gray-300 border border-gray-600/30 hover:border-cyan-400/50'
                       }`}
                   >
                     {tech}
