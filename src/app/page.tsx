@@ -458,7 +458,7 @@ export default function Home() {
               <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
                 <div>
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none mb-4">
-                    NISCHAL
+                    DHRUV
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                       SINGH
