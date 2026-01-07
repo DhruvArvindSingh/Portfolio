@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Reveal from './Reveal'
+import { motion } from 'framer-motion'
 
 interface Skill {
     name: string
@@ -12,30 +12,30 @@ interface Skill {
 
 const skills: Skill[] = [
     // Frontend
-    { name: 'React/Next.js', level: 95, category: 'Frontend', color: '#61dafb' },
-    { name: 'TypeScript', level: 90, category: 'Frontend', color: '#3178c6' },
-    { name: 'Tailwind CSS', level: 92, category: 'Frontend', color: '#06b6d4' },
-    { name: 'Three.js', level: 85, category: 'Frontend', color: '#000000' },
+    { name: 'React/Next.js', level: 95, category: 'Frontend', color: '#00FF41' }, // Terminal Green
+    { name: 'TypeScript', level: 90, category: 'Frontend', color: '#2496ED' }, // Docker Blue
+    { name: 'Tailwind CSS', level: 92, category: 'Frontend', color: '#00F0FF' }, // Holographic Cyan
+    { name: 'Three.js', level: 85, category: 'Frontend', color: '#FFFFFF' },
 
     // Backend
-    { name: 'Node.js', level: 88, category: 'Backend', color: '#68a063' },
-    { name: 'Express', level: 87, category: 'Backend', color: '#000000' },
-    { name: 'PostgreSQL', level: 82, category: 'Backend', color: '#336791' },
-    { name: 'Redis', level: 80, category: 'Backend', color: '#dc382d' },
+    { name: 'Node.js', level: 88, category: 'Backend', color: '#00FF41' },
+    { name: 'Express', level: 87, category: 'Backend', color: '#627EEA' }, // Ethereum Purple
+    { name: 'PostgreSQL', level: 82, category: 'Backend', color: '#2496ED' },
+    { name: 'Redis', level: 80, category: 'Backend', color: '#FF00FF' }, // Neon Pink
 
     // DevOps & Cloud
-    { name: 'AWS', level: 85, category: 'DevOps', color: '#ff9900' },
-    { name: 'Docker', level: 88, category: 'DevOps', color: '#2496ed' },
-    { name: 'Kafka', level: 75, category: 'DevOps', color: '#231f20' },
+    { name: 'AWS', level: 85, category: 'DevOps', color: '#FF9900' },
+    { name: 'Docker', level: 88, category: 'DevOps', color: '#2496ED' },
+    { name: 'Kafka', level: 75, category: 'DevOps', color: '#FFFFFF' },
 
     // Blockchain
-    { name: 'Solidity', level: 78, category: 'Blockchain', color: '#363636' },
-    { name: 'Web3.js', level: 80, category: 'Blockchain', color: '#f16822' },
+    { name: 'Solidity', level: 78, category: 'Blockchain', color: '#627EEA' },
+    { name: 'Web3.js', level: 80, category: 'Blockchain', color: '#FF9900' },
 
     // Languages
-    { name: 'Rust', level: 70, category: 'Languages', color: '#ce422b' },
-    { name: 'C/C++', level: 85, category: 'Languages', color: '#659bd3' },
-    { name: 'Python', level: 83, category: 'Languages', color: '#3776ab' },
+    { name: 'Rust', level: 70, category: 'Languages', color: '#FF00FF' },
+    { name: 'C/C++', level: 85, category: 'Languages', color: '#2496ED' },
+    { name: 'Python', level: 83, category: 'Languages', color: '#00F0FF' },
 ]
 
 export default function SkillsRadar() {
@@ -56,183 +56,208 @@ export default function SkillsRadar() {
         const ctx = canvas.getContext('2d')
         if (!ctx) return
 
-        const centerX = canvas.width / 2
-        const centerY = canvas.height / 2
-        const maxRadius = Math.min(centerX, centerY) - 40
-
-        let animationFrame: number
-        let rotation = 0
+        // Handle high DPI displays
+        const dpr = window.devicePixelRatio || 1
+        const rect = canvas.getBoundingClientRect()
+        
+        canvas.width = rect.width * dpr
+        canvas.height = rect.height * dpr
+        
+        ctx.scale(dpr, dpr)
+        
+        const width = rect.width
+        const height = rect.height
+        const centerX = width / 2
+        const centerY = height / 2
+        const maxRadius = Math.min(centerX, centerY) - 60
 
         const drawRadar = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.clearRect(0, 0, width, height)
 
-            // Draw concentric circles
-            const levels = 5
+            // Draw concentric circles (Grid)
+            const levels = 4
             for (let i = 1; i <= levels; i++) {
                 const radius = (maxRadius / levels) * i
                 ctx.beginPath()
                 ctx.arc(centerX, centerY, radius, 0, Math.PI * 2)
-                ctx.strokeStyle = `rgba(168, 85, 247, ${0.1 + i * 0.05})`
+                ctx.strokeStyle = `rgba(0, 255, 65, ${0.1 + i * 0.05})` // Green grid
                 ctx.lineWidth = 1
+                ctx.setLineDash([5, 5])
                 ctx.stroke()
+                ctx.setLineDash([])
 
                 // Add level labels
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'
-                ctx.font = '10px sans-serif'
-                ctx.fillText(`${i * 20}%`, centerX + 5, centerY - radius + 5)
+                ctx.fillStyle = 'rgba(0, 255, 65, 0.5)'
+                ctx.font = '10px "JetBrains Mono", monospace'
+                ctx.fillText(`${i * 25}%`, centerX + 5, centerY - radius + 5)
             }
 
             // Draw axes
             const numAxes = filteredSkills.length
             for (let i = 0; i < numAxes; i++) {
-                const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2 + rotation * 0.001
+                const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2
                 const x = centerX + Math.cos(angle) * maxRadius
                 const y = centerY + Math.sin(angle) * maxRadius
 
                 ctx.beginPath()
                 ctx.moveTo(centerX, centerY)
                 ctx.lineTo(x, y)
-                ctx.strokeStyle = 'rgba(168, 85, 247, 0.2)'
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.2)'
                 ctx.lineWidth = 1
                 ctx.stroke()
             }
 
-            // Draw skill points and connect them
-            ctx.beginPath()
-            filteredSkills.forEach((skill, i) => {
-                const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2 + rotation * 0.001
-                const radius = (skill.level / 100) * maxRadius
-                const x = centerX + Math.cos(angle) * radius
-                const y = centerY + Math.sin(angle) * radius
-
-                if (i === 0) {
-                    ctx.moveTo(x, y)
-                } else {
-                    ctx.lineTo(x, y)
-                }
-
-                // Draw skill points
-                ctx.save()
-                ctx.beginPath()
-                ctx.arc(x, y, hoveredSkill?.name === skill.name ? 8 : 5, 0, Math.PI * 2)
-                ctx.fillStyle = skill.color
-                ctx.fill()
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'
-                ctx.lineWidth = 2
-                ctx.stroke()
-                ctx.restore()
-            })
-
-            // Complete the polygon
+            // Draw skill polygon
             if (filteredSkills.length > 0) {
+                ctx.beginPath()
+                filteredSkills.forEach((skill, i) => {
+                    const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2
+                    const radius = (skill.level / 100) * maxRadius
+                    const x = centerX + Math.cos(angle) * radius
+                    const y = centerY + Math.sin(angle) * radius
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y)
+                    } else {
+                        ctx.lineTo(x, y)
+                    }
+                })
                 ctx.closePath()
-                ctx.fillStyle = 'rgba(168, 85, 247, 0.1)'
+                ctx.fillStyle = 'rgba(0, 255, 65, 0.1)'
                 ctx.fill()
-                ctx.strokeStyle = 'rgba(168, 85, 247, 0.5)'
+                ctx.strokeStyle = '#00FF41'
                 ctx.lineWidth = 2
                 ctx.stroke()
             }
 
-            // Draw skill labels
+            // Draw skill points
             filteredSkills.forEach((skill, i) => {
-                const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2 + rotation * 0.001
-                const labelRadius = maxRadius + 25
+                const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2
+                const radius = (skill.level / 100) * maxRadius
+                const x = centerX + Math.cos(angle) * radius
+                const y = centerY + Math.sin(angle) * radius
+
+                // Draw point
+                ctx.beginPath()
+                ctx.arc(x, y, hoveredSkill?.name === skill.name ? 6 : 4, 0, Math.PI * 2)
+                ctx.fillStyle = skill.color
+                ctx.fill()
+                
+                // Glow effect
+                if (hoveredSkill?.name === skill.name) {
+                    ctx.shadowColor = skill.color
+                    ctx.shadowBlur = 15
+                    ctx.stroke()
+                    ctx.shadowBlur = 0
+                }
+            })
+
+            // Draw labels
+            filteredSkills.forEach((skill, i) => {
+                const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2
+                const labelRadius = maxRadius + 30
                 const x = centerX + Math.cos(angle) * labelRadius
                 const y = centerY + Math.sin(angle) * labelRadius
 
-                ctx.fillStyle = hoveredSkill?.name === skill.name ? skill.color : 'rgba(255, 255, 255, 0.7)'
-                ctx.font = hoveredSkill?.name === skill.name ? 'bold 12px sans-serif' : '11px sans-serif'
+                ctx.fillStyle = hoveredSkill?.name === skill.name ? '#00FF41' : 'rgba(255, 255, 255, 0.6)'
+                ctx.font = hoveredSkill?.name === skill.name ? 'bold 12px "JetBrains Mono", monospace' : '11px "JetBrains Mono", monospace'
                 ctx.textAlign = 'center'
                 ctx.textBaseline = 'middle'
                 ctx.fillText(skill.name, x, y)
             })
-
-            rotation += 0.5
-            animationFrame = requestAnimationFrame(drawRadar)
         }
 
         drawRadar()
+        
+        // Redraw on resize
+        window.addEventListener('resize', drawRadar)
 
         return () => {
-            cancelAnimationFrame(animationFrame)
+            window.removeEventListener('resize', drawRadar)
         }
     }, [filteredSkills, hoveredSkill])
 
     return (
         <div className="w-full">
-            <Reveal direction="up">
-                <div className="bg-gray-900/80 backdrop-blur-md rounded-3xl p-8 border border-purple-500/20">
-                    {/* Category Filter */}
-                    <div className="flex flex-wrap gap-3 justify-center mb-8">
-                        {categories.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setSelectedCategory(category)}
-                                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${selectedCategory === category
-                                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50'
-                                        : 'bg-gray-800/50 text-gray-300 border border-gray-600/30 hover:border-purple-400/50'
-                                    }`}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-black/80 backdrop-blur-md rounded-sm p-8 border border-green-500/30 relative overflow-hidden"
+            >
+                {/* Decorative Corners */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-green-500"></div>
+                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-green-500"></div>
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-green-500"></div>
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-green-500"></div>
 
-                    {/* Radar Chart */}
-                    <div className="flex justify-center mb-6">
-                        <canvas
-                            ref={canvasRef}
-                            width={600}
-                            height={600}
-                            className="max-w-full h-auto"
-                            onMouseMove={(e) => {
-                                const rect = canvasRef.current?.getBoundingClientRect()
-                                if (!rect) return
-
-                                const x = e.clientX - rect.left
-                                const y = e.clientY - rect.top
-                                const centerX = rect.width / 2
-                                const centerY = rect.height / 2
-
-                                let found = false
-                                filteredSkills.forEach((skill, i) => {
-                                    const angle = (Math.PI * 2 * i) / filteredSkills.length - Math.PI / 2
-                                    const maxRadius = Math.min(centerX, centerY) - 40
-                                    const radius = (skill.level / 100) * maxRadius
-                                    const skillX = centerX + Math.cos(angle) * radius
-                                    const skillY = centerY + Math.sin(angle) * radius
-
-                                    const distance = Math.sqrt(Math.pow(x - skillX, 2) + Math.pow(y - skillY, 2))
-                                    if (distance < 15) {
-                                        setHoveredSkill(skill)
-                                        found = true
-                                    }
-                                })
-
-                                if (!found) setHoveredSkill(null)
-                            }}
-                            onMouseLeave={() => setHoveredSkill(null)}
-                        />
-                    </div>
-
-                    {/* Skill Details on Hover */}
-                    {hoveredSkill && (
-                        <div className="text-center">
-                            <div className="inline-block bg-gray-800/90 backdrop-blur-sm px-6 py-4 rounded-2xl border border-purple-500/30">
-                                <h4 className="text-xl font-bold mb-2" style={{ color: hoveredSkill.color }}>
-                                    {hoveredSkill.name}
-                                </h4>
-                                <div className="flex items-center gap-3 justify-center">
-                                    <div className="text-gray-400">{hoveredSkill.category}</div>
-                                    <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-                                    <div className="text-purple-400 font-bold">{hoveredSkill.level}%</div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                {/* Category Filter */}
+                <div className="flex flex-wrap gap-3 justify-center mb-8">
+                    {categories.map((category) => (
+                        <button
+                            key={category}
+                            onClick={() => setSelectedCategory(category)}
+                            className={`px-4 py-1 text-xs font-mono border transition-all ${
+                                selectedCategory === category
+                                    ? 'bg-green-500 text-black border-green-500 font-bold'
+                                    : 'bg-black text-gray-400 border-gray-800 hover:border-green-500/50'
+                            }`}
+                        >
+                            [{category.toUpperCase()}]
+                        </button>
+                    ))}
                 </div>
-            </Reveal>
+
+                {/* Radar Chart */}
+                <div className="flex justify-center mb-6 relative z-10">
+                    <canvas
+                        ref={canvasRef}
+                        style={{ width: '100%', maxWidth: '600px', height: 'auto', aspectRatio: '1/1' }}
+                        onMouseMove={(e) => {
+                            const canvas = canvasRef.current
+                            if (!canvas) return
+                            const rect = canvas.getBoundingClientRect()
+                            
+                            // Scale coordinates to match canvas internal resolution
+                            const scaleX = canvas.width / rect.width
+                            const scaleY = canvas.height / rect.height
+
+                            const x = (e.clientX - rect.left) * scaleX
+                            const y = (e.clientY - rect.top) * scaleY
+                            
+                            const centerX = canvas.width / 2
+                            const centerY = canvas.height / 2
+
+                            let found = false
+                            filteredSkills.forEach((skill, i) => {
+                                const angle = (Math.PI * 2 * i) / filteredSkills.length - Math.PI / 2
+                                const maxRadius = Math.min(centerX, centerY) - 60 * scaleX // Adjust for scale
+                                const radius = (skill.level / 100) * maxRadius
+                                const skillX = centerX + Math.cos(angle) * radius
+                                const skillY = centerY + Math.sin(angle) * radius
+
+                                const distance = Math.sqrt(Math.pow(x - skillX, 2) + Math.pow(y - skillY, 2))
+                                if (distance < 20 * scaleX) { // Larger hit area
+                                    setHoveredSkill(skill)
+                                    found = true
+                                }
+                            })
+
+                            if (!found) setHoveredSkill(null)
+                        }}
+                        onMouseLeave={() => setHoveredSkill(null)}
+                    />
+                </div>
+
+                {/* Skill Details on Hover */}
+                {hoveredSkill && (
+                    <div className="text-center absolute bottom-8 left-0 right-0 pointer-events-none">
+                        <div className="inline-block bg-black/90 px-6 py-2 border border-green-500/50 text-green-400 font-mono text-sm">
+                            {hoveredSkill.name}: {hoveredSkill.level}%
+                        </div>
+                    </div>
+                )}
+            </motion.div>
         </div>
     )
 }
-

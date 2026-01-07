@@ -1,7 +1,7 @@
-import { colorMap, ColorKey } from '../lib/colorMap'
-import AlienCard from './AlienCard'
+import { motion } from 'framer-motion'
+import { ColorKey } from '../lib/colorMap'
+import { Hash, Box, ExternalLink, Github } from 'lucide-react'
 
-// Project Card Component
 interface ProjectCardProps {
     title: string
     subtitle: string
@@ -12,153 +12,112 @@ interface ProjectCardProps {
     color: ColorKey
     isLeft?: boolean
     revealDelayMs?: number
+    index: number
 }
 
-/**
- * @description A card component that displays information about a project.
- * @param {ProjectCardProps} props The props for the component.
- * @returns {JSX.Element} The project card component.
- */
-const ProjectCard = ({ title, subtitle, description, year, technologies, links, color, isLeft = false, revealDelayMs = 0 }: ProjectCardProps) => {
-    const colors = colorMap[color]
+const ProjectCard = ({ title, subtitle, description, year, technologies, links, isLeft = false, revealDelayMs = 0, index }: ProjectCardProps) => {
+    // Generate a pseudo-hash based on the title
+    const pseudoHash = `0x${title.split('').reduce((acc, char) => acc + char.charCodeAt(0).toString(16), '').substring(0, 12)}...`
+    const prevHash = `0x${(index * 123456).toString(16).padStart(12, '0')}...`
 
     return (
-        <div className="flex items-start md:items-center md:justify-between group">
-            {/* Mobile/Tablet Layout */}
-            <div className="md:hidden flex items-start w-full">
-                <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black mt-2 mr-6 flex-shrink-0 shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
-                <div className="flex-1">
-                    <AlienCard
-                        side={isLeft ? 'left' : 'right'}
-                        delayMs={revealDelayMs}
-                        accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                    >
-                        <div className="flex justify-between items-start mb-3">
-                            <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
-                                {year}
-                            </div>
-                            <div className="flex-1 text-right">
-                                <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                <p className="text-gray-300 mb-2 font-medium text-right">{subtitle}</p>
-                            </div>
-                        </div>
-                        <p className="text-base text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                        <div className="flex gap-2 text-sm mb-4 flex-wrap">
-                            {technologies.map((tech, index) => {
-                                const techColors = colorMap[tech.color]
-                                return (
-                                    <span key={index} className={`${techColors.bgLight} ${techColors.text} px-3 py-1.5 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
-                                        {tech.name}
-                                    </span>
-                                )
-                            })}
-                        </div>
-                        <div className="flex gap-4 flex-wrap">
-                            {links.map((link, index) => (
-                                <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2`}>
-                                    {link.label}
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
-                                </a>
-                            ))}
-                        </div>
-                    </AlienCard>
-                </div>
+        <div className="relative w-full max-w-4xl mx-auto mb-16">
+            {/* Connecting Chain Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gray-800 -z-10 transform md:-translate-x-1/2">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-green-500/50 to-transparent animate-pulse" />
             </div>
 
-            {/* Desktop Layout */}
-            <div className="hidden md:flex items-center justify-between w-full">
-                {isLeft ? (
-                    <>
-                        <div className="w-5/12 text-right pr-8">
-                            <AlienCard
-                                side={'left'}
-                                delayMs={revealDelayMs}
-                                accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                            >
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
-                                        {year}
-                                    </div>
-                                    <div className="flex-1 text-right">
-                                        <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                    </div>
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: revealDelayMs / 1000 }}
+                className={`flex flex-col md:flex-row items-center gap-8 ${isLeft ? 'md:flex-row-reverse' : ''}`}
+            >
+                {/* Block Visual */}
+                <div className="w-full md:w-1/2">
+                    <div className="bg-black/80 backdrop-blur-md border border-green-500/30 p-6 rounded-sm relative overflow-hidden group hover:border-green-500/60 transition-colors duration-300">
+                        {/* Header: Block Info */}
+                        <div className="flex justify-between items-center border-b border-gray-800 pb-4 mb-4 font-mono text-xs text-gray-500">
+                            <div className="flex items-center gap-2">
+                                <Box size={14} className="text-green-500" />
+                                <span>BLOCK #{1000 + index}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span className="text-gray-600">PREV:</span>
+                                <span className="text-gray-400">{prevHash}</span>
+                            </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-2xl font-bold text-white font-mono group-hover:text-green-400 transition-colors">
+                                        {title}
+                                    </h3>
+                                    <p className="text-sm text-gray-400 font-mono mt-1">{subtitle}</p>
                                 </div>
-                                <p className="text-gray-300 mb-2 font-medium text-right">{subtitle}</p>
-                                <p className="text-base text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                                <div className="flex gap-2 text-sm mb-4 justify-end flex-wrap">
-                                    {technologies.map((tech, index) => {
-                                        const techColors = colorMap[tech.color]
-                                        return (
-                                            <span key={index} className={`${techColors.bgLight} ${techColors.text} px-3 py-1.5 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
-                                                {tech.name}
-                                            </span>
-                                        )
-                                    })}
+                                <span className="px-2 py-1 bg-green-900/20 border border-green-500/30 text-green-400 text-xs font-mono rounded">
+                                    {year}
+                                </span>
+                            </div>
+
+                            <p className="text-gray-300 text-sm leading-relaxed font-mono border-l-2 border-gray-700 pl-4">
+                                {description}
+                            </p>
+
+                            {/* Tech Stack */}
+                            <div className="flex flex-wrap gap-2 pt-2">
+                                {technologies.map((tech, i) => (
+                                    <span key={i} className="px-2 py-1 bg-gray-900 border border-gray-700 text-gray-300 text-xs font-mono hover:border-green-500/50 hover:text-green-400 transition-colors cursor-default">
+                                        {tech.name}
+                                    </span>
+                                ))}
+                            </div>
+
+                            {/* Footer: Hash & Links */}
+                            <div className="pt-4 mt-4 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                <div className="flex items-center gap-2 text-xs font-mono text-gray-500 bg-black/50 px-2 py-1 rounded">
+                                    <Hash size={12} />
+                                    <span className="truncate max-w-[150px]">{pseudoHash}</span>
                                 </div>
-                                <div className="flex gap-4 justify-end">
-                                    {links.map((link, index) => (
-                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2`}>
+
+                                <div className="flex gap-3">
+                                    {links.map((link, i) => (
+                                        <a
+                                            key={i}
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 text-xs font-mono text-green-400 hover:text-green-300 transition-colors uppercase tracking-wider"
+                                        >
+                                            {link.label.toLowerCase().includes('github') ? <Github size={14} /> : <ExternalLink size={14} />}
                                             {link.label}
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
                                         </a>
                                     ))}
                                 </div>
-                            </AlienCard>
+                            </div>
                         </div>
-                        <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
-                        <div className="w-5/12 pl-8" />
-                    </>
-                ) : (
-                    <>
-                        <div className="w-5/12 text-right pr-8" />
-                        <div className={`relative z-10 w-6 h-6 ${colors.bg} rounded-full border-4 border-black shadow-lg ${colors.shadow} group-hover:${colors.shadowHover} transition-all duration-300`}></div>
-                        <div className="w-5/12 pl-8">
-                            <AlienCard
-                                side={'right'}
-                                delayMs={revealDelayMs}
-                                accentClasses={{ text: colors.text, borderLight: colors.borderLight, borderHover: colors.borderHover, shadow: colors.shadow }}
-                            >
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="flex-1 text-left">
-                                        <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-1 hover:${colors.textHover} transition-colors duration-300`}>{title}</h3>
-                                    </div>
-                                    <div className="px-3 py-1.5 bg-gray-800/60 border border-gray-600/30 rounded-full text-sm text-gray-300 font-medium backdrop-blur-sm">
-                                        {year}
-                                    </div>
-                                </div>
-                                <p className="text-gray-300 mb-2 font-medium text-left">{subtitle}</p>
-                                <p className="text-base text-gray-400 mb-4 break-words leading-relaxed">{description}</p>
-                                <div className="flex flex-wrap gap-2 text-sm mb-4">
-                                    {technologies.map((tech, index) => {
-                                        const techColors = colorMap[tech.color]
-                                        return (
-                                            <span key={index} className={`${techColors.bgLight} ${techColors.text} px-3 py-1.5 rounded-full font-medium border ${techColors.borderLight} hover:${techColors.borderHover} transition-all duration-300 transform hover:scale-105`}>
-                                                {tech.name}
-                                            </span>
-                                        )
-                                    })}
-                                </div>
-                                <div className="flex gap-4">
-                                    {links.map((link, index) => (
-                                        <a key={index} href={link.url} className={`${colors.text} hover:${colors.textHover} text-base font-medium transition-all duration-300 flex items-center gap-1 hover:gap-2`}>
-                                            {link.label}
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
-                                        </a>
-                                    ))}
-                                </div>
-                            </AlienCard>
-                        </div>
-                    </>
-                )}
-            </div>
+
+                        {/* Decorative Corner Accents */}
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-green-500" />
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-green-500" />
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-green-500" />
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-green-500" />
+                    </div>
+                </div>
+
+                {/* Connector Node (Center) */}
+                <div className="hidden md:flex items-center justify-center w-8 h-8 bg-black border-2 border-green-500 rounded-full z-10 shadow-[0_0_10px_rgba(0,255,65,0.5)]">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                </div>
+
+                {/* Empty Space for Layout Balance */}
+                <div className="hidden md:block w-1/2" />
+            </motion.div>
         </div>
     )
 }
 
-export default ProjectCard 
+export default ProjectCard

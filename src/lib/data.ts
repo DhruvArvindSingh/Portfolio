@@ -4,27 +4,54 @@ export const experiences: Array<{
     title: string
     company: string
     companyUrl?: string
-    description: string
+    description?: string
+    mentor?: string
+    scope?: string
+    highlights?: string[]
     period: string
     technologies: { name: string; color: ColorKey }[]
     links: { label: string; url: string }[]
     color: ColorKey
 }> = [
         {
-            title: "Blockchain Developer Intern",
-            company: "NSUT: Web3 Maintainer Suite",
+            title: "C4GT DMP Intern — Web3 Maintainers Suite",
+            company: "Blockchain & Full-Stack Development",
             companyUrl: "https://github.com/seetadev/Eth-Maintenance/",
-            description: "Selected for a 3-month open-source internship under C4GT 2025 to build cross-chain Web3 developer tools for predictive and reactive industrial maintenance using Filecoin, Chainlink, Scroll, and Polygon zkEVM.",
-            period: "2025 June - August (Ongoing)",
+            mentor: "Sir Manu Sheel Gupta",
+            scope: "End-to-end development, deployment, and scaling across cloud, mobile, and backend systems.",
+            highlights: [
+                "Built and deployed the EthMaintainers website on GCP and AWS with production-grade infra (SSL, containers, CI/CD) for high availability and reliability.",
+                "Shipped cross-platform mobile apps (Android & iOS) using Ionic/Capacitor, delivering a consistent, performant UX.",
+                "Architected a modular Node.js (Express) backend with pluggable adapters across 8 databases/storage backends: PostgreSQL, MongoDB, Neo4j, Firebase, Amazon S3, OrbitDB, Lighthouse, and Filecoin.",
+                "Implemented core product features: barcode-based invoice sharing, on-chain invoice issuance, brand customization (add/remove logo), Gmail API email delivery, and password-protected exports.",
+                "Set up Dockerized CI/CD pipelines for automated testing and multi-cloud deployments; explored Kubernetes for future scaling.",
+                "Wrote documentation, added security hardening, and created contribution workflows to support open-source collaboration.",
+                "Continuously evolving: shipping new features regularly based on community feedback; open to issues and PRs."
+            ],
+            period: "June 2025 - August 2025",
             technologies: [
-                { name: "Solidity", color: "gray" },
+                { name: "Node.js", color: "green" },
+                { name: "Express", color: "gray" },
+                { name: "Ionic", color: "blue" },
+                { name: "Capacitor", color: "blue" },
+                { name: "PostgreSQL", color: "blue" },
+                { name: "MongoDB", color: "green" },
+                { name: "Neo4j", color: "cyan" },
+                { name: "Firebase", color: "orange" },
+                { name: "Amazon S3", color: "orange" },
+                { name: "OrbitDB", color: "purple" },
+                { name: "Lighthouse", color: "purple" },
                 { name: "Filecoin", color: "blue" },
-                { name: "Chainlink", color: "blue" },
-                { name: "Scroll", color: "orange" },
-                { name: "Polygon", color: "purple" }
+                { name: "GCP", color: "blue" },
+                { name: "AWS", color: "orange" },
+                { name: "Docker", color: "cyan" },
+                { name: "CI/CD", color: "green" },
+                { name: "Gmail API", color: "red" }
             ],
             links: [
-                { label: "View Details", url: "https://github.com/seetadev/Eth-Maintenance/issues/5" }
+                { label: "Live Site", url: "https://ethmaintainers.sbs" },
+                { label: "Backend MVP", url: "https://mvp-be.dsingh.fun" },
+                { label: "GitHub", url: "https://github.com/seetadev/Eth-Maintenance/issues/5" }
             ],
             color: "purple"
         },
@@ -57,6 +84,31 @@ export const projects: Array<{
     color: ColorKey
 }> = [
         {
+            title: "Solanalance",
+            subtitle: "Onchain Freelance Platform",
+            description: "Solanalance is an onchain freelance platform for recruiters to post freelance jobs where users can apply. Payment is done via Solana in stages with escrow smart contracts ensuring freelancers are protected from scams as clients pay upfront when freelancers are selected, with funds securely stored in escrow.",
+            year: "2025",
+            technologies: [
+                { name: "Next.js", color: "cyan" },
+                { name: "Tailwind CSS", color: "cyan" },
+                { name: "Express", color: "red" },
+                { name: "Socket.io", color: "red" },
+                { name: "PostgreSQL", color: "blue" },
+                { name: "S3", color: "orange" },
+                { name: "GCP Compute Engine", color: "orange" },
+                { name: "Nginx", color: "green" },
+                { name: "Solana", color: "purple" },
+                { name: "Smart Contract", color: "purple" },
+                { name: "Escrow", color: "purple" }
+            ],
+            links: [
+                { label: "System Design", url: "https://drive.google.com/file/d/1MB-e24od38Vm-QqfAQrgBYmzCYvzqudJ/view?usp=sharing" },
+                { label: "GitHub", url: "https://github.com/DhruvArvindSingh/SolanaLance" },
+                { label: "Web Link", url: "https://solanalance.com/" }
+            ],
+            color: "purple"
+        },
+        {
             title: "Animath",
             subtitle: "Code based Video Creation",
             description: "Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.",
@@ -78,7 +130,7 @@ export const projects: Array<{
                 { name: "Python", color: "green" }
             ],
             links: [
-                { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
+                { label: "System Design", url: "https://drive.google.com/file/d/1ANM5375CXZCHMnyAIqO-YZXXMQXH-jp4/view?usp=sharing" },
                 { label: "Web Link", url: "https://animath.dsingh.fun" },
                 { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Manim" }
             ],
@@ -103,7 +155,7 @@ export const projects: Array<{
                 { name: "Docker", color: "green" }
             ],
             links: [
-                { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
+                { label: "System Design", url: "https://drive.google.com/file/d/1em_PDI4jYOZH-7eH4UZKxsKWFAsnUMwR/view?usp=sharing" },
                 { label: "Web Link", url: "http://deployer.dsingh.fun" },
                 { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Instant-Deployer" }
             ],
@@ -124,8 +176,7 @@ export const projects: Array<{
                 { name: "Docker", color: "green" }
             ],
             links: [
-                { label: "System Design", url: "https://drive.google.com/file/d/1oEDFMWCF3z5S3BOMf_SqIo9yXR6RxDX1/view?usp=sharing" },
-                { label: "Web Link", url: "http://collab-draw.in" },
+                { label: "Web Link", url: "http://collabdraw.dsingh.fun" },
                 { label: "GitHub", url: "https://github.com/DhruvArvindSingh/Collab-draw" }
             ],
             color: "orange"
