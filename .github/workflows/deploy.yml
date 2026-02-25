@@ -20,6 +20,8 @@ jobs:
         env:
           DEPLOYER_TOKEN: ${{ secrets.DEPLOYER_TOKEN }}
         run: |
-          curl -sL https://deployer-be.dsingh.fun/api/cli/latest -o deployer
-          chmod +x deployer
-          ./deployer deploy --ci --token "$DEPLOYER_TOKEN"
+          # Use the smart installer from GitHub
+          curl -sL https://raw.githubusercontent.com/DhruvArvindSingh/Deployer/master/deployer-frontend/public/install.sh | bash
+          
+          # The installer puts it in /usr/local/bin, so we just call 'deployer'
+          deployer deploy --ci --token "$DEPLOYER_TOKEN"
