@@ -16,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dhruv's Portfolio",
-  description: "Interactive 3D portfolio showcasing cutting-edge web development with Three.js",
+  title: "Dhruv Singh — DevOps & Blockchain Developer",
+  description: "DevOps engineer, blockchain developer, and open source contributor (CNCF/kgateway, stdlib). Self-hosting infrastructure on a 2-node homelab. Building cloud-native and decentralized systems.",
+  keywords: ["DevOps", "Blockchain", "Kubernetes", "CNCF", "Open Source", "Homelab", "Cloud Native", "Solidity", "Go", "Rust"],
 };
 
 /**

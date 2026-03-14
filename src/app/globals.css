@@ -10,6 +10,7 @@
   --ethereum-purple: #627EEA;
   --holographic-cyan: #00F0FF;
   --neon-pink: #FF00FF;
+  --matrix-green: #00ff41;
 }
 
 @theme inline {
@@ -37,45 +38,76 @@ body {
   max-width: 100vw;
 }
 
-/* Responsive container */
+/* Responsive container — avoid universal pseudo-element selectors (perf) */
 * {
   box-sizing: border-box;
 }
 
-/* Prevent horizontal overflow for all elements */
-*,
-*::before,
-*::after {
-  max-width: 100%;
-}
+/* ============================================
+   GLITCH EFFECTS
+   ============================================ */
 
-/* Glitch Effect */
 @keyframes glitch {
-  0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    transform: translate(-2px, -2px);
-  }
-  60% {
-    transform: translate(2px, 2px);
-  }
-  80% {
-    transform: translate(2px, -2px);
-  }
-  100% {
-    transform: translate(0);
-  }
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
 }
 
 .glitch-hover:hover {
   animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
 }
 
-/* Scanline Effect */
+/* Advanced Glitch Text Effect */
+@keyframes glitch-text {
+  0% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                 -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                 -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                 -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                 -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                 0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                 -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                 0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                 -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                 0.05em 0 0 rgba(0, 255, 0, 0.75),
+                 0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                 0.05em 0 0 rgba(0, 255, 0, 0.75),
+                 0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
+                 -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+                 -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+}
+
+.glitch-text:hover {
+  animation: glitch-text 0.5s infinite;
+}
+
+/* ============================================
+   SCANLINE EFFECT (CRT Monitor)
+   ============================================ */
+
+/* Scanline reduced to lower z-index and lower opacity for better perf */
 .scanline {
   position: fixed;
   top: 0;
@@ -86,16 +118,21 @@ body {
     to bottom,
     rgba(255, 255, 255, 0),
     rgba(255, 255, 255, 0) 50%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.1)
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.05)
   );
   background-size: 100% 4px;
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.15;
+  z-index: 50;
+  opacity: 0.08;
+  will-change: auto;
+  contain: strict;
 }
 
-/* Terminal Cursor Blink */
+/* ============================================
+   TERMINAL CURSOR BLINK
+   ============================================ */
+
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
@@ -107,24 +144,34 @@ body {
   color: var(--terminal-green);
 }
 
-/* Neon Glow Utilities */
+/* ============================================
+   NEON GLOW UTILITIES
+   ============================================ */
+
 .glow-text-green {
-  text-shadow: 0 0 10px rgba(0, 255, 65, 0.7), 0 0 20px rgba(0, 255, 65, 0.5);
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.7), 0 0 20px rgba(0, 255, 65, 0.5), 0 0 40px rgba(0, 255, 65, 0.3);
 }
 
 .glow-text-purple {
   text-shadow: 0 0 10px rgba(98, 126, 234, 0.7), 0 0 20px rgba(98, 126, 234, 0.5);
 }
 
+.glow-text-cyan {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
 .glow-box-green {
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3), inset 0 0 15px rgba(0, 255, 65, 0.05);
 }
 
 .glow-box-purple {
   box-shadow: 0 0 15px rgba(98, 126, 234, 0.3);
 }
 
-/* Gradient Animation Keyframes */
+/* ============================================
+   GRADIENT ANIMATIONS
+   ============================================ */
+
 @keyframes gradient-x {
   0%, 100% {
     background-size: 200% 200%;
@@ -140,18 +187,34 @@ body {
   animation: gradient-x 4s ease-in-out infinite;
 }
 
-/* Alien card drop-in + beam */
+/* ============================================
+   MATRIX RAIN BACKGROUND
+   ============================================ */
+
+@keyframes matrix-drop {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   ALIEN CARD / UFO ANIMATION
+   ============================================ */
+
 @keyframes alien-drop {
   0% {
     transform: translate3d(0, -28px, 0) rotateX(8deg) scale(0.96);
     opacity: 0;
   }
-
   60% {
     transform: translate3d(0, 6px, 0) rotateX(0deg) scale(1.01);
     opacity: 1;
   }
-
   100% {
     transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
     opacity: 1;
@@ -159,13 +222,10 @@ body {
 }
 
 @keyframes beam-pulse {
-
-  0%,
-  100% {
+  0%, 100% {
     opacity: 0.0;
     filter: blur(6px);
   }
-
   50% {
     opacity: 0.35;
     filter: blur(8px);
@@ -174,14 +234,13 @@ body {
 
 .alien-card-wrapper {
   opacity: 0;
-  transform: translate3d(0, -24px, 0) scale(0.98);
-  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms ease;
+  transform: translateY(-24px);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease;
 }
 
 .alien-card-visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  animation: alien-drop 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform: translateY(0);
 }
 
 .ufo-beam {
@@ -191,79 +250,79 @@ body {
   background: radial-gradient(ellipse at top, var(--beam-color, rgba(168, 85, 247, 0.28)), var(--beam-color-soft, rgba(168, 85, 247, 0.06)) 60%, transparent 70%);
   clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%);
   opacity: 0;
-  transform: translateZ(0);
 }
 
 .ufo-beam-on {
   animation: beam-pulse 1.8s ease-in-out infinite;
 }
 
-/* Reveal-in animation (IntersectionObserver driven) */
+/* ============================================
+   REVEAL ANIMATIONS (IntersectionObserver)
+   ============================================ */
+
+/* Reveal animations - removed filter transitions (GPU-expensive) */
 .reveal {
   opacity: 0;
-  transform: translate3d(0, 16px, 0) scale(0.98);
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 700ms ease;
-  will-change: opacity, transform, filter;
-  filter: saturate(0.8) blur(0.3px);
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  filter: saturate(1) blur(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-up {
-  transform: translate3d(0, 24px, 0) scale(0.98);
+  transform: translate3d(0, 24px, 0);
 }
 
 .reveal-down {
-  transform: translate3d(0, -24px, 0) scale(0.98);
+  transform: translate3d(0, -24px, 0);
 }
 
 .reveal-left {
-  transform: translate3d(-24px, 0, 0) scale(0.98);
+  transform: translate3d(-24px, 0, 0);
 }
 
 .reveal-right {
-  transform: translate3d(24px, 0, 0) scale(0.98);
+  transform: translate3d(24px, 0, 0);
 }
 
-/* Interactive card subtle 3D hover */
+/* ============================================
+   INTERACTIVE CARD 3D HOVER
+   ============================================ */
+
 .interactive-card {
-  transform-style: preserve-3d;
-  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease, filter 350ms ease;
-  perspective: 1000px;
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease;
 }
 
 .interactive-card:hover {
-  transform: translateY(-4px) rotateX(1deg) rotateY(-1deg) scale(1.01);
+  transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(168, 85, 247, 0.2), 0 6px 18px rgba(236, 72, 153, 0.12);
-  filter: brightness(1.03);
 }
 
-/* Scroll progress bar */
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
+  height: 2px;
   width: 0%;
   z-index: 70;
-  /* above header (50) */
-  background: linear-gradient(90deg, #a855f7, #ec4899, #06b6d4);
-  box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+  background: linear-gradient(90deg, #00FF41, #00F0FF, #627EEA);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.6);
   transition: width 120ms linear;
 }
 
-/* Custom cursor styles - Reverted to default for usability */
-/* * {
-  cursor: none !important;
-} */
+/* ============================================
+   GLASSMORPHISM
+   ============================================ */
 
-/* Enhanced glassmorphism effect */
 .glass {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -271,26 +330,132 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Improved scrollbar */
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #a855f7, #ec4899);
-  border-radius: 5px;
+  background: linear-gradient(180deg, #00FF41, #00F0FF);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #9333ea, #db2777);
+  background: linear-gradient(180deg, #00cc33, #00c0cc);
 }
 
-/* Selection styles */
+/* ============================================
+   SELECTION
+   ============================================ */
+
 ::selection {
-  background: rgba(168, 85, 247, 0.3);
+  background: rgba(0, 255, 65, 0.3);
   color: white;
+}
+
+/* ============================================
+   TYPING EFFECT
+   ============================================ */
+
+@keyframes typing-cursor {
+  0%, 100% { border-color: var(--terminal-green); }
+  50% { border-color: transparent; }
+}
+
+.typing-cursor {
+  border-right: 2px solid var(--terminal-green);
+  animation: typing-cursor 1s step-end infinite;
+}
+
+/* ============================================
+   PULSE RING (for status indicators)
+   ============================================ */
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* ============================================
+   SECTION DIVIDER
+   ============================================ */
+
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+  filter: blur(4px);
+}
+
+/* ============================================
+   ACTIVE NAV INDICATOR
+   ============================================ */
+
+@keyframes nav-underline {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--terminal-green);
+  transform-origin: center;
+  animation: nav-underline 0.3s ease forwards;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+}
+
+/* ============================================
+   GRID BACKGROUND PATTERN
+   ============================================ */
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ============================================
+   HEXAGON BADGE
+   ============================================ */
+
+.hex-badge {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }

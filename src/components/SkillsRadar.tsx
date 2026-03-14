@@ -12,27 +12,32 @@ interface Skill {
 
 const skills: Skill[] = [
     // Frontend
-    { name: 'React/Next.js', level: 95, category: 'Frontend', color: '#00FF41' }, // Terminal Green
-    { name: 'TypeScript', level: 90, category: 'Frontend', color: '#2496ED' }, // Docker Blue
-    { name: 'Tailwind CSS', level: 92, category: 'Frontend', color: '#00F0FF' }, // Holographic Cyan
+    { name: 'React/Next.js', level: 95, category: 'Frontend', color: '#00FF41' },
+    { name: 'TypeScript', level: 90, category: 'Frontend', color: '#2496ED' },
+    { name: 'Tailwind CSS', level: 92, category: 'Frontend', color: '#00F0FF' },
     { name: 'Three.js', level: 85, category: 'Frontend', color: '#FFFFFF' },
 
     // Backend
     { name: 'Node.js', level: 88, category: 'Backend', color: '#00FF41' },
-    { name: 'Express', level: 87, category: 'Backend', color: '#627EEA' }, // Ethereum Purple
+    { name: 'Express', level: 87, category: 'Backend', color: '#627EEA' },
     { name: 'PostgreSQL', level: 82, category: 'Backend', color: '#2496ED' },
-    { name: 'Redis', level: 80, category: 'Backend', color: '#FF00FF' }, // Neon Pink
+    { name: 'Redis', level: 80, category: 'Backend', color: '#FF00FF' },
 
     // DevOps & Cloud
+    { name: 'Docker', level: 90, category: 'DevOps', color: '#2496ED' },
+    { name: 'Kubernetes', level: 78, category: 'DevOps', color: '#326CE5' },
     { name: 'AWS', level: 85, category: 'DevOps', color: '#FF9900' },
-    { name: 'Docker', level: 88, category: 'DevOps', color: '#2496ED' },
+    { name: 'Nginx', level: 82, category: 'DevOps', color: '#009639' },
     { name: 'Kafka', level: 75, category: 'DevOps', color: '#FFFFFF' },
+    { name: 'CI/CD', level: 83, category: 'DevOps', color: '#00F0FF' },
 
     // Blockchain
     { name: 'Solidity', level: 78, category: 'Blockchain', color: '#627EEA' },
     { name: 'Web3.js', level: 80, category: 'Blockchain', color: '#FF9900' },
+    { name: 'Solana', level: 75, category: 'Blockchain', color: '#9945FF' },
 
     // Languages
+    { name: 'Go', level: 72, category: 'Languages', color: '#00ADD8' },
     { name: 'Rust', level: 70, category: 'Languages', color: '#FF00FF' },
     { name: 'C/C++', level: 85, category: 'Languages', color: '#2496ED' },
     { name: 'Python', level: 83, category: 'Languages', color: '#00F0FF' },

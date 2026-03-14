@@ -14,6 +14,26 @@ export const experiences: Array<{
     color: ColorKey
 }> = [
         {
+            title: "Open Source Contributor — CNCF / kgateway",
+            company: "Cloud Native Computing Foundation",
+            companyUrl: "https://github.com/kgateway-dev/kgateway",
+            description: "Contributing to kgateway, a CNCF project — a Kubernetes-native API gateway built on Envoy Proxy. Working on gateway configuration, routing enhancements, and cloud-native networking features for the Kubernetes ecosystem.",
+            period: "2025 - Present",
+            technologies: [
+                { name: "Go", color: "cyan" },
+                { name: "Kubernetes", color: "blue" },
+                { name: "Envoy Proxy", color: "purple" },
+                { name: "gRPC", color: "green" },
+                { name: "Helm", color: "blue" },
+                { name: "CNCF", color: "cyan" }
+            ],
+            links: [
+                { label: "kgateway Repo", url: "https://github.com/kgateway-dev/kgateway" },
+                { label: "My PRs", url: "https://github.com/kgateway-dev/kgateway/pulls?q=author%3ADhruvArvindSingh" }
+            ],
+            color: "cyan"
+        },
+        {
             title: "C4GT DMP Intern — Web3 Maintainers Suite",
             company: "Blockchain & Full-Stack Development",
             companyUrl: "https://github.com/seetadev/Eth-Maintenance/",
@@ -59,7 +79,7 @@ export const experiences: Array<{
             title: "Open Source Contributor",
             company: "Stdlib",
             companyUrl: "https://github.com/stdlib-js/stdlib",
-            description: "Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR's",
+            description: "Contributed to the development of a comprehensive library of mathematical functions and algorithms in JavaScript, Julia, Fortran and C. Added 25,000+ lines of code within 40+ merged and 70 overall PR's.",
             period: "2024 - December - Still Contributing",
             technologies: [
                 { name: "JavaScript", color: "gray" },
@@ -111,7 +131,7 @@ export const projects: Array<{
         {
             title: "Animath",
             subtitle: "Code based Video Creation",
-            description: "Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation.Completely scalable with the use of AWS services and Kafka with postgreSQL database.",
+            description: "Animath transforms your mathematical ideas into stunning visual animations. Simply describe what you want to see, and our AI will generate Python code using Manim to create your animation. Completely scalable with the use of AWS services and Kafka with PostgreSQL database.",
             year: "2025",
             technologies: [
                 { name: "Next.js", color: "cyan" },
@@ -184,7 +204,7 @@ export const projects: Array<{
         {
             title: "Crypto Wallet App",
             subtitle: "Cross Platform Crypto Wallet",
-            description: "A cross platform crypto wallet app that allows you to manage your crypto assets and transactions. It is built with React Native, TypeScript, and Web3.js. It is a simple and easy to use wallet app that allows you to send ,receive and track prices of crypto assets.",
+            description: "A cross platform crypto wallet app that allows you to manage your crypto assets and transactions. It is built with React Native, TypeScript, and Web3.js. It is a simple and easy to use wallet app that allows you to send, receive and track prices of crypto assets.",
             year: "2024",
             technologies: [
                 { name: "React Native", color: "violet" },
@@ -251,7 +271,7 @@ export const additionalProjects: Array<{
         {
             title: "Ludo Game",
             subtitle: "Multiplayer Ludo Game",
-            description: "A multiplayer ludo game that allows you to play with your friends. It is built with vanilla javascript, ejs, socket.io, node.js and express. It is a simple and easy to use ludo game that allows you to play with your friends.It has both random room and custom room options.",
+            description: "A multiplayer ludo game that allows you to play with your friends. It is built with vanilla javascript, ejs, socket.io, node.js and express. It is a simple and easy to use ludo game that allows you to play with your friends. It has both random room and custom room options.",
             year: "2024",
             technologies: [
                 { name: "JavaScript", color: "orange" },
@@ -269,7 +289,7 @@ export const additionalProjects: Array<{
         {
             title: "Library Management System",
             subtitle: "Library Management System using C++",
-            description: "A library management system that allows you to manage your library through console. It is built with C++ using classs with .csv file for storing books and users info wiith realtime storage update and over 20+ features.",
+            description: "A library management system that allows you to manage your library through console. It is built with C++ using classes with .csv file for storing books and users info with realtime storage update and over 20+ features.",
             year: "2023",
             technologies: [
                 { name: "C++", color: "blue" },
@@ -282,3 +302,62 @@ export const additionalProjects: Array<{
             color: "amber"
         }
     ]
+
+// Homelab infrastructure data
+export const homelabNodes = [
+    {
+        name: "node-01",
+        type: "Dell Laptop",
+        hostname: "dell-node",
+        ram: "3 GB",
+        status: "online" as const,
+        services: ["MinIO S3", "Nginx Proxy", "Monitoring"],
+        ip: "192.168.1.x",
+        os: "Linux",
+        uptime: "99.2%"
+    },
+    {
+        name: "node-02",
+        type: "Desktop CPU",
+        hostname: "desktop-node",
+        ram: "4 GB",
+        status: "online" as const,
+        services: ["Web Hosting", "Cloud Storage", "Docker Runtime"],
+        ip: "192.168.1.x",
+        os: "Linux",
+        uptime: "98.7%"
+    }
+]
+
+export const homelabServices = [
+    { name: "S3 Object Storage", node: "node-01", status: "running", icon: "bucket" },
+    { name: "Cloud Dashboard", node: "node-02", status: "running", icon: "cloud" },
+    { name: "Website Hosting", node: "node-02", status: "running", icon: "globe" },
+    { name: "Reverse Proxy", node: "node-01", status: "running", icon: "shield" },
+    { name: "Docker Engine", node: "node-02", status: "running", icon: "container" },
+    { name: "Monitoring Stack", node: "node-01", status: "running", icon: "chart" },
+]
+
+// Open source contribution data
+export const openSourceContributions = [
+    {
+        org: "stdlib-js",
+        project: "stdlib",
+        description: "Comprehensive library of mathematical functions and algorithms",
+        role: "Contributor",
+        stats: { prs: 70, merged: 40, linesAdded: 25000 },
+        languages: ["JavaScript", "Julia", "Fortran", "C"],
+        url: "https://github.com/stdlib-js/stdlib",
+        color: "pink" as ColorKey,
+    },
+    {
+        org: "CNCF",
+        project: "kgateway",
+        description: "Kubernetes-native API gateway built on Envoy Proxy",
+        role: "Contributor",
+        stats: { prs: 5, merged: 3, linesAdded: 500 },
+        languages: ["Go", "Kubernetes", "Helm"],
+        url: "https://github.com/kgateway-dev/kgateway",
+        color: "cyan" as ColorKey,
+    }
+]

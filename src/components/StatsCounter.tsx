@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Reveal from './Reveal'
+import { motion } from 'framer-motion'
 
 interface Stat {
     value: number
@@ -9,41 +9,50 @@ interface Stat {
     suffix: string
     icon: string
     color: string
-    gradient: string
 }
 
 const stats: Stat[] = [
     {
-        value: 100000,
-        label: 'Lines of Code',
+        value: 25000,
+        label: 'Lines Contributed to OSS',
         suffix: '+',
-        icon: '💻',
-        color: 'from-purple-400 to-pink-400',
-        gradient: 'from-purple-500/20 to-pink-500/20'
+        icon: '⌨',
+        color: 'text-green-400',
     },
     {
         value: 70,
-        label: 'Pull Requests Merged',
+        label: 'Pull Requests',
         suffix: '+',
-        icon: '🚀',
-        color: 'from-cyan-400 to-blue-400',
-        gradient: 'from-cyan-500/20 to-blue-500/20'
+        icon: '⑂',
+        color: 'text-purple-400',
     },
     {
         value: 15,
-        label: 'Projects Completed',
+        label: 'Projects Deployed',
         suffix: '+',
-        icon: '⚡',
-        color: 'from-orange-400 to-red-400',
-        gradient: 'from-orange-500/20 to-red-500/20'
+        icon: '▶',
+        color: 'text-cyan-400',
+    },
+    {
+        value: 2,
+        label: 'Homelab Nodes',
+        suffix: '',
+        icon: '⊞',
+        color: 'text-yellow-400',
+    },
+    {
+        value: 6,
+        label: 'Services Running',
+        suffix: '+',
+        icon: '◉',
+        color: 'text-orange-400',
     },
     {
         value: 5,
-        label: 'Years Experience',
+        label: 'Years Coding',
         suffix: '+',
-        icon: '🏆',
-        color: 'from-emerald-400 to-teal-400',
-        gradient: 'from-emerald-500/20 to-teal-500/20'
+        icon: '⏱',
+        color: 'text-pink-400',
     }
 ]
 
@@ -63,21 +72,17 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
         )
 
         const currentRef = ref.current
-        if (currentRef) {
-            observer.observe(currentRef)
-        }
+        if (currentRef) observer.observe(currentRef)
 
         return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef)
-            }
+            if (currentRef) observer.unobserve(currentRef)
         }
     }, [])
 
     useEffect(() => {
         if (!isVisible) return
 
-        const duration = 2000 // 2 seconds
+        const duration = 2000
         const steps = 60
         const increment = value / steps
         let current = 0
@@ -96,16 +101,13 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
     }, [isVisible, value])
 
     const formatNumber = (num: number) => {
-        if (num >= 1000000) {
-            return (num / 1000000).toFixed(1) + 'M'
-        } else if (num >= 1000) {
-            return (num / 1000).toFixed(1) + 'K'
-        }
+        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'
+        if (num >= 1000) return (num / 1000).toFixed(1) + 'K'
         return num.toString()
     }
 
     return (
-        <div ref={ref} className="text-5xl sm:text-6xl font-bold">
+        <div ref={ref} className="text-4xl sm:text-5xl font-bold font-mono tabular-nums">
             {formatNumber(count)}{suffix}
         </div>
     )
@@ -113,32 +115,40 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 
 export default function StatsCounter() {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {stats.map((stat, index) => (
-                <Reveal key={index} direction="up" delayMs={index * 100}>
-                    <div className={`group relative bg-gradient-to-br ${stat.gradient} p-8 rounded-2xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300 overflow-hidden`}>
-                        {/* Background glow effect */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.08, duration: 0.4 }}
+                    className="group relative bg-black/60 border border-gray-800 hover:border-green-500/30 p-5 rounded-sm transition-all duration-300 text-center overflow-hidden"
+                >
+                    {/* Glow on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                        {/* Floating icon */}
-                        <div className="text-5xl mb-4 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
+                    <div className="relative z-10">
+                        {/* Icon */}
+                        <div className={`text-2xl mb-3 ${stat.color} font-mono`}>
                             {stat.icon}
                         </div>
 
                         {/* Counter */}
-                        <div className={`bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
+                        <div className={`${stat.color} mb-2`}>
                             <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                         </div>
 
                         {/* Label */}
-                        <div className="text-gray-400 text-sm font-medium uppercase tracking-wide">
+                        <div className="text-gray-500 text-[10px] font-mono uppercase tracking-wider leading-tight">
                             {stat.label}
                         </div>
-
-                        {/* Decorative corner */}
-                        <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${stat.color} opacity-5 rounded-bl-full`}></div>
                     </div>
-                </Reveal>
+
+                    {/* Corner accents */}
+                    <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-gray-700 group-hover:border-green-500/50 transition-colors" />
+                    <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-gray-700 group-hover:border-green-500/50 transition-colors" />
+                </motion.div>
             ))}
         </div>
     )
